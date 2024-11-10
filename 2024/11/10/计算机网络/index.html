@@ -1,0 +1,676 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#58C9B9">
+  <meta name="author" content="kid">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="![[Pasted image 20241110190125.png]]先展示一下这个经典结构，然后用一个数据包的一生来逐一解释整个计算机网络 1.应用层HTTP(Hypertext Transfer Protocol)超文本传输协议当我们打开一个网站时，会输入一个网址，这个网址就是url![[Pasted image 20241110220019.png]]url代表了我们要向服务器请求的资源，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络">
+<meta property="og:url" content="http://example.com/2024/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="![[Pasted image 20241110190125.png]]先展示一下这个经典结构，然后用一个数据包的一生来逐一解释整个计算机网络 1.应用层HTTP(Hypertext Transfer Protocol)超文本传输协议当我们打开一个网站时，会输入一个网址，这个网址就是url![[Pasted image 20241110220019.png]]url代表了我们要向服务器请求的资源，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-11-10T14:00:00.000Z">
+<meta property="article:modified_time" content="2024-11-10T15:37:38.459Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>计算机网络 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>kid的blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="计算机网络"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-10 22:00" pubdate>
+          November 10, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          26 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">计算机网络</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>![[Pasted image 20241110190125.png]]<br>先展示一下这个经典结构，然后用一个数据包的一生来逐一解释整个计算机网络</p>
+<h1 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h1><h2 id="HTTP-Hypertext-Transfer-Protocol-超文本传输协议"><a href="#HTTP-Hypertext-Transfer-Protocol-超文本传输协议" class="headerlink" title="HTTP(Hypertext Transfer Protocol)超文本传输协议"></a>HTTP(Hypertext Transfer Protocol)超文本传输协议</h2><p>当我们打开一个网站时，会输入一个网址，这个网址就是url<br>![[Pasted image 20241110220019.png]]<br>url代表了我们要向服务器请求的资源，对url进行解析后，确定了请求信息，接下来就可以遵循HTTP协议把这些信息封装成一个HTTP请求，而请求主要是GET请求，POST请求，还有PUT请求，DELETE请求等，但是最常用的就是GET，POST请求，一个POST请求由请求行，请求头，请求头三部分构成，而GET请求没有请求体。</p>
+<p>&#x3D;&#x3D;下图就是一个POST请求的报文形式。&#x3D;&#x3D;<br>![[Pasted image 20241110221245.png]]</p>
+<p>这样一个请求数据包就诞生了，接下来就需要为他指路，让他知道请求的是哪个服务器</p>
+<h2 id="DNS协议"><a href="#DNS协议" class="headerlink" title="DNS协议"></a>DNS协议</h2><p>我们平时打开网页时都是输入的网址，例如<a target="_blank" rel="noopener" href="http://www.baidu.com但是计算机是无法识别域名的,在计算机的网络中只有ip/">www.baidu.com但是计算机是无法识别域名的，在计算机的网络中只有IP</a>, MAC地址可以被解读，那么我们就要想办法将域名解析为服务器IP，这时候就用到了DNS解析。接下来讲解一下DNS解析的步骤。</p>
+<ol>
+<li><strong>第一步</strong><br>本地电脑会检查浏览器缓存中有没有这个域名对应的解析过的IP地址，如果缓存中有，这个解析过程就结束。浏览器缓存域名也是有限制的，不仅浏览器缓存大小有限制，而且缓存的时间也有限制，通常情况下为几分钟到几小时不等，域名被缓存的时间限制可以通过TTL属性来设置。这个缓存时间太长和太短都不太好，如果时间太长，一旦域名被解析到的IP有变化，会导致被客户端缓存的域名无法解析到变化后的IP地址，以致该域名不能正常解析，这段时间内有一部分用户无法访问网站。如果设置时间太短，会导致用户每次访问网站都要重新解析一次域名。</li>
+<li><strong>第二步</strong><br>如果浏览器缓存中没有数据，浏览器会查找操作系统缓存中是否有这个域名对应的DNS解析结果。</li>
+<li><strong>第三步</strong><br>前两个过程无法解析时，就要用到我们网络配置中的”DNS服务器地址”了。操作系统会把这个域名发送给这个本地DNS服务器。每个完整的内网通常都会配置本地DNS服务器。它们一般都会缓存域名解析结果，当然缓存时间是受到域名的失效时间控制的。大约80%的域名解析到这里就结束了，后续的DNS迭代和递归也是由本地DNS服务器负责。</li>
+<li><strong>第四步</strong><br>如果本地DNS服务器仍然没有命中，就直接到根DNS服务器请求解析。</li>
+<li><strong>第五步</strong><br>根DNS服务器返回给本地DNS域名服务器一个顶级DNS服务器地址，它是国际顶级域名服务器，如.com、.cn、.org等，全球只有13台左右。</li>
+<li><strong>第六步</strong><br>本地DNS服务器再向上一步获得的顶级DNS服务器发送解析请求。接受请求的顶级DNS服务器查找并返回此域名对应的Name Server域名服务器的地址，这个Name Server服务器就是我要访问的网站域名提供商的服务器，其实该域名的解析任务就是由域名提供商的服务器来完成。   比如我要访问<a target="_blank" rel="noopener" href="http://www.baidu.com,而这个域名是从a公司注册获得的,那么a公司上的服务器就会有www.baidu.com的相关信息./">www.baidu.com，而这个域名是从A公司注册获得的，那么A公司上的服务器就会有www.baidu.com的相关信息。</a></li>
+<li><strong>第七步</strong><br>Name Server服务器会查询存储的域名和IP的映射关系表，再把查询出来的域名和IP地址等等信息，连同一个TTL值返回给本地DNS服务器。本地DNS服务器会缓存这个域名和IP的对应关系，缓存时间由TTL值控制。</li>
+<li><strong>第八步</strong><br>把解析的结果返回给本地电脑，本地电脑根据TTL值缓存在本地系统缓存中，域名解析过程结束在实际的DNS解析过程中，可能还不止这10步，如Name Server可能有很多级，或者有一个GTM来负载均衡控制，这都有可能会影响域名解析过程</li>
+</ol>
+<p>&#x3D;&#x3D;下图为一个DNS解析的流程&#x3D;&#x3D;<br>![[Pasted image 20241110223235.png]]</p>
+<p>这样数据包就找到了自己的目的地了。而HTTP(HTTPS)协议和DNS协议就是在&#x3D;&#x3D;应用层&#x3D;&#x3D;上的协议</p>
+<h1 id="2-传输层"><a href="#2-传输层" class="headerlink" title="2.传输层"></a>2.传输层</h1><h2 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h2><h3 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h3><p>TCP协议就是工作在传输层上的协议，TCP协议是面向连接的可靠协议，所以在发送数据之前要先与目标服务器进行TCP连接，就是经典的三次握手，三次握手目的是保证双方都有发送和接收的能力。&#x3D;&#x3D;下图前三次就是建立握手的过程&#x3D;&#x3D;<br>![[Pasted image 20241110224644.png]]<br>&#x3D;&#x3D;下图是一个简单的TCP建立连接的模型&#x3D;&#x3D;<br>![[Pasted image 20241110224730.png]]<br>接下来解读一下TCP头部</p>
+<h3 id="TCP头部字段"><a href="#TCP头部字段" class="headerlink" title="TCP头部字段"></a>TCP头部字段</h3><p>![[Pasted image 20241110225009.png]]<br>首先，源端口号和目标端口号是不可少的，如果没有这两个端口号，数据就不知道应该发给哪个应用。<br>接下来有包的序号，这个是为了解决包乱序的问题。<br>还有应该有的是确认号，目的是确认发出去对方是否有收到。如果没有收到就应该重新发送，直到送达，这个是为了解决丢包的问题。<br>接下来还有一些状态位。例如 SYN 是发起一个连接，ACK 是回复，RST 是重新连接，FIN 是结束连接等。TCP 是面向连接的，因而双方要维护连接的状态，这些带状态位的包的发送，会引起双方的状态变更。<br>还有一个重要的就是窗口大小。TCP 要做流量控制，通信双方各声明一个窗口（缓存大小），作用是为了解决发送方和接收方速度不同而导致的数据丢失问题,当发送方发送的太快,接收方来不及接受就会导致数据丢失。<br>除了做流量控制以外，TCP还会做拥塞控制，为了解决过多的数据注入到网络导致网络崩溃和超负荷问题。<br>接下来讲解一下流量控制和拥塞控制<br><strong>流量控制</strong><br>发送端会根据自己的实际情况发送数据，但因为接收端接收不过来的话，接收方只能把处理不过来的数据存在缓存区里。如果缓存区都满了对方还在疯狂发送数据，接收方只能把收到的数据包丢掉，这就造成了网络资源的浪费！典型的场景如以太网场景中10G设备向1G设备发TCP包。<br>为了防止这种现象的发生，TCP 提供一种机制可以让发送端根据接收端的实际接收能力控制发送的数据量。这就是所谓的流量控制。<br>它的具体操作是：<br>（1）接收端主机向发送端主机通知自已可以接收数据的大小；<br>（2）于是发送端会发送不超过这个限度的数据，该大小限度就被称作窗口大小。窗口大小的值由接收端主机决定，而在TCP 首部中，就有一个字段用来通知窗口大小<br>![[Pasted image 20241110225641.png]]<br>（3）接收主机将自己可以接收的缓冲区大小放入这个字段中通知给发送端，这个字段的值越大，说明网络的吞吐量越高。<br>不过，接收端的这个缓冲区一旦面临数据溢出时，窗口大小的值也会随之被设置为一个更小的值通知给发送端，从而控制数据发送量。也就是说，发送端主机会根据接收端主机的指示，对发送数据的量进行控制。这也就形成了一个完整的TCP流控制(流量控制)。当Window&#x3D;0时，即告知发送方停止发送数据。<br><strong>拥塞控制</strong><br>先了解两个概念：<br>拥塞窗口（cwnd）：发送方维持的一个状态变量，其大小取决于网络的拥塞程度，并且动态变化。<br>慢开始门限（ssthresh）：为了防止拥塞窗口cwnd的增长过大引起网络拥塞所设置的一个门限值。<br>通过四种算法实现拥塞管理：<br>1.慢开始<br>2.拥塞避免<br>3.超时重传（1988年TCP Tahoe版本，已废弃不用）<br>4.快重传（1990年Reno版本，在用）<br>5.快恢复（1990年Reno版本，在用）<br>也就是说发送方会动态判定网络状态并按照上述算法调整TCP的发包节奏，那么如何确认使用算法呢？如下：<br>当cwnd &lt; ssthresh时，使用慢开始算法；<br>当cwnd &gt; ssthresh时，停止使用慢开始算法而改用拥塞避免算法；<br>当cwnd &#x3D; ssthresh时，既可使用慢开始算法，也可使用拥塞避免算法。</p>
+<ol>
+<li><strong>慢开始</strong><br>发送方先探测网络拥塞程度，并不是一开始就发送大量的数据，发送方会根据拥塞程度增大拥塞窗口cwnd。<br>计算方法：每经过一个传输轮次cwnd值就加倍，让cwnd值呈指数增加。<br>![[Pasted image 20241110231829.png]]<br>如上图，大体过程：<br> 1.当前发送方cwnd值为1，因此只能发送一个数据报文段（拥塞窗口cwnd值是几就能发送几个数据段）<br>2.接收方收到该数据报文段后回复一个确认报文段，发送方收到该确认报文后，将cwnd值变为2(加倍)；<br>3.发送方此时可以连续发送两个数据段，接收方收到该数据段后一次发回2个确认报文段；<br>4.发送方收到这两个确认报文后，将cwnd值加2变为4（加倍）后可以连续发送4个数据段，以此类推直至cwnd&#x3D;ssthresh。</li>
+<li><strong>拥塞避免</strong><br>继上图达到cwnd≥ssthresh后采用该算法用来控制拥塞窗口的增长速率。<br>计算方法：每经过一个传输轮次cwnd值加1，让cwnd值呈线性缓慢增大。<br>![[Pasted image 20241110232026.png]]</li>
+<li><strong>拥塞发生</strong><br>当网络发生拥塞丢包时（如图假定cwnd&#x3D;24）<br><strong>● 快重传和快恢复（1990年TCP Reno版本，在用）</strong><br>超时重传算法直接把cwnd减小到1太过强烈，若还能收到连续3个ACK说明网络质量没那么差。同时采用快重传和快恢复算法，过程如下：</li>
+</ol>
+<p>（1）当发送方连续收到3个重复确认时即执行“乘法减小”算法，把慢开始门限ssthresh 减半；<br>（2）由于发送方现在认为网络不那么差，于是把cwnd值设置为开始门限ssthresh 减半后的数值；<br>（3）开始执行拥塞避免算法 (“加法增大”)使拥塞窗口缓慢地线性增大。<br>![[Pasted image 20241110232211.png]]<br>这样就解释完了TCP协议的所有字段。</p>
+<h3 id="TCP-分割数据"><a href="#TCP-分割数据" class="headerlink" title="TCP 分割数据"></a>TCP 分割数据</h3><p>如果 HTTP 请求消息比较长，超过了 MSS 的长度，这时 TCP 就需要把 HTTP 的数据拆解成一块块的数据发送，而不是一次性发送所有数据。<br>MTU：一个网络包的最大长度，以太网中一般为 1500 字节。<br>MSS：除去 IP 和 TCP 头部之后，一个网络包所能容纳的 TCP 数据的最大长度。<br>![[Pasted image 20241110232538.png]]</p>
+<h3 id="TCP报文组装"><a href="#TCP报文组装" class="headerlink" title="TCP报文组装"></a>TCP报文组装</h3><p>将TCP报文和之前的HTTP报文组装在一起，TCP协议就完成了他的任务了。<br>![[Pasted image 20241110232710.png]]</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>计算机网络</div>
+      <div>http://example.com/2024/11/10/计算机网络/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>kid</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>November 10, 2024</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-1/" title="计算机网络">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">计算机网络</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/09/%E6%A0%91/" title="树">
+                        <span class="hidden-mobile">树</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://lib.baomitu.com/valine/1.5.1/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"Qn6rnYm6K7wq0ZfONK6vJvvI-MdYXbMMI","appKey":"b0eBqxA8l34pViNIl8oYiVhK","path":"window.location.pathname","placeholder":null,"avatar":"retro","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":false,"recordIP":false,"serverURLs":"https://qn6rnym6.api.lncldglobal.com","emojiCDN":null,"emojiMaps":null,"enableQQ":false},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
