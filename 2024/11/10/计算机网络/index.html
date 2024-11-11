@@ -40,7 +40,7 @@
 <meta property="og:image" content="http://example.com/2024/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Pasted%20image%2020241110232538.png">
 <meta property="og:image" content="http://example.com/2024/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Pasted%20image%2020241110232710.png">
 <meta property="article:published_time" content="2024-11-10T14:00:00.000Z">
-<meta property="article:modified_time" content="2024-11-10T16:15:55.538Z">
+<meta property="article:modified_time" content="2024-11-11T13:05:08.008Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2024/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Pasted-image-20241110190125.png">
@@ -293,14 +293,14 @@
 <h1 id="1-应用层"><a href="#1-应用层" class="headerlink" title="1.应用层"></a>1.应用层</h1><h2 id="HTTP-Hypertext-Transfer-Protocol-超文本传输协议"><a href="#HTTP-Hypertext-Transfer-Protocol-超文本传输协议" class="headerlink" title="HTTP(Hypertext Transfer Protocol)超文本传输协议"></a>HTTP(Hypertext Transfer Protocol)超文本传输协议</h2><p>当我们打开一个网站时，会输入一个网址，这个网址就是url<br><img src="/2024/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Pasted%20image%2020241110220019.png" srcset="/img/loading.gif" lazyload><br>url代表了我们要向服务器请求的资源，对url进行解析后，确定了请求信息，接下来就可以遵循HTTP协议把这些信息封装成一个HTTP请求，而请求主要是GET请求，POST请求，还有PUT请求，DELETE请求等，但是最常用的就是GET，POST请求，一个POST请求由请求行，请求头，请求头三部分构成，而GET请求没有请求体。</p>
 <p>&#x3D;&#x3D;下图就是一个POST请求的报文形式。&#x3D;&#x3D;<br><img src="/2024/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/Pasted%20image%2020241110221245.png" srcset="/img/loading.gif" lazyload></p>
 <p>这样一个请求数据包就诞生了，接下来就需要为他指路，让他知道请求的是哪个服务器</p>
-<h2 id="DNS协议"><a href="#DNS协议" class="headerlink" title="DNS协议"></a>DNS协议</h2><p>我们平时打开网页时都是输入的网址，例如<a target="_blank" rel="noopener" href="http://www.baidu.com但是计算机是无法识别域名的,在计算机的网络中只有ip/">www.baidu.com但是计算机是无法识别域名的，在计算机的网络中只有IP</a>, MAC地址可以被解读，那么我们就要想办法将域名解析为服务器IP，这时候就用到了DNS解析。接下来讲解一下DNS解析的步骤。</p>
+<h2 id="DNS协议"><a href="#DNS协议" class="headerlink" title="DNS协议"></a>DNS协议</h2><p>我们平时打开网页时都是输入的网址，例如:<a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a> 但是计算机是无法识别域名的，在计算机的网络中只有IP, MAC地址可以被解读，那么我们就要想办法将域名解析为服务器IP，这时候就用到了DNS解析。接下来讲解一下DNS解析的步骤。</p>
 <ol>
 <li><strong>第一步</strong><br>本地电脑会检查浏览器缓存中有没有这个域名对应的解析过的IP地址，如果缓存中有，这个解析过程就结束。浏览器缓存域名也是有限制的，不仅浏览器缓存大小有限制，而且缓存的时间也有限制，通常情况下为几分钟到几小时不等，域名被缓存的时间限制可以通过TTL属性来设置。这个缓存时间太长和太短都不太好，如果时间太长，一旦域名被解析到的IP有变化，会导致被客户端缓存的域名无法解析到变化后的IP地址，以致该域名不能正常解析，这段时间内有一部分用户无法访问网站。如果设置时间太短，会导致用户每次访问网站都要重新解析一次域名。</li>
 <li><strong>第二步</strong><br>如果浏览器缓存中没有数据，浏览器会查找操作系统缓存中是否有这个域名对应的DNS解析结果。</li>
 <li><strong>第三步</strong><br>前两个过程无法解析时，就要用到我们网络配置中的”DNS服务器地址”了。操作系统会把这个域名发送给这个本地DNS服务器。每个完整的内网通常都会配置本地DNS服务器。它们一般都会缓存域名解析结果，当然缓存时间是受到域名的失效时间控制的。大约80%的域名解析到这里就结束了，后续的DNS迭代和递归也是由本地DNS服务器负责。</li>
 <li><strong>第四步</strong><br>如果本地DNS服务器仍然没有命中，就直接到根DNS服务器请求解析。</li>
 <li><strong>第五步</strong><br>根DNS服务器返回给本地DNS域名服务器一个顶级DNS服务器地址，它是国际顶级域名服务器，如.com、.cn、.org等，全球只有13台左右。</li>
-<li><strong>第六步</strong><br>本地DNS服务器再向上一步获得的顶级DNS服务器发送解析请求。接受请求的顶级DNS服务器查找并返回此域名对应的Name Server域名服务器的地址，这个Name Server服务器就是我要访问的网站域名提供商的服务器，其实该域名的解析任务就是由域名提供商的服务器来完成。   比如我要访问<a target="_blank" rel="noopener" href="http://www.baidu.com,而这个域名是从a公司注册获得的,那么a公司上的服务器就会有www.baidu.com的相关信息./">www.baidu.com，而这个域名是从A公司注册获得的，那么A公司上的服务器就会有www.baidu.com的相关信息。</a></li>
+<li><strong>第六步</strong><br>本地DNS服务器再向上一步获得的顶级DNS服务器发送解析请求。接受请求的顶级DNS服务器查找并返回此域名对应的Name Server域名服务器的地址，这个Name Server服务器就是我要访问的网站域名提供商的服务器，其实该域名的解析任务就是由域名提供商的服务器来完成。   比如我要访问 <a target="_blank" rel="noopener" href="http://www.baidu.com,/">www.baidu.com，</a> 而这个域名是从A公司注册获得的，那么A公司上的服务器就会有<a target="_blank" rel="noopener" href="http://www.baidu.com的相关信息./">www.baidu.com的相关信息。</a></li>
 <li><strong>第七步</strong><br>Name Server服务器会查询存储的域名和IP的映射关系表，再把查询出来的域名和IP地址等等信息，连同一个TTL值返回给本地DNS服务器。本地DNS服务器会缓存这个域名和IP的对应关系，缓存时间由TTL值控制。</li>
 <li><strong>第八步</strong><br>把解析的结果返回给本地电脑，本地电脑根据TTL值缓存在本地系统缓存中，域名解析过程结束在实际的DNS解析过程中，可能还不止这10步，如Name Server可能有很多级，或者有一个GTM来负载均衡控制，这都有可能会影响域名解析过程</li>
 </ol>
