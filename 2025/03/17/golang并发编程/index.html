@@ -1,0 +1,670 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#58C9B9">
+  <meta name="author" content="kid">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="1.Goruntine和Changoruntine是go的协程，chan是为了实现goruntine之间的通讯，go并发的思想是通过通信来共享内存，而不是通过共享内存来通信。相比于java使用thread，goruntine更加轻量级，包含了CPU上下文。而对于并发安全问题，java使用各种同步机制如synchronized关键字、ReentrantLock、Semaphore等，来保证多线程程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang并发编程">
+<meta property="og:url" content="http://example.com/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.Goruntine和Changoruntine是go的协程，chan是为了实现goruntine之间的通讯，go并发的思想是通过通信来共享内存，而不是通过共享内存来通信。相比于java使用thread，goruntine更加轻量级，包含了CPU上下文。而对于并发安全问题，java使用各种同步机制如synchronized关键字、ReentrantLock、Semaphore等，来保证多线程程序">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317162025.png">
+<meta property="og:image" content="http://example.com/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317163039.png">
+<meta property="og:image" content="http://example.com/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317182527.png">
+<meta property="article:published_time" content="2025-03-17T10:48:47.000Z">
+<meta property="article:modified_time" content="2025-03-17T11:03:13.088Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://example.com/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317162025.png">
+  
+  
+  
+  <title>golang并发编程 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>kid的blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>Home</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>Archives</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>Categories</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>Tags</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>About</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="golang并发编程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2025-03-17 18:48" pubdate>
+          March 17, 2025 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.7k words
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          23 mins
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">golang并发编程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="1-Goruntine和Chan"><a href="#1-Goruntine和Chan" class="headerlink" title="1.Goruntine和Chan"></a>1.Goruntine和Chan</h1><p>goruntine是go的协程，chan是为了实现goruntine之间的通讯，go并发的思想是通过通信来共享内存，而不是通过共享内存来通信。相比于java使用thread，goruntine更加轻量级，包含了CPU上下文。而对于并发安全问题，java使用各种同步机制如synchronized关键字、ReentrantLock、Semaphore等，来保证多线程程序的并发安全性。但是，使用Java进行线程管理需要手动管理线程的生命周期和资源，容易出现线程安全问题。Go语言通过Channel机制来保证goroutine之间的安全通信，使得并发编程更加简单和安全。由于Channel是一种基于消息传递的通信方式，因此不会出现死锁和资源竞争等问题。此外，Go语言的运行时系统会自动管理goroutine的调度和资源，减少了开发者的负担，提高了程序的稳定性和安全性。</p>
+<h3 id="避免数据竞争的三种方式："><a href="#避免数据竞争的三种方式：" class="headerlink" title="避免数据竞争的三种方式："></a>避免数据竞争的三种方式：</h3><ol>
+<li>不去写变量。读取不可能出现数据竞争。</li>
+<li>避免从多个 goroutine 访问变量，尽量把变量限定在了一个单独的 goroutine 中。(使用 channel 来共享数据)</li>
+<li>互斥锁</li>
+</ol>
+<h3 id="Goroutine"><a href="#Goroutine" class="headerlink" title="Goroutine"></a>Goroutine</h3><p>Goroutine 是 Go 语言中实现并发的核心机制。它是一种轻量级的线程，拥有自己的栈空间和程序计数器，但与系统线程相比，它具有以下特点：</p>
+<ul>
+<li><strong>创建和销毁成本低</strong>：Goroutine 的创建和销毁只需很少的系统资源，因此可以轻松创建大量的 Goroutine。</li>
+<li><strong>调度</strong>：Go 语言的运行时会自动调度 Goroutine 在多个 CPU 上执行，充分利用多核 CPU 的资源。</li>
+<li><strong>非抢占式</strong>：Goroutine 是非抢占式的，这意味着它不会抢占其他 Goroutine 正在运行的 CPU 时间。</li>
+</ul>
+<h3 id="Channel"><a href="#Channel" class="headerlink" title="Channel"></a>Channel</h3><p>Channel 是 Go 语言中用于 goroutine 之间通信的管道。它可以用来传递数据、同步执行等。<br>Channel 具有以下特点：</p>
+<ul>
+<li><strong>类型化</strong>：Channel 可以是特定类型的，这意味着只能发送和接收该类型的数据。</li>
+<li><strong>容量</strong>：Channel 可以有容量限制，这意味着它可以同时存储一定数量的数据。</li>
+<li><strong>阻塞</strong>：Channel 可以是阻塞的，这意味着如果尝试从空 Channel 中接收数据或向满 Channel 中发送数据，操作将会阻塞，直到有数据可供接收或有空间可供发送。<br><img src="/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317162025.png" srcset="/img/loading.gif" lazyload><br>当主协程接收到 10 个信号后，所有协程都已经完成任务，不会再向通道发送数据。此时，主协程尝试第 11 次从通道接收数据，由于通道中没有新的数据，且没有协程会再发送数据，主协程就会一直阻塞，最终导致死锁错误。而关闭通道可以向接收方表明不会再有新的数据发送到通道中。接收方在通道关闭后，仍然可以从通道中接收已有的数据，当所有数据都被接收后，接收操作会立即返回通道元素类型的零值和一个布尔值 <code>false</code>，表示通道已关闭。<br>使用chan后要释放chan，否则会出现一直读取chan的情况，发生死锁（deadlock！！）<br><img src="/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317163039.png" srcset="/img/loading.gif" lazyload><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;  <br>    messageCh := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>, <span class="hljs-number">10</span>)  <br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;  <br>       messageCh &lt;- i  <br>    &#125;  <br>    <span class="hljs-built_in">close</span>(messageCh)  <br>  <br>    <span class="hljs-keyword">for</span> &#123;  <br>       time.Sleep(time.Second)  <br>       msg, ok := &lt;-messageCh  <br>       <span class="hljs-keyword">if</span> !ok &#123;  <br>          <span class="hljs-keyword">break</span>  <br>       &#125;  <br>       fmt.Printf(<span class="hljs-string">&quot;msg:%v, ok:%v\n&quot;</span>, msg, ok)  <br>    &#125;  <br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="2-时机控制WaitGroup"><a href="#2-时机控制WaitGroup" class="headerlink" title="2.时机控制WaitGroup"></a>2.时机控制WaitGroup</h1><figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs scss">func <span class="hljs-selector-tag">main</span>() &#123;  <br>    start := time.<span class="hljs-built_in">Now</span>()  <br>    var wg sync.WaitGroup  <br>    for i := <span class="hljs-number">0</span>; <span class="hljs-selector-tag">i</span> &lt; <span class="hljs-number">10</span>; <span class="hljs-selector-tag">i</span>++ &#123;  <br>       wg<span class="hljs-selector-class">.Add</span>(<span class="hljs-number">1</span>)  <br>       go <span class="hljs-built_in">doSome</span>(i, &amp;wg)  <br>    &#125;  <br>    wg<span class="hljs-selector-class">.Wait</span>()  <br>    fmt<span class="hljs-selector-class">.Println</span>(&quot;use time:  &quot;, time.Since(start))  <br>&#125;  <br>  <br>func <span class="hljs-built_in">doSome</span>(number int, wg *sync.WaitGroup) &#123;  <br>    <span class="hljs-selector-tag">time</span><span class="hljs-selector-class">.Sleep</span>(time.Millisecond * <span class="hljs-number">100</span>)  <br>    fmt<span class="hljs-selector-class">.Printf</span>(&quot;result: %d\n&quot;, number)  <br>    wg<span class="hljs-selector-class">.Done</span>()  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="3-流程控制Select"><a href="#3-流程控制Select" class="headerlink" title="3.流程控制Select"></a>3.流程控制Select</h1><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs go">  <br><span class="hljs-keyword">type</span> MessageServer <span class="hljs-keyword">struct</span> &#123;  <br>    messageCh <span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>  <br>    quitCh    <span class="hljs-keyword">chan</span> <span class="hljs-keyword">struct</span>&#123;&#125;  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">NewMessageServer</span><span class="hljs-params">()</span></span> *MessageServer &#123;  <br>    <span class="hljs-keyword">return</span> &amp;MessageServer&#123;  <br>       messageCh: <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">string</span>, <span class="hljs-number">100</span>),  <br>       quitCh:    <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-keyword">struct</span>&#123;&#125;, <span class="hljs-number">1</span>),  <br>    &#125;  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">sendMessage</span><span class="hljs-params">(s *MessageServer, message <span class="hljs-type">string</span>)</span></span> &#123;  <br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;  <br>       s.messageCh &lt;- message  <br>    &#125;  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MessageServer)</span></span> handleMessage(message <span class="hljs-type">string</span>) &#123;  <br>    fmt.Println(<span class="hljs-string">&quot;get message: &quot;</span>, message)  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(s *MessageServer)</span></span> work() &#123;  <br>    <span class="hljs-keyword">for</span> &#123;  <br>       <span class="hljs-keyword">select</span> &#123;  <br>       <span class="hljs-keyword">case</span> msg := &lt;-s.messageCh:  <br>          s.handleMessage(msg)  <br>       <span class="hljs-keyword">case</span> &lt;-s.quitCh:  <br>          <span class="hljs-keyword">return</span>  <br>       <span class="hljs-keyword">default</span>:  <br>          s.quitCh &lt;- <span class="hljs-keyword">struct</span>&#123;&#125;&#123;&#125;  <br>       &#125;  <br>    &#125;  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;  <br>    server := NewMessageServer()  <br>    sendMessage(server, <span class="hljs-string">&quot;hello world&quot;</span>)  <br>    server.work()  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="4-Mutex和Atomic"><a href="#4-Mutex和Atomic" class="headerlink" title="4.Mutex和Atomic"></a>4.Mutex和Atomic</h1><p>防止data race问题（多线程竞争同一资源），做data race检查最好在go test中做</p>
+<h3 id="Mutex"><a href="#Mutex" class="headerlink" title="Mutex"></a>Mutex</h3><p>类似java中的锁（我感觉都一样）</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">type</span> Counter <span class="hljs-keyword">struct</span> &#123;  <br>    sync.Mutex  <br>    number <span class="hljs-type">int</span>  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(c *Counter)</span></span> AddNumber(i <span class="hljs-type">int</span>, wg *sync.WaitGroup) &#123;  <br>    c.Mutex.Lock()  <br>    <span class="hljs-keyword">defer</span> c.Mutex.Unlock()  <br>    c.number += i  <br>    wg.Done()  <br>&#125;  <br>  <br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;  <br>    start := time.Now()  <br>    num := <span class="hljs-number">0</span>  <br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000000</span>; i++ &#123;  <br>       num += i  <br>    &#125;  <br>    fmt.Printf(<span class="hljs-string">&quot;num: %d, time: %v\n&quot;</span>, num, time.Since(start))  <br>    start = time.Now()  <br>    counter := &amp;Counter&#123;&#125;  <br>    <span class="hljs-keyword">var</span> wg sync.WaitGroup  <br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">1000000</span>; i++ &#123;  <br>       wg.Add(<span class="hljs-number">1</span>)  <br>       <span class="hljs-keyword">go</span> counter.AddNumber(i, &amp;wg)  <br>    &#125;  <br>    wg.Wait()  <br>    fmt.Printf(<span class="hljs-string">&quot;num: %d, time: %v\n&quot;</span>, counter.number, time.Since(start))  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h1 id="5-sync包"><a href="#5-sync包" class="headerlink" title="5.sync包"></a>5.sync包</h1><h2 id="1-sync包工具"><a href="#1-sync包工具" class="headerlink" title="1.sync包工具:"></a>1.sync包工具:</h2><p>Mutex： 互斥锁<br>RWMutex：读写锁<br>WaitGroup：并发等待组<br>Map：并发安全字典<br>Once：单例模式<br>Cond：同步等待条件<br>Pool：临时对象池</p>
+<h2 id="2-sync-Mutex-互斥锁"><a href="#2-sync-Mutex-互斥锁" class="headerlink" title="2.sync.Mutex(互斥锁)"></a>2.sync.Mutex(互斥锁)</h2><p><code>sync.Mutex</code> 的结构体：<br><img src="/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317182527.png" srcset="/img/loading.gif" lazyload><br>在默认状态下，互斥锁的所有状态位都是 0，<code>int32</code> 中的不同位分别表示了不同的状态：</p>
+<ul>
+<li><code>locked</code>：表示这个锁是否被持有</li>
+<li><code>woken</code>：表示是否从有唤醒的 goroutine</li>
+<li><code>starving</code>：表示此锁是否进入饥饿状态</li>
+<li><code>waitersCount</code>：表示等待此锁的 goroutine 的数量</li>
+</ul>
+<h3 id="饥饿模式"><a href="#饥饿模式" class="headerlink" title="饥饿模式"></a>饥饿模式</h3><p>请求锁的 goroutine 有两类，一类是新来请求锁的 goroutine，另一类是被唤醒的等待请求锁的 goroutine。<br>由于新来的 goroutine 也参与竞争锁，极端情况下，等待中的 goroutine 可能一直获取不到锁，这就是<strong>饥饿问题</strong>。<br>为了解决饥饿，Go为 mutex 增加了<strong>饥饿模式</strong>。<br>在正常模式下，等待中的 goroutine 会按照先进先出的顺序获取锁。但是如果新来的 goroutine 竞争锁，等待中的 goroutine 大概率是获取不到锁的。一旦 goroutine 超 过 1ms 没有获取到锁，它就会将当前互斥锁切换到饥饿模式，保证锁的公平性。<br>在饥饿模式中，互斥锁会直接交给等待队列最前面的 goroutine。新来的 goroutine 在该状态下不能获取锁、也不会进入自旋状态，只会在队列的末尾等待。<br>下面两种情况，mutex 会切换为正常模式:</p>
+<ul>
+<li>一个 goroutine 获得了锁并且它在队列的末尾</li>
+<li>一个 goroutine 等待的时间少于 1ms</li>
+</ul>
+<h3 id="Mutex-Lock-的实现"><a href="#Mutex-Lock-的实现" class="headerlink" title="Mutex.Lock() 的实现"></a>Mutex.Lock() 的实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-keyword">const</span> (<br>    mutexLocked = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-literal">iota</span> <span class="hljs-comment">// 1</span><br>    mutexWoken <span class="hljs-comment">// 2</span><br>    mutexStarving <span class="hljs-comment">// 4</span><br>    mutexWaiterShift = <span class="hljs-literal">iota</span> <span class="hljs-comment">// 3</span><br>	starvationThresholdNs = <span class="hljs-number">1e6</span> <span class="hljs-comment">// 1000000</span><br>)<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> Lock() &#123;<br>    <span class="hljs-comment">// Fast path: grab unlocked mutex.</span><br>	<span class="hljs-comment">// 没有 goroutine 持有锁，也没有等待的 goroutine，当前 goroutine 可以直接获得锁</span><br>    <span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, <span class="hljs-number">0</span>, mutexLocked) &#123;<br>        <span class="hljs-keyword">if</span> race.Enabled &#123;<br>            race.Acquire(unsafe.Pointer(m))<br>        &#125;<br>	    <span class="hljs-keyword">return</span><br>	&#125;<br>    <span class="hljs-comment">// Slow path (outlined so that the fast path can be inlined)</span><br>	<span class="hljs-comment">// 通过自旋等方式竞争锁</span><br>    m.lockSlow()<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> lockSlow() &#123;<br>	<span class="hljs-keyword">var</span> waitStartTime <span class="hljs-type">int64</span><br>	starving := <span class="hljs-literal">false</span> <span class="hljs-comment">// 当前 goroutine 的饥饿标记</span><br>	awoke := <span class="hljs-literal">false</span> <span class="hljs-comment">// 唤醒标记</span><br>	iter := <span class="hljs-number">0</span> <span class="hljs-comment">// 自旋次数</span><br>	old := m.state <span class="hljs-comment">// 当前锁的状态</span><br>	<span class="hljs-keyword">for</span> &#123;<br>		<span class="hljs-comment">// 锁是非饥饿模式并且还没被释放，尝试自旋</span><br>		<span class="hljs-keyword">if</span> old&amp;(mutexLocked|mutexStarving) == mutexLocked &amp;&amp; runtime_canSpin(iter) &#123;<br>			<span class="hljs-comment">// 尝试设置 mutexWoken 标志来通知解锁，以避免唤醒其他阻塞的 goroutine</span><br>			<span class="hljs-keyword">if</span> !awoke &amp;&amp; old&amp;mutexWoken == <span class="hljs-number">0</span> &amp;&amp; old&gt;&gt;mutexWaiterShift != <span class="hljs-number">0</span> &amp;&amp; <br>				atomic.CompareAndSwapInt32(&amp;m.state, old, old|mutexWoken) &#123;<br>				awoke = <span class="hljs-literal">true</span><br>			&#125;<br>			runtime_doSpin()<br>			iter++<br>			old = m.state <span class="hljs-comment">// 再次获取锁的状态，后面会检查锁是否被释放了</span><br>			<span class="hljs-keyword">continue</span><br>		&#125;<br>        <span class="hljs-built_in">new</span> := old<br>        <span class="hljs-keyword">if</span> old&amp;mutexStarving == <span class="hljs-number">0</span> &#123;<br>			<span class="hljs-built_in">new</span> |= mutexLocked <span class="hljs-comment">// 非饥饿状态，加锁</span><br>		&#125;<br>		<span class="hljs-keyword">if</span> old&amp;(mutexLocked|mutexStarving) != <span class="hljs-number">0</span> &#123;<br>			<span class="hljs-built_in">new</span> += <span class="hljs-number">1</span> &lt;&lt; mutexWaiterShift <span class="hljs-comment">// waiter 数量加 1</span><br>		&#125;<br>        <span class="hljs-keyword">if</span> starving &amp;&amp; old&amp;mutexLocked != <span class="hljs-number">0</span> &#123;<br>			<span class="hljs-built_in">new</span> |= mutexStarving <span class="hljs-comment">// 设置饥饿状态</span><br>		&#125;<br>		<span class="hljs-keyword">if</span> awoke &#123;<br>			<span class="hljs-comment">// The goroutine has been woken from sleep, </span><br>			<span class="hljs-comment">// so we need to reset the flag in either case. </span><br>			<span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span>&amp;mutexWoken == <span class="hljs-number">0</span> &#123;<br>				throw(<span class="hljs-string">&quot;sync: inconsistent mutex state&quot;</span>)<br>			&#125;<br>			<span class="hljs-built_in">new</span> &amp;^= mutexWoken <span class="hljs-comment">// 新状态清除唤醒标记</span><br>		&#125;<br>        <span class="hljs-comment">// 设置新状态</span><br>		<span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, old, <span class="hljs-built_in">new</span>) &#123;<br>            <span class="hljs-comment">// 再次检查，原来锁的状态已释放，并且不是饥饿状态，正常请求到了锁，返回</span><br>			<span class="hljs-keyword">if</span> old&amp;(mutexLocked|mutexStarving) == <span class="hljs-number">0</span> &#123;<br>				<span class="hljs-keyword">break</span> <span class="hljs-comment">// locked the mutex with CAS</span><br>			&#125;<br>			<span class="hljs-comment">// 处理饥饿状态</span><br>			<span class="hljs-comment">// 如果之前就在该队列里面，就加入到队列头</span><br>			queueLifo : waitStartTime != <span class="hljs-number">0</span><br>			<span class="hljs-keyword">if</span> waitStartTime == <span class="hljs-number">0</span> &#123;<br>				waitStartTime = runtime_nanotime()<br>			&#125;<br>            <span class="hljs-comment">// runtime_SemacquireMutex 通过信号量保证资源不会被两个 goroutine 获取</span><br>			<span class="hljs-comment">// runtime_SemacquireMutex 会在方法中不断尝试获取锁并陷入休眠等待信号量的释放</span><br>			<span class="hljs-comment">// 也就是这里会阻塞等待</span><br>			<span class="hljs-comment">// 一旦当前 goroutine 可以获取信号量，它就会立刻返回，剩余代码也会继续执行</span><br>			runtime_SemacquireMutex(&amp;m.sema, queueLifo, <span class="hljs-number">1</span>)<br>			<span class="hljs-comment">// 在正常模式下，这段代码会设置唤醒和饥饿标记、重置迭代次数并重新执行获取锁的循环</span><br>            <span class="hljs-comment">// 在饥饿模式下，当前 goroutine 会获得锁，如果等待队列中只存在当前 goroutine，锁还会从饥饿模式中退出</span><br>			starving = starving || runtime_nanotime()-waitStartTime &gt; starvationThresholdNs<br>			old = m.state<br>			<span class="hljs-keyword">if</span> old&amp;mutexStarving != <span class="hljs-number">0</span> &#123;<br>				<span class="hljs-keyword">if</span> old&amp;(mutexLocked|mutexWoken) != <span class="hljs-number">0</span> || old&gt;&gt;mutexWaiterShift == <span class="hljs-number">0</span> &#123;<br>					throw(<span class="hljs-string">&quot;sync: inconsistent mutex state&quot;</span>)<br>				&#125;<br>				delta := <span class="hljs-type">int32</span>(mutexLocked - <span class="hljs-number">1</span>&lt;&lt;mutexWaiterShift)<br>				<span class="hljs-keyword">if</span> !starving || old&gt;&gt;mutexWaiterShift == <span class="hljs-number">1</span> &#123;<br>					delta -= mutexStarving<br>				&#125;<br>				atomic.AddInt32(&amp;m.state, delta)<br>				<span class="hljs-keyword">break</span><br>			&#125;<br>			awoke = <span class="hljs-literal">true</span><br>			iter = <span class="hljs-number">0</span><br>		&#125; <span class="hljs-keyword">else</span> &#123;<br>			old = m.state<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">if</span> race.Enabled &#123;<br>		race.Acquire(unsafe.Pointer(m))<br>	&#125;	<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="自旋"><a href="#自旋" class="headerlink" title="自旋"></a>自旋</h4><p>自旋是一种多线程同步机制，<strong>当前的进程在进入自旋的过程中会一直保持 CPU 的占用</strong>，持续检查某个条件是否为真。在多核的 CPU 上，自旋可以避免 goroutine 的切换， 使用恰当会对性能带来很大的增益，但是使用的不恰当就会拖慢整个程序，所以 goroutine 进入自旋的条件非常苛刻：</p>
+<ol>
+<li><code>old&amp;(mutexLocked|mutexStarving) == mutexLocked</code> 只有在普通模式</li>
+<li><code>runtime_canSpin(iter)</code> 为真：<ul>
+<li>运行在多 CPU 的机器上</li>
+<li>自旋的次数小于四次</li>
+<li>当前机器上至少存在一个正在运行的处理器 P 并且处理的运行队列为空</li>
+</ul>
+</li>
+</ol>
+<h3 id="Mutex-Unlock-的实现"><a href="#Mutex-Unlock-的实现" class="headerlink" title="Mutex.Unlock() 的实现"></a>Mutex.Unlock() 的实现</h3><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> Unlock() &#123;<br>	<span class="hljs-keyword">if</span> race.Enabled &#123;<br>		_ = m.state<br>		race.Release(unsafe.Pointer(m))<br>	&#125;<br><br>	<span class="hljs-comment">// Fast path: drop lock bit.</span><br>	<span class="hljs-comment">// new == 0 成功释放锁</span><br>	<span class="hljs-built_in">new</span> := atomic.AddInt32(&amp;m.state, -mutexLocked)<br>	<span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span> != <span class="hljs-number">0</span> &#123;<br>		<span class="hljs-comment">// Outlined slow path to allow inlining the fast path.</span><br>		<span class="hljs-comment">// To hide unlockSlow during tracing we skip one extra frame when tracing GoUnblock.</span><br>		m.unlockSlow(<span class="hljs-built_in">new</span>)<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(m *Mutex)</span></span> unlockSlow(<span class="hljs-built_in">new</span> <span class="hljs-type">int32</span>) &#123;<br>	<span class="hljs-keyword">if</span> (<span class="hljs-built_in">new</span>+mutexLocked)&amp;mutexLocked == <span class="hljs-number">0</span> &#123; <span class="hljs-comment">// unlock 一个未加锁的锁</span><br>		fatal(<span class="hljs-string">&quot;sync: unlock of unlocked mutex&quot;</span>)<br>	&#125;<br>	<span class="hljs-keyword">if</span> <span class="hljs-built_in">new</span>&amp;mutexStarving == <span class="hljs-number">0</span> &#123; <span class="hljs-comment">// 正常模式</span><br>		old := <span class="hljs-built_in">new</span><br>		<span class="hljs-keyword">for</span> &#123;<br>			<span class="hljs-comment">// 不存在等待者 或者 mutexLocked、mutexStarving、mutexWoken 状态不都为 0</span><br>			<span class="hljs-comment">// 则不需要唤醒其他等待者</span><br>			<span class="hljs-keyword">if</span> old&gt;&gt;mutexWaiterShift == <span class="hljs-number">0</span> || old&amp;(mutexLocked|mutexWoken|mutexStarving) != <span class="hljs-number">0</span> &#123;<br>				<span class="hljs-keyword">return</span><br>			&#125;<br>			<span class="hljs-comment">// 存在等待者，通过 runtime_Semrelease 唤醒等待者并移交锁的所有权</span><br>			<span class="hljs-built_in">new</span> = (old - <span class="hljs-number">1</span>&lt;&lt;mutexWaiterShift) | mutexWoken<br>			<span class="hljs-keyword">if</span> atomic.CompareAndSwapInt32(&amp;m.state, old, <span class="hljs-built_in">new</span>) &#123;<br>				runtime_Semrelease(&amp;m.sema, <span class="hljs-literal">false</span>, <span class="hljs-number">1</span>)<br>				<span class="hljs-keyword">return</span><br>			&#125;<br>			old = m.state<br>		&#125;<br>	&#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// 饥饿模式</span><br>		<span class="hljs-comment">// 直接调用 runtime_Semrelease 将当前锁交给下一个正在尝试获取锁的等待者，等待者被唤醒后会得到锁，在这时还不会退出饥饿状态</span><br>		runtime_Semrelease(&amp;m.sema, <span class="hljs-literal">true</span>, <span class="hljs-number">1</span>)<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-sync-RWMutex"><a href="#3-sync-RWMutex" class="headerlink" title="3.sync.RWMutex"></a>3.sync.RWMutex</h2><p>读写互斥锁 <code>sync.RWMutex</code> 是细粒度的互斥锁，一般来说有几种情况：</p>
+<ul>
+<li>读锁之间不互斥</li>
+<li>写锁之间是互斥的</li>
+<li>写锁与读锁是互斥的<br><code>sync.RWMutex</code> 类型中的 <code>Lock</code> 方法和 <code>Unlock</code> 方法用于对写锁进行锁定和解锁，<code>RLock</code> 方法和 <code>RUnlock</code> 方法则分别用于对读锁进行锁定和解锁。</li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>golang并发编程</div>
+      <div>http://example.com/2025/03/17/golang并发编程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>kid</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 17, 2025</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">
+                        <span class="hidden-mobile">计算机网络</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>Table of Contents</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
