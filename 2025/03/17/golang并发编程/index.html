@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317163039.png">
 <meta property="og:image" content="http://example.com/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317182527.png">
 <meta property="article:published_time" content="2025-03-17T10:48:47.000Z">
-<meta property="article:modified_time" content="2025-03-17T11:03:13.088Z">
+<meta property="article:modified_time" content="2025-03-30T12:51:02.860Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://example.com/2025/03/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/Pasted%20image%2020250317162025.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k words
+          4.7k words
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          23 mins
+          39 mins
         
       </span>
     
@@ -332,6 +332,64 @@
 <li>读锁之间不互斥</li>
 <li>写锁之间是互斥的</li>
 <li>写锁与读锁是互斥的<br><code>sync.RWMutex</code> 类型中的 <code>Lock</code> 方法和 <code>Unlock</code> 方法用于对写锁进行锁定和解锁，<code>RLock</code> 方法和 <code>RUnlock</code> 方法则分别用于对读锁进行锁定和解锁。</li>
+</ul>
+<h2 id="4-sync-WaitGroup"><a href="#4-sync-WaitGroup" class="headerlink" title="4.sync.WaitGroup"></a>4.sync.WaitGroup</h2><p><code>sync.WaitGroup</code> 可以等待一组 goroutine 的返回，常用于处理批量的并发任务。它是并发安全的。<br><code>WaitGroup</code> 提供了三个方法：</p>
+<ul>
+<li><code>Add</code>：用来设置 <code>WaitGroup</code> 的计数值。</li>
+<li><code>Done</code>：用来将 <code>WaitGroup</code> 的计数值减 1，其实就是调用了 <code>Add(-1)</code>。</li>
+<li><code>Wait</code>：调用这个方法的 <code>goroutine</code> 会一直阻塞，直到 <code>WaitGroup</code> 的计数值变为 0。<br>不要把 <code>Add</code> 和 <code>Wait</code> 方法的调用放在不同的 goroutine 中执行，以免 <code>Add</code> 还未执行，<code>Wait</code> 已经退出<br>尽量不要重用 <code>WaitGroup</code>。新建一个 <code>WaitGroup</code> 不会带来多大的资源 开销，重用反而更容易出错。<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-comment">// src/sync/cond.go#L117</span><br><span class="hljs-keyword">type</span> noCopy <span class="hljs-keyword">struct</span>&#123;&#125;<br><br><span class="hljs-comment">// Lock is a no-op used by -copylocks checker from `go vet`.</span><br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(*noCopy)</span></span> Lock()   &#123;&#125;<br><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-params">(*noCopy)</span></span> Unlock() &#123;&#125;<br></code></pre></td></tr></table></figure>
+<code>noCopy</code> 是 go 1.7 开始引入的一个静态检查机制，它只是一个辅助类型<code>tools/go/analysis/passes/copylock</code> 包中的分析器会在编译期间检查被拷贝的变量中是否包含 <code>noCopy</code> 或者实现了 <code>Lock</code> 和 <code>Unlock</code> 方法，如果包含该结构体或者实现了对应的方法就会报错</li>
+</ul>
+<h3 id="关于noCopy"><a href="#关于noCopy" class="headerlink" title="关于noCopy"></a>关于noCopy</h3><p><code>noCopy</code> 类型以及相关的 <code>Lock</code> 和 <code>Unlock</code> 方法的设计主要是为了防止某些结构体被意外拷贝</p>
+<p>以下是一些通常需要不可拷贝属性的类：</p>
+<ul>
+<li><strong>资源管理类</strong>：比如文件操作类，若允许拷贝，可能导致多个副本同时操作同一个文件，引发数据混乱或文件资源被滥用。再如数据库连接管理类，拷贝该类实例可能造成多个副本同时连接数据库，超出数据库连接池的限制，影响系统性能和稳定性。</li>
+<li><strong>状态管理类</strong>：像游戏中的角色状态类，每个角色的状态是唯一且独立的，若进行拷贝，可能导致角色状态混乱，影响游戏逻辑。还有 Web 应用中的用户会话管理类，每个用户的会话状态是特定的，拷贝会话管理类实例可能导致用户状态混淆，引发安全问题或错误的业务逻辑。</li>
+<li><strong>单例类</strong>：单例模式确保一个类只有一个实例存在于系统中。若允许拷贝单例类，就会破坏单例模式的唯一性，可能导致系统中出现多个不同状态的 “单例” 实例，引发逻辑错误和资源管理混乱。</li>
+<li><strong>并发控制类</strong>：例如使用互斥锁（Mutex）来控制并发访问的类，若可拷贝，可能会出现多个副本同时尝试获取锁，导致并发控制失效，引发数据竞争和不一致性问题。</li>
+<li><strong>内部有唯一标识或指针的类</strong>：当类内部包含唯一标识（如 UUID）或指针指向特定的内存区域、外部资源时，拷贝该类可能导致多个实例拥有相同的标识或指向相同的资源，进而引发冲突或资源管理错误。</li>
+</ul>
+<p>静态分析代码：<br><code>go vet</code> 工具属于 Go 标准库的一部分，其工作原理是对代码进行静态分析，也就是在不运行代码的情况下分析代码的结构与语义。在使用 <code>-copylocks</code> 检查器时，<code>go vet</code> 会执行以下操作：<br><strong>1.解析代码</strong><br><code>go vet</code> 会对代码进行解析，构建抽象语法树（AST）。抽象语法树是代码的一种树形表示，它能体现代码的语法结构。<br><strong>2.查找 <code>noCopy</code> 字段</strong><br><code>go vet</code> 会遍历抽象语法树，查找包含 <code>noCopy</code> 类型字段的结构体。当发现这样的结构体时，它会记录下来。<br><strong>3.检查拷贝操作</strong><br>接着，<code>go vet</code> 会查找代码里对这些包含 <code>noCopy</code> 字段的结构体进行拷贝的操作。拷贝操作可能有以下几种情况：赋值，函数参数传递，函数返回值。<br><strong>4.发出警告</strong><br>一旦 <code>go vet</code> 发现对包含 <code>noCopy</code> 字段的结构体进行了拷贝操作，就会发出警告，提醒开发者可能存在的问题。</p>
+<h2 id="5-sync-Cond"><a href="#5-sync-Cond" class="headerlink" title="5.sync.Cond"></a>5.sync.Cond</h2><p><code>sync.Cond</code> 基于互斥锁&#x2F;读写锁<br>和互斥锁的区别：<br>互斥锁 <code>sync.Mutex</code> 通常用来保护临界区和共享资源，条件变量 <code>sync.Cond</code> 用来协调想要访问共享资源的 goroutine。<br><code>sync.Cond</code> 经常用在多个 goroutine 等待，一个 goroutine 通知的场景。<br><code>NewCond</code> 用来创建 <code>sync.Cond</code> 实例，<code>sync.Cond</code> 暴露了几个方法：</p>
+<ul>
+<li><code>Broadcast</code> 用来唤醒所有等待条件变量的 goroutine，无需锁保护。</li>
+<li><code>Signal</code> 唤醒一个 goroutine。</li>
+<li><code>Wait</code> 调用 <code>Wait</code> 会自动释放锁，并挂起调用者所在的 goroutine，也就是当前 goroutine 会阻塞在 <code>Wait</code> 方法调用的地方。如果其他 goroutine 调用了 <code>Signal</code> 或 <code>Broadcast</code> 唤醒 了该 goroutine，那么 <code>Wait</code> 方法在结束阻塞时，会重新加锁，并且继续执行 <code>Wait</code> 后面的代码。<figure class="highlight roboconf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs roboconf">var status int64<br><br>func main() &#123;<br>	<span class="hljs-attribute">c</span> := sync<span class="hljs-variable">.NewCond</span>(&amp;sync<span class="hljs-variable">.Mutex</span>&#123;&#125;)<br>	for i := 0; <span class="hljs-attribute">i &lt; 10; i++ &#123;</span><br><span class="hljs-attribute">		go listen(c)</span><br><span class="hljs-attribute">	&#125;</span><br><span class="hljs-attribute">	time.Sleep(1 * time.Second)</span><br><span class="hljs-attribute">	go broadcast(c)</span><br><span class="hljs-attribute"></span><br><span class="hljs-attribute">	ch</span> := make(chan os<span class="hljs-variable">.Signal</span>, 1)<br>	signal<span class="hljs-variable">.Notify</span>(ch, os<span class="hljs-variable">.Interrupt</span>)<br>	&lt;-ch<br>&#125;<br><br>func broadcast(c *sync<span class="hljs-variable">.Cond</span>) &#123;<br>	c<span class="hljs-variable">.L</span><span class="hljs-variable">.Lock</span>()<br>	atomic<span class="hljs-variable">.StoreInt</span>64(&amp;status, 1)<br>	c<span class="hljs-variable">.Broadcast</span>()<br>	c<span class="hljs-variable">.L</span><span class="hljs-variable">.Unlock</span>()<br>&#125;<br><br>func listen(c *sync<span class="hljs-variable">.Cond</span>) &#123;<br>	c<span class="hljs-variable">.L</span><span class="hljs-variable">.Lock</span>()<br>	for atomic<span class="hljs-variable">.LoadInt</span>64(&amp;status) != 1 &#123; <br>		c<span class="hljs-variable">.Wait</span>()<br>	&#125;<br>	fmt<span class="hljs-variable">.Println</span>(&quot;listen&quot;)<br>	c<span class="hljs-variable">.L</span><span class="hljs-variable">.Unlock</span>()<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<li><code>status</code>：互斥锁需要保护的条件变量。</li>
+<li><code>listen()</code> 调用 <code>Wait()</code> 等待通知，直到 <code>status</code> 为 1。</li>
+<li><code>broadcast()</code> 将 <code>status</code> 置为 1，调用 <code>Broadcast()</code> 通知所有等待的 goroutine。</li>
+</ul>
+<h2 id="6-sync-Once"><a href="#6-sync-Once" class="headerlink" title="6.sync.Once"></a>6.sync.Once</h2><p>Go 标准库中 <code>sync.Once</code> 可以保证 Go 程序运行期间的某段代码只会执行一次。常常用于单例对象的初始化场景。<br><code>sync.Once</code> 只有一个对外唯一暴露的方法 <code>Do</code>，可以多次调用，但是只第一次调用时会执行一次。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> &#123;<br>    o := &amp;sync.Once&#123;&#125;<br>    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++ &#123;<br>        o.Do(<span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>            fmt.Println(<span class="hljs-string">&quot;only once&quot;</span>)<br>        &#125;)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>运行：</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vim">$ <span class="hljs-keyword">go</span> run main.<span class="hljs-keyword">go</span><br><span class="hljs-keyword">only</span> once<br></code></pre></td></tr></table></figure>
+<h2 id="7-Context"><a href="#7-Context" class="headerlink" title="7.Context"></a>7.Context</h2><p>主要的作用是在在一组 goroutine 之间传递共享的值、取消信号、deadline 等。<code>context.Context</code>并不是一个具体的实现，而是一个定义了一组方法的接口，Context接口共有四个方法。</p>
+<ul>
+<li><code>Deadline</code> — 返回当前 context 的截止时间。</li>
+<li><code>Done</code> — 返回一个只读的 channel，可用于识别当前 channel 是否已经被关闭，其原因可能是到期，也可能是被取消了。多次调用 <code>Done</code> 方法会返回同一个 channel。</li>
+<li><code>Err</code> — 返回当前 context 被关闭的原因。<ul>
+<li>如果 context 被取消，会返回 <code>Canceled</code> 错误。</li>
+<li>如果 context 超时，会返回 <code>DeadlineExceeded</code> 错误。</li>
+</ul>
+</li>
+<li><code>Value</code> — 返回当前 context 对应所存储的 context信息，可以用来传递请求特定的数据。<br>创建 context：</li>
+<li><code>Background</code>：创建一个空的 context，一般用在主函数、初始化、测试以及创建 root context 的时候。</li>
+<li><code>TODO</code>：创建一个空的 context，不知道要传递一些什么上下文信息的时候，就用这个。</li>
+<li><code>WithCancel</code>：基于 parent context 创建一个可以取消的新 context。</li>
+<li><code>WithTimeout</code>：基于 parent context 创建一个具有<strong>超时时间</strong>的新 context。</li>
+<li><code>WithDeadline</code>：和 <code>WithTimeout</code> 一样，只不过参数是<strong>截止时间</strong>（超时时间加上当前时间）。</li>
+<li><code>WithValue</code>：基于某个 context 创建并存储对应的上下文信息。</li>
+</ul>
+<h1 id="6-atomic包（原子操作）"><a href="#6-atomic包（原子操作）" class="headerlink" title="6.atomic包（原子操作）"></a>6.atomic包（原子操作）</h1><p>Go 的标准库 <code>sync/atomic</code> 提供了一些实现原子操作的方法：</p>
+<ul>
+<li>Add</li>
+<li>CompareAndSwap（简称 CAS）</li>
+<li>Load</li>
+<li>Swap</li>
+<li>Store<br><strong>互斥锁与原子操作</strong><br>区别：</li>
+<li><strong>互斥锁是用来保护临界区，原子操作用于对一个变量的更新保护</strong>。</li>
+<li>互斥锁由操作系统的调度器实现，原子操作由底层硬件指令直接提供支持。<br>使用互斥锁实现并发计数：<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">MutexAdd</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> a <span class="hljs-type">int32</span> =  <span class="hljs-number">0</span><br>	<span class="hljs-keyword">var</span> wg sync.WaitGroup<br>	<span class="hljs-keyword">var</span> mu sync.Mutex<br>	start := time.Now()<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000</span>; i++ &#123;<br>		wg.Add(<span class="hljs-number">1</span>)<br>		<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>			<span class="hljs-keyword">defer</span> wg.Done()<br>			mu.Lock()<br>			a += <span class="hljs-number">1</span><br>			mu.Unlock()<br>		&#125;()<br>	&#125;<br>	wg.Wait()<br>	timeSpends := time.Now().Sub(start).Nanoseconds()<br>    fmt.Printf(<span class="hljs-string">&quot;mutex value %d, spend time: %v\n&quot;</span>, a, timeSpends)<br>&#125;<br></code></pre></td></tr></table></figure>
+使用原子操作替换互斥锁：<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">AtomicAdd</span><span class="hljs-params">()</span></span> &#123;<br>	<span class="hljs-keyword">var</span> a <span class="hljs-type">int32</span> =  <span class="hljs-number">0</span><br>	<span class="hljs-keyword">var</span> wg sync.WaitGroup<br>	start := time.Now()<br>	<span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10000</span>; i++ &#123;<br>		wg.Add(<span class="hljs-number">1</span>)<br>		<span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> &#123;<br>			<span class="hljs-keyword">defer</span> wg.Done()<br>			atomic.AddInt32(&amp;a, <span class="hljs-number">1</span>)<br>		&#125;()<br>	&#125;<br>	wg.Wait()<br>	timeSpends := time.Now().Sub(start).Nanoseconds()<br>    fmt.Printf(<span class="hljs-string">&quot;atomic value %d, spend time: %v\n&quot;</span>, atomic.LoadInt32(&amp;a), timeSpends)<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
 
                 
