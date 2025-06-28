@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
+  
+    <link rel="icon" href="/assets/favicon.png">
+  
+  
+  <title>Android_Runtime | Kid</title>
+  <link rel="canonical" href="http://example.com/2025/06/28/Android-Runtime/">
+  <meta name="author" content="kid" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="一. Android Runtime（ART）架构概述 1. ART在Android系统中的定位 ART处于Android系统架构的核心层，向上对接应用框架层（如Activity、Service等组件），向下依赖Linux内核提供的内存管理、线程调度等基础服务。其核心职责包括： 字节码执行：解析和执行DEX（Dalvik Executable）字节码 内存管理：负责对象的分配、回收与内存优化 类加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android_Runtime">
+<meta property="og:url" content="http://example.com/2025/06/28/Android-Runtime/index.html">
+<meta property="og:site_name" content="Kid">
+<meta property="og:description" content="一. Android Runtime（ART）架构概述 1. ART在Android系统中的定位 ART处于Android系统架构的核心层，向上对接应用框架层（如Activity、Service等组件），向下依赖Linux内核提供的内存管理、线程调度等基础服务。其核心职责包括： 字节码执行：解析和执行DEX（Dalvik Executable）字节码 内存管理：负责对象的分配、回收与内存优化 类加">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/06/28/Android-Runtime/img.png">
+<meta property="article:published_time" content="2025-06-28T09:22:01.000Z">
+<meta property="article:modified_time" content="2025-06-28T09:22:54.231Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/06/28/Android-Runtime/img.png">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kr-core.min.css" media="all"></link>
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/highlight.js/night-eighties.min.css" media="all"></link>
+  
+  <link rel="stylesheet" id="theme-light-css" href="/css/kr-theme/light.min.css" media="all"></link>
+  <link rel="stylesheet" id="theme-dark-css" href="/css/kr-theme/dark.min.css" media="(prefers-color-scheme: dark)"></link>
+  <script src="/js/kr-theme.min.js"></script>
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></link>
+  
+    <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></link>
+  
+  
+    <link rel="stylesheet" href="/vendors/viewerjs@1.11.6/dist/viewer.min.css"></link>
+  
+  <!-- 不得不预先加载的一些JS文件 -->
+  
+    <script src="/vendors/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
+  
+  <!-- 自定义站点横幅和背景 -->
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('https://dev.krt.moe/demo-assets/banner.webp');
+      }
+      html[data-theme="dark"] .kratos-cover.kratos-cover-2 {
+        background-image: url('https://dev.krt.moe/demo-assets/banner_dark.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('https://dev.krt.moe/demo-assets/bg.webp');
+        }
+        html[data-theme="dark"] body.custom-background {
+          background-image: url('https://dev.krt.moe/demo-assets/bg.webp');
+        }
+      }
+    
+    
+      .widget-kratos-about .photo-background {
+        background-image: url('/images/default.webp');
+      }
+      html[data-theme="dark"] .widget-kratos-about .photo-background {
+        background-image: url('/images/default.webp');
+      }
+    
+  </style>
+
+  <!-- 额外的追加注入项 -->
+  
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    <li>
+                                        
+                                            <a href="/">
+                                        
+                                            
+                                                <i class="fa fa-home"></i>
+                                            
+                                            首页
+                                        </a>
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            <a href="/archives/">
+                                        
+                                            
+                                                <i class="fa fa-file"></i>
+                                            
+                                            档案馆
+                                        </a>
+                                        
+                                    </li>
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Kid</a></div>
+                    <div id="kratos-nav-toggle-wrapper" class="nav-toggle">
+                        <a id="kratos-nav-toggle" class="kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Kid</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
+
+
+        
+
+            
+
+            <section class="kr-main-col col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/06/28/Android-Runtime/">
+    <div class="kratos-hentry kratos-page-inner clearfix">
+        <header class="kratos-page-header">
+            
+                <h1 class="kratos-page-title text-center" itemprop="name headline">Android_Runtime</h1>
+            
+            <ul class="kratos-page-meta text-center">
+                <li><time datetime="2025-06-28T09:22:01.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-06-28</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">kid</span>
+                </li>
+                
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~10.22K
+                        
+                        字
+                    </li>
+                
+                
+                
+            </ul>
+        </header>
+        <div class="kratos-page-content kr-post">
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p><strong>一. Android Runtime（ART）架构概述</strong></p>
+<p><strong>1. ART在Android系统中的定位</strong></p>
+<p>ART处于Android系统架构的核心层，向上对接应用框架层（如Activity、Service等组件），向下依赖Linux内核提供的内存管理、线程调度等基础服务。其核心职责包括：</p>
+<p><strong>字节码执行</strong>：解析和执行DEX（Dalvik Executable）字节码</p>
+<p><strong>内存管理</strong>：负责对象的分配、回收与内存优化</p>
+<p><strong>类加载</strong>：管理Java类的加载、验证与初始化</p>
+<p><strong>JNI交互</strong>：实现Java代码与Native代码的双向通信</p>
+<p><strong>安全机制</strong>：确保应用运行的安全性与隔离性</p>
+<p><strong>2.ART架构概述</strong></p>
+<p>ART的架构主要包括以下组件：</p>
+<p>类加载器系统：负责加载和验证类</p>
+<p>执行引擎：包括解释器和JIT编译器</p>
+<p>垃圾回收器：管理内存分配和回收</p>
+<p>调试和分析工具：支持应用调试和性能分析</p>
+<p>运行时服务：提供线程管理、反射等功能</p>
+<p><strong>3. ART架构设计目标</strong></p>
+<p>ART的设计遵循以下核心目标：</p>
+<p><strong>高性能</strong>：通过AOT编译、JIT即时优化提升执行效率</p>
+<p><strong>低内存占用</strong>：采用分代垃圾回收、指针压缩等技术优化内存</p>
+<p><strong>兼容性</strong>：确保与Java语言规范及Android应用的兼容性</p>
+<p><strong>安全性</strong>：通过沙箱机制隔离应用，防止恶意攻击</p>
+<p><strong>可扩展性</strong>：支持插件化、热修复等动态特性</p>
+<p><strong>二. ART初始化</strong></p>
+<p><strong>1.Zygote进程</strong></p>
+<p><strong>Zygote进程的核心作用</strong></p>
+<p>Zygote进程是Android系统中的一个特殊进程，它是所有应用进程的父进程。在Android系统启动过程中，Zygote进程率先被创建并初始化，之后每当系统需要创建一个新的应用进程时，都会通过复制Zygote进程来实现，这种机制极大地提高了应用启动速度。</p>
+<p>Zygote进程的核心作用包括：</p>
+<p>预加载和初始化Java运行时环境（包括ART虚拟机）</p>
+<p>预加载常用的Java类和资源</p>
+<p>作为应用进程的模板，通过fork()机制快速创建新的应用进程</p>
+<p>Zygote进程的启动与ART的初始化紧密相关。在Zygote进程启动过程中，会完成ART虚拟机的初始化工作，包括内存管理系统、类加载系统、垃圾回收器等组件的初始化。ART虚拟机的高效运行是Zygote进程能够快速创建应用进程的基础。</p>
+<p>Zygote进程在启动时会加载并初始化核心Java类库，这些类库会被映射到Zygote进程的内存空间中。当通过fork()创建新的应用进程时，这些预加载的类库和资源可以被新进程共享，无需再次加载，从而显著提高应用启动速度。</p>
+<p><strong>Zygote进程的启动</strong></p>
+<p>Zygote进程的启动发生在Android系统启动的早期阶段。具体来说，当Linux内核启动完成后，会首先创建init进程，这是Android系统中的第一个用户空间进程。init进程会解析init.rc配置文件，并启动一系列重要的系统服务，其中就包括Zygote进程。</p>
+<p>Zygote进程的启动是Android系统启动过程中的关键步骤，它的成功启动标志着系统Java运行时环境的准备就绪，为后续系统服务和应用的启动奠定了基础。</p>
+<p><strong>2.Linux内核启动与init进程</strong></p>
+<p><strong>Linux内核启动</strong></p>
+<p>Android系统的启动始于Linux内核的加载和初始化。当设备上电后，引导程序（如Bootloader）会加载Linux内核镜像到内存中，并将控制权交给内核。</p>
+<p>Linux内核的启动流程大致如下：</p>
+<p>初始化CPU和内存子系统</p>
+<p>检测和初始化硬件设备</p>
+<p>挂载根文件系统</p>
+<p>执行第一个用户空间进程（通常是init进程）</p>
+<p>在内核启动过程中，会执行一系列的初始化操作，包括设置中断处理、内存管理、设备驱动等。这些操作确保了系统硬件的正常工作，并为后续用户空间进程的运行提供了基础环境。</p>
+<p><strong>init进程的创建</strong></p>
+<p>当Linux内核完成初始化后，会创建init进程（进程ID为1）。init进程是Android系统中所有用户空间进程的祖先，它负责启动和管理系统中的其他进程和服务。</p>
+<p>init进程的主要作用包括：</p>
+<p>解析和执行init.rc配置文件</p>
+<p>启动系统关键服务（如Zygote、ServiceManager等）</p>
+<p>监控和管理系统服务的生命周期</p>
+<p>处理系统关机和重启操作</p>
+<p>init进程使用的是Android特有的Init语言编写的配置文件，这些文件定义了系统服务的启动顺序、依赖关系和运行参数等信息。</p>
+<p><strong>3.Zygote进程启动流程</strong></p>
+<p><strong>初始化与参数配置</strong></p>
+<p>Zygote进程的启动由app_process可执行文件触发。app_process是一个用C++编写的程序，位于&#x2F;system&#x2F;bin目录下。它的主要作用是初始化Java虚拟机环境，并启动Zygote进程的主类。在启动Zygote进程时，app_process会接收一系列命令行参数，这些参数定义了Zygote进程的启动模式和行为</p>
+<p><strong>启动Java虚拟机</strong></p>
+<p>在解析完命令行参数后，app_process会调用JNI（Java Native Interface）函数来初始化Java虚拟机（JVM）。在Android系统中，这个Java虚拟机实际上是ART（Android Runtime）。</p>
+<p>初始化ART的关键步骤包括：</p>
+<p>创建Java虚拟机实例</p>
+<p>设置Java虚拟机参数（如堆大小、垃圾回收器类型等）</p>
+<p>注册JNI方法</p>
+<p>加载核心Java类库</p>
+<p><strong>调用ZygoteIniit.main()方法</strong></p>
+<p>一旦Java虚拟机初始化完成，app_process会调用Zygote的主类com.android.internal.os.ZygoteInit的main()方法。这个方法是Zygote进程的入口点，负责完成Zygote进程的剩余初始化工作。</p>
+<p>ZygoteInit.main()方法的主要工作包括：</p>
+<p>创建并初始化Zygote服务器套接字</p>
+<p>预加载Java类和资源</p>
+<p>启动系统服务</p>
+<p>等待并处理来自系统的创建应用进程请求</p>
+<p><strong>小结</strong></p>
+<p>先暂停一下，我们对上述过程进行一个简单的梳理，当Android系统启动时先初始化Linux内核，接下来执行init进程，init进程中包含了Zygote进程的启动规则，然后启动Zygote进程，先配置启动参数，如Zygote进程标识，初始化完成后启动系统服务等，接下来Zygote进程去创建java虚拟机也就是ART，最后执行ZygoteInit.main()方法完成初始化，要注意其中的依赖关系，类比一下：</p>
+<p>app_process 相当于 “启动器”：类似双击.exe 文件启动程序，app_process 被执行后启动 Zygote 进程。</p>
+<p>Zygote 进程相当于 “容器”：容器启动后，在内部搭建 Java 虚拟机环境（如 ART），为运行 Java 代码做准备。</p>
+<p>核心逻辑：app_process 是启动 Zygote 的工具，而 Zygote 是创建 Java 虚拟机的主体。</p>
+<p>因此依赖关系为：</p>
+<p>Zygote 进程由 app_process 程序创建：init 进程通过执行 app_process 可执行文件，创建 Zygote 进程。</p>
+<p>Java 虚拟机由 Zygote 进程创建：Zygote 进程在启动时，通过代码逻辑初始化 ART&#x2F;Dalvik 虚拟机</p>
+<p><strong>4.ART初始化</strong></p>
+<p><strong>Runtime初始化</strong></p>
+<p>在Zygote进程启动过程中，ART的初始化始于Runtime类的创建和初始化。Runtime类是ART的核心类，负责管理整个运行时环境。</p>
+<p>Runtime类的初始化主要包括以下步骤：</p>
+<p>解析命令行参数和环境变量</p>
+<p>初始化内存分配器</p>
+<p>设置线程管理系统</p>
+<p>初始化垃圾回收器</p>
+<p>注册JNI方法</p>
+<p><strong>类加载系统初始化</strong></p>
+<p>类加载系统是ART的重要组成部分，负责查找、加载和验证Java类。在Zygote进程中，类加载系统的初始化确保了核心Java类库能够被正确加载和使用。</p>
+<p>类加载系统的初始化主要包括：</p>
+<p>创建类加载器实例</p>
+<p>初始化类加载路径</p>
+<p>注册类解析器</p>
+<p>预加载核心类</p>
+<p><strong>垃圾回收器初始化</strong></p>
+<p>垃圾回收器（GC）负责自动管理Java对象的内存分配和回收。在Zygote进程中，垃圾回收器的初始化设置了GC的类型、参数和工作模式。</p>
+<p>ART支持多种垃圾回收器，包括：</p>
+<p>标记-清除（Mark-Sweep）</p>
+<p>标记-整理（Mark-Compact）</p>
+<p>G1（Garbage-First）</p>
+<p>垃圾回收器的初始化主要包括：</p>
+<p>根据系统配置选择合适的GC类型</p>
+<p>设置GC参数（如堆大小、并发线程数等）</p>
+<p>初始化GC数据结构</p>
+<p>注册GC回调函数</p>
+<p><strong>JNI环境初始化</strong></p>
+<p>JNI（Java Native Interface）允许Java代码与本地代码（如C&#x2F;C++）进行交互。在Zygote进程中，JNI环境的初始化确保了Java代码能够正确调用本地方法。</p>
+<p>JNI环境初始化主要包括：</p>
+<p>创建JNIEnv实例</p>
+<p>注册本地方法</p>
+<p>初始化JNI函数表</p>
+<p>设置JNI异常处理机制</p>
+<p><strong>5.创建应用进程</strong></p>
+<p><strong>通过Zygote创建应用进程的原理</strong></p>
+<p>在Android系统中，应用进程是通过Zygote进程的fork()机制创建的。这种机制利用了Linux操作系统的fork()系统调用的特性，允许一个进程快速复制自身，形成一个新的子进程。</p>
+<p>当系统需要启动一个应用时，ActivityManagerService会向Zygote进程发送一个创建新进程的请求。Zygote进程接收到请求后，会调用fork()系统调用创建一个新的进程，然后在新进程中加载并启动应用的主Activity。</p>
+<p><strong>应用进程创建的详细流程</strong></p>
+<p>应用进程创建的详细流程如下：</p>
+<p><strong>请求发起</strong>：当用户点击应用图标或通过其他方式启动应用时，ActivityManagerService会向Zygote进程发送创建应用进程的请求。</p>
+<p><strong>请求接收</strong>：Zygote进程通过服务器套接字接收请求，并解析请求参数。</p>
+<p><strong>进程创建</strong>：Zygote进程调用fork()系统调用创建新的进程。由于fork()是写时复制（Copy-On-Write）的，新进程可以快速复制Zygote进程的内存空间，而不需要实际复制所有数据。</p>
+<p><strong>环境初始化</strong>：在新进程中，Zygote会执行一些初始化操作，如重置信号处理、设置进程名称等。</p>
+<p><strong>应用加载</strong>：新进程加载应用的APK文件，并初始化应用的主Activity。</p>
+<p><strong>应用启动</strong>：新进程调用应用的主Activity的onCreate()和onStart()方法，启动应用。</p>
+<p><strong>进程创建后的ART环境调整</strong></p>
+<p>虽然应用进程继承了Zygote进程的ART环境，但在创建后会进行一些特定的调整，以适应应用的需求：</p>
+<p><strong>类加载器设置</strong>：应用进程会创建自己的类加载器，用于加载应用的类和资源</p>
+<p><strong>内存分配调整</strong>：根据应用的需求，调整堆大小和其他内存分配参数</p>
+<p><strong>垃圾回收策略调整</strong>：根据应用的特性，调整垃圾回收器的参数和工作模式</p>
+<p><strong>调试和分析工具配置</strong>：如果应用处于调试模式，会配置相应的调试和分析工具</p>
+<p><strong>三. 类加载机制</strong></p>
+<p><strong>1.dex文件</strong></p>
+<p><strong>1.概述</strong></p>
+<p>Dex（Dalvik Executable）文件格式是专为Android平台设计的一种字节码格式，它起源于早期的Dalvik虚拟机时代。在Android系统发展初期，传统的Java字节码（.class文件）在移动设备上执行效率较低，因为移动设备资源有限，需要更高效的执行方式。为了解决这个问题，Google开发了Dalvik虚拟机，并设计了Dex文件格式，它将多个Java类文件整合到一个单一文件中，减少了文件I&#x2F;O开销和内存占用，更适合移动设备的特性 。</p>
+<p>Dex文件的主要作用是作为Android应用的可执行文件格式。当开发者编写Java或Kotlin代码并编译后，最终会生成Dex文件，这些Dex文件被打包到APK（Android Package）文件中。在应用安装时，Dex文件会被安装到设备上，并在应用运行时由Android Runtime（ART）或Dalvik虚拟机加载和执行。Dex文件中包含了应用的所有代码逻辑、资源引用等信息，是Android应用运行的核心载体 。</p>
+<p><strong>2.Dex文件与Class文件的关系</strong></p>
+<p>Dex文件与Java Class文件都是字节码格式，但它们在结构和设计上有很大差异。Class文件是Java虚拟机（JVM）的执行格式，每个Class文件对应一个Java类或接口，包含了该类的字节码、常量池、方法信息等。而Dex文件则是将多个Class文件整合在一起，消除了冗余信息，优化了存储结构，更适合在移动设备上使用 。</p>
+<p>从转换关系来看，Java源代码首先被编译成Class文件，然后通过dx工具（Android SDK中的一个工具）将多个Class文件转换为一个或多个Dex文件。在转换过程中，dx工具会进行一系列优化，如合并常量池、优化方法调用等，使得Dex文件更加紧凑和高效。例如，多个Class文件中可能存在相同的字符串常量，在转换为Dex文件时，这些重复的常量会被合并为一个，减少了文件大小 。</p>
+<p><strong>2.MultiDex多文件处理</strong></p>
+<p><strong>1.概述</strong></p>
+<p><strong>主Dex文件与次级Dex文件</strong></p>
+<p>在MultiDex机制中，Dex文件分为主Dex文件和次级Dex文件。主Dex文件是应用启动时首先加载的文件，它包含了应用启动所必需的核心代码，如应用入口类（继承自Application的类）、Android四大组件（Activity、Service、BroadcastReceiver、ContentProvider）的基础类等 。这些代码是应用启动和运行的基础，必须确保在应用启动时能够快速加载和执行 。</p>
+<p>次级Dex文件则存储了应用的其他代码，如业务逻辑类、第三方库代码等。这些代码在应用启动时并不需要立即加载，而是在后续使用到相关功能时，由MultiDex机制动态加载。次级Dex文件的存在，使得应用能够突破单个Dex文件的方法数限制，容纳更多的代码 。</p>
+<p><strong>类加载器的作用</strong></p>
+<p>在MultiDex机制中，类加载器起着关键作用。Android提供了两种重要的类加载器用于处理MultiDex：PathClassLoader和DexClassLoader 。</p>
+<p>PathClassLoader用于加载已经安装到设备上的应用的Dex文件，它只能加载指定目录下的Dex文件，并且这些Dex文件必须位于系统默认的应用安装路径下。在MultiDex中，PathClassLoader主要用于加载主Dex文件 。</p>
+<p>DexClassLoader则更加灵活，它可以加载任意目录下的Dex文件，包括外部存储目录。在MultiDex机制中，DexClassLoader用于加载次级Dex文件。通过DexClassLoader，应用能够在运行时动态加载次级Dex文件中的类，实现代码的动态扩展 。</p>
+<p><strong>MultiDex与Android Runtime的关系</strong></p>
+<p>MultiDex机制与Android Runtime（ART或Dalvik）紧密协作。在应用启动时，Android Runtime首先通过PathClassLoader加载主Dex文件，并在主Dex文件中查找应用的入口类，开始执行应用的启动逻辑 。</p>
+<p>当应用在运行过程中需要使用次级Dex文件中的类时，Android Runtime会借助DexClassLoader加载次级Dex文件。加载完成后，Android Runtime会将次级Dex文件中的类信息整合到运行时环境中，确保这些类能够被正确访问和调用 。同时，Android Runtime还需要处理多个Dex文件之间的类引用关系，保证代码执行的正确性和一致性 。</p>
+<p><strong>2.MultiDex的配置与构建过程</strong></p>
+<p>在Android项目的build.gradle文件中，需要进行相关配置以启用MultiDex功能。首先，在android闭包内的defaultConfig中添加multiDexEnabled true，这告诉Gradle在构建过程中启用MultiDex 。</p>
+<p>Groovy<br>android {<br>defaultConfig {<br>multiDexEnabled true<br>}<br>}</p>
+<p>此外，还需要添加MultiDex库的依赖。在较新的Android项目中，通常使用androidx.multidex:multidex库，在dependencies闭包中添加如下依赖：</p>
+<p>Groovy<br>dependencies {<br>implementation ‘androidx.multidex:multidex:2.0.1’<br>}</p>
+<p>这些配置是启用MultiDex的基础，它们指导Gradle在构建应用时进行代码拆分和Dex文件生成 。</p>
+<p><strong>3.主Dex文件的加载过程</strong></p>
+<p><strong>应用启动时的加载流程</strong></p>
+<p>当用户点击应用图标启动应用时，Android系统首先会找到应用的APK文件，并解压其中的内容。系统会使用PathClassLoader来加载主Dex文件（classes.dex） 。</p>
+<p>PathClassLoader会从APK文件的根目录下读取classes.dex文件，并将其映射到内存中。在映射过程中，PathClassLoader会验证Dex文件的完整性，确保文件没有损坏 。如果验证通过，PathClassLoader会开始解析Dex文件的头部信息，获取文件的基本信息和各个数据区域的偏移量 。</p>
+<p>接下来，PathClassLoader会根据Dex文件的结构，依次加载和解析字符串池、类型表、方法表等索引表和数据段，建立类的元数据信息 。当主Dex文件中的所有类都被加载和解析完成后，PathClassLoader会在主Dex文件中查找应用的入口类（继承自Application的类） 。</p>
+<p><strong>Android Runtime对主Dex的处理</strong></p>
+<p>Android Runtime（ART或Dalvik）在PathClassLoader加载完主Dex文件后，会接手后续处理。ART首先会对主Dex文件中的类进行验证，确保类的字节码符合语法和安全规范 。</p>
+<p>验证通过后，ART会为每个类分配内存空间，并初始化类的静态字段。对于包含静态代码块的类，ART会执行静态代码块中的代码，完成类的初始化工作 。同时，ART会构建类的继承关系和方法调用关系，建立类的运行时数据结构 。</p>
+<p>在完成类的初始化后，ART会调用应用入口类的onCreate()方法，开始执行应用的启动逻辑。此时，应用已经成功加载了主Dex文件中的核心代码，具备了基本的运行环境 。</p>
+<p><strong>核心类的优先加载</strong></p>
+<p>在主Dex文件的加载过程中，核心类会被优先加载。这些核心类包括应用入口类、Android四大组件类、与系统交互的关键类（如Context类及其子类）等 。这些类是应用启动和运行的基础，必须在应用启动时立即可用 。</p>
+<p>为了确保核心类被放入主Dex文件，MultiDex.install()方法会自动分析类的依赖关系，将与核心类有直接或间接依赖关系的类也一并放入主Dex文件 。这样可以避免在应用启动时出现类找不到的问题，保证应用能够快速、稳定地启动 。同时，优先加载核心类也有助于提高应用的启动性能，减少用户等待时间</p>
+<p><strong>4.次级Dex文件的加载机制</strong></p>
+<p><strong>加载触发条件</strong></p>
+<p>次级Dex文件的加载并非在应用启动时立即进行，而是在满足特定触发条件时才会发生。当应用在运行过程中需要使用次级Dex文件中的类时，就会触发次级Dex文件的加载 。</p>
+<p>例如，当用户点击应用中的某个按钮，触发了一个位于次级Dex文件中的Activity时，系统会检测到该Activity类尚未加载，从而触发次级Dex文件的加载 。又或者，应用在运行过程中调用了一个位于次级Dex文件中的第三方库方法，也会触发次级Dex文件的加载 。此外，动态代码加载（如使用反射加载次级Dex文件中的类）同样会触发次级Dex文件的加载 。</p>
+<p><strong>类加载的整合与管理</strong></p>
+<p>当DexClassLoader成功加载次级Dex文件中的类后，需要将这些类整合到应用的运行时环境中。Android Runtime会建立新加载类与已加载类之间的引用关系，确保不同Dex文件中的类能够相互调用 。</p>
+<p>为了管理多个Dex文件中的类，Android Runtime维护了一个类加载器链（双亲委派模型）。主Dex文件由PathClassLoader加载，次级Dex文件由DexClassLoader加载，DexClassLoader的父类加载器是PathClassLoader 。当应用请求加载一个类时，类加载器链会按照顺序依次尝试加载类 。</p>
+<p>首先，DexClassLoader会尝试在次级Dex文件中查找类；如果找不到，会将请求传递给父类加载器PathClassLoader，由PathClassLoader在主Dex文件中查找类 。这种类加载器链的管理方式，保证了应用能够正确加载和使用多个Dex文件中的类，避免了类冲突和找不到类的问题 。</p>
+<p><strong>5.类加载冲突与解决策略</strong></p>
+<p><strong>冲突产生的原因</strong></p>
+<p>在MultiDex机制下，类加载冲突可能会因为多种原因产生。一种常见的原因是多个Dex文件中存在同名的类 。例如，应用引入了两个不同版本的第三方库，这两个库中可能包含同名但实现不同的类 。当应用在运行过程中同时使用到这两个库时，就会出现类加载冲突 。</p>
+<p>另一个原因是类加载顺序问题。由于主Dex文件和次级Dex文件由不同的类加载器加载，且次级Dex文件在应用运行时才加载，如果在次级Dex文件加载之前，应用已经使用了主Dex文件中同名的类，那么当次级Dex文件加载后，可能会导致类的行为不符合预期 。此外，动态代码加载和反射的使用也可能引发类加载冲突，因为它们可能会绕过正常的类加载顺序 。</p>
+<p><strong>冲突检测机制</strong></p>
+<p>为了检测类加载冲突，Android Runtime在类加载过程中会进行一系列检查。当DexClassLoader加载次级Dex文件中的类时，会检查该类是否已经被其他类加载器加载过 。如果发现类已经被加载，Android Runtime会比较两个类的来源（即所属的Dex文件） 。</p>
+<p>如果两个类来自不同的Dex文件，Android Runtime会判断是否存在冲突。判断的依据包括类的包名、类名以及类的字节码内容等 。如果发现冲突，Android Runtime会抛出ClassNotFoundException或NoClassDefFoundError等异常，提示开发者存在类加载冲突问题 。</p>
+<p>此外，开发者也可以通过日志输出和调试工具来辅助检测类加载冲突。在关键的类加载位置添加日志输出，记录类的加载来源和加载顺序，通过分析日志可以定位到类加载冲突的具体位置 。</p>
+<p><strong>解决冲突的策略</strong></p>
+<p>解决类加载冲突的策略有多种。一种策略是统一第三方库的版本，避免引入多个版本的库导致同名类冲突 。开发者可以在项目的build.gradle文件中，通过implementation或api依赖声明，指定统一的第三方库版本 。</p>
+<p>另一种策略是使用ProGuard或R8等工具进行代码混淆。混淆工具可以对类名、方法名和字段名进行重命名，降低不同库中同名类冲突的概率 。在build.gradle文件中配置ProGuard或R8规则，例如：</p>
+<p>Groovy<br>buildTypes {<br>release {<br>minifyEnabled true<br>proguardFiles getDefaultProguardFile(‘proguard-android-optimize.txt’), ‘proguard-rules.pro’<br>}<br>}</p>
+<p>此外，开发者还可以通过自定义类加载器来解决类加载冲突问题。自定义类加载器可以实现特定的类加载逻辑，例如优先加载某个Dex文件中的类，或者根据类的来源进行不同的处理 。通过合理运用这些策略，可以有效解决MultiDex机制下的类加载冲突问题，保证应用的稳定运行 。</p>
+<p><strong>3.ART中的双亲委派模型</strong></p>
+<p><strong>1.类加载器的继承关系</strong></p>
+<p>Android的类加载器之间存在明确的继承关系 。BootClassLoader是所有类加载器的根，它没有父类加载器 。PathClassLoader和DexClassLoader都继承自BaseDexClassLoader，而BaseDexClassLoader又继承自ClassLoader类 。这种继承关系为双亲委托模型的实现提供了基础，子类加载器可以通过父类引用调用父类的加载方法，实现委托加载 。</p>
+<p><strong>2.与Java类加载器体系的异同</strong></p>
+<p>Android的类加载器体系与Java标准的类加载器体系既有相似之处，也存在差异 。相似之处在于都采用了双亲委托模型，类加载器之间形成层次结构，核心类由顶层类加载器加载 。不同之处在于，Java标准体系中的顶层类加载器是Bootstrap ClassLoader（由C++实现），接下来是Extension ClassLoader和Application ClassLoader 。而Android中没有Extension ClassLoader，取而代之的是PathClassLoader和DexClassLoader，并且Android使用Dex文件格式而非Java的Class文件格式，这导致类加载的具体实现有所不同 。</p>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <span itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</span>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            
+            
+                <div class="post-actions text-center clearfix" id="post-actions">
+                
+                    <a class="donate" href="javascript:;" onclick="krOpenDonateModal()"><i class="fa fa-bitcoin"></i> 打赏</a>
+                
+                
+                    <a class="share" href="javascript:;" onclick="krOpenShareModal()"><i class="fa fa-share-alt"></i> 分享</a>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-06-28T09:22:54.231Z" itemprop="dateModified">最后编辑：2025-06-28</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 每日搓安卓组件" href="/2025/05/18/每日搓安卓组件/"><i class="fa fa-angle-left"></i> 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <div class="comment-post">
+            
+        </div>
+    
+</article>
+
+        
+
+            </section>
+
+            
+                
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="image/img2.jpg" alt="John Doe" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                6
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                0
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                0
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+
+            
+                
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/06/28/Android-Runtime/"><i class="fa fa-book"></i> Android_Runtime</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2025/05/18/%E6%AF%8F%E6%97%A5%E6%90%93%E5%AE%89%E5%8D%93%E7%BB%84%E4%BB%B6/"><i class="fa fa-book"></i> 每日搓安卓组件</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/12/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="fa fa-book"></i> golang并发编程</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa fa-book"></i> 计算机网络</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/11/09/%E6%A0%91/"><i class="fa fa-book"></i> 树</a>
+            
+          
+        
+          
+            
+      </ul>
+  </div>
+  </aside>
+
+            
+    </div>
+</section>
+            
+
+        
+
+                </div>
+    </div>
+</div>
+
+<footer>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 Kid 版权所有.</li>
+                            <li>本站已运行<span id="kr-since">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>自豪地使用 <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a> 主题</li>
+                            <li>站点由 John Doe 用 <i class="fa fa-heart" style="color:#d43f57"></i> 搭建</li>
+                        </div>
+                        <!-- 额外的追加注入项 -->
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                <div class="box theme-box" id="theme-toggle">
+                    <span class="fa fa-adjust"></span>
+                </div>
+            </div>
+            <div id="gotop-box" class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
+</div>
+
+
+    <div id="kr-donate-modal" class="kr-modal">
+    <div class="kr-modal-bg" onclick="krCloseDonateModal()"></div>
+    <div class="kr-modal-content">
+        <div class="kr-modal-header">
+            <div class="kr-modal-icon">
+                <i class="fa fa-bitcoin"></i>
+            </div>
+            <div class="kr-modal-title">赞助喵</div>
+            <button class="kr-modal-close" onclick="krCloseDonateModal()">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
+        <div class="kr-modal-body">
+            <div class="kr-donate-message">非常感谢您的喜欢！ <i class="fa fa-heart" style="color:#d43f57"></i></div>
+            <div class="kr-donate-qr" id="kr-donate-qr">
+                
+                    <img class="kr-donate-placeholder" src="https://dev.krt.moe/demo-assets/donate.webp" alt="赞助喵" />
+                
+            </div>
+            <div class="kr-donate-platforms">
+                
+                    
+                        <button class="kr-donate-platform-button" style="color: skyblue;" title="模拟支付" onclick="krDonateModalShowPlatformQR('example_payment', 'skyblue')">
+                            <i class="fa fa-credit-card"></i>
+                        </button>
+                    
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script defer src="/js/kr-modal/donate.min.js"></script>
+
+
+
+
+    <div id="kr-share-modal" class="kr-modal">
+    <div class="kr-modal-bg" onclick="krCloseShareModal()"></div>
+    <div class="kr-modal-content">
+        <div class="kr-modal-header">
+            <div class="kr-modal-icon">
+                <i class="fa fa-share-alt"></i>
+            </div>
+            <div class="kr-modal-title">分享这一刻</div>
+            <button class="kr-modal-close" onclick="krCloseShareModal()">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
+        <div class="kr-modal-body">
+            <div class="kr-share-message">让朋友们也来瞅瞅！</div>
+            <div class="kr-share-qr" id="kr-share-qr"></div>
+            <div class="kr-share-platforms">
+                
+                    <button class="kr-share-platform-button" style="color: #62b6e7;" title="喵窝" onclick="krShareModalOpenPlatform('https://nya.one/share?text=%3E%20$TITLE%0A%3E%0A%3E%20$SUMMARY%0A----%20$SITE%0A%0A$URL')">
+                        <svg fill="currentColor" width="18" height="18" viewBox="0 0 329 388"><path d="M0,36.226c0,-19.993 16.233,-36.226 36.226,-36.226c13.788,0 25.787,7.719 31.908,19.068l188.366,229.845l0,-111.259c-6.356,5.508 -14.645,8.843 -23.707,8.843c-19.994,0 -36.226,-16.232 -36.226,-36.226c-0,-8.551 2.968,-16.413 7.93,-22.613l-0.015,-0.013l56.614,-69.08c6.2,-11.073 18.047,-18.565 31.63,-18.565c19.994,0 36.227,16.233 36.227,36.226l-0,314.644c-0,19.994 -16.233,36.226 -36.227,36.226c-13.166,0 -24.701,-7.039 -31.044,-17.555l-189.229,-230.899l-0,212.228c-0,19.994 -16.233,36.226 -36.227,36.226c-19.993,0 -36.226,-16.232 -36.226,-36.226l0,-314.644Z" /></svg>
+                    </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script defer src="/js/kr-modal/share.min.js"></script>
+
+
+
+<!-- 额外的追加注入项 -->
+
+
+        <script>
+    if (!window.kr) {
+        window.kr = {};
+    }
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
+</script>
+
+
+  <script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
+
+
+
+  <script defer src="/vendors/viewerjs@1.11.6/dist/viewer.min.js"></script>
+
+
+<script defer src="/js/kr-core.min.js"></script>
+
+
+  <script defer src="/js/kr-pjax.min.js"></script>
+
+
+<!-- 额外的追加注入项 -->
+
+
+    </body>
+</html>
