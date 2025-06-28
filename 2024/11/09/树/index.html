@@ -1,324 +1,198 @@
-
-
 <!DOCTYPE html>
-<html lang="en" data-default-color-scheme=auto>
-
-
-
-<head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" href="/assets/favicon.png">
   
-  <meta name="theme-color" content="#58C9B9">
-  <meta name="author" content="kid">
-  <meta name="keywords" content="">
   
-    <meta name="description" content="树1、树的基本概念1.树的定义 树是n（n&gt;&#x3D;0）个结点的有限集。当n &#x3D; 0时，称为空树。在任意一棵非空树中应满足：有且仅有一个特定的称为根的结点。 当n&gt;1时，其余节点可分为m（m&gt;0）个互不相交的有限集T1,T2,…,Tm，其中每个集合本身又是一棵树，并且称为根的子树。 显然，树的定义是递归的，即在树的定义中又用到了自身，树是一种递归的数据结构。树作为一">
+  <title>树 | Kid</title>
+  <link rel="canonical" href="http://example.com/2024/11/09/%E6%A0%91/">
+  <meta name="author" content="kid" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="树1、树的基本概念1.树的定义 树是n（n&gt;&#x3D;0）个结点的有限集。当n &#x3D; 0时，称为空树。在任意一棵非空树中应满足：有且仅有一个特定的称为根的结点。 当n&gt;1时，其余节点可分为m（m&gt;0）个互不相交的有限集T1,T2,…,Tm，其中每个集合本身又是一棵树，并且称为根的子树。 显然，树的定义是递归的，即在树的定义中又用到了自身，树是一种递归的数据结构。树作为一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="树">
 <meta property="og:url" content="http://example.com/2024/11/09/%E6%A0%91/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Kid">
 <meta property="og:description" content="树1、树的基本概念1.树的定义 树是n（n&gt;&#x3D;0）个结点的有限集。当n &#x3D; 0时，称为空树。在任意一棵非空树中应满足：有且仅有一个特定的称为根的结点。 当n&gt;1时，其余节点可分为m（m&gt;0）个互不相交的有限集T1,T2,…,Tm，其中每个集合本身又是一棵树，并且称为根的子树。 显然，树的定义是递归的，即在树的定义中又用到了自身，树是一种递归的数据结构。树作为一">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_1.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_2.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_3.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_4.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_5.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_6.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_7.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_8.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_9.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_10.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_11.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_12.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_13.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_14.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_15.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_16.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_17.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_18.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_19.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_20.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_21.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_22.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_23.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_24.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_25.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_26.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_27.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_28.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_29.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_30.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_31.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_32.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_33.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_34.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_35.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_36.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_37.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_38.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_39.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_40.png">
-<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_41.png">
+<meta property="og:image" content="http://example.com/2024/11/09/%E6%A0%91/img_42.png">
 <meta property="article:published_time" content="2024-11-09T08:00:00.000Z">
-<meta property="article:modified_time" content="2024-11-14T15:47:27.453Z">
+<meta property="article:modified_time" content="2025-06-28T09:08:59.906Z">
 <meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2024/11/09/%E6%A0%91/img.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2024/11/09/%E6%A0%91/img_42.png">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kr-core.min.css" media="all"></link>
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/highlight.js/night-eighties.min.css" media="all"></link>
+  
+  <link rel="stylesheet" id="theme-light-css" href="/css/kr-theme/light.min.css" media="all"></link>
+  <link rel="stylesheet" id="theme-dark-css" href="/css/kr-theme/dark.min.css" media="(prefers-color-scheme: dark)"></link>
+  <script src="/js/kr-theme.min.js"></script>
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></link>
+  
+    <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></link>
   
   
+    <link rel="stylesheet" href="/vendors/viewerjs@1.11.6/dist/viewer.min.css"></link>
   
-  <title>树 - Hexo</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <!-- 不得不预先加载的一些JS文件 -->
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <script src="/vendors/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
   
+  <!-- 自定义站点横幅和背景 -->
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('https://dev.krt.moe/demo-assets/banner.webp');
+      }
+      html[data-theme="dark"] .kratos-cover.kratos-cover-2 {
+        background-image: url('https://dev.krt.moe/demo-assets/banner_dark.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('https://dev.krt.moe/demo-assets/bg.webp');
+        }
+        html[data-theme="dark"] body.custom-background {
+          background-image: url('https://dev.krt.moe/demo-assets/bg.webp');
+        }
+      }
+    
+    
+      .widget-kratos-about .photo-background {
+        background-image: url('/images/default.webp');
+      }
+      html[data-theme="dark"] .widget-kratos-about .photo-background {
+        background-image: url('/images/default.webp');
+      }
+    
+  </style>
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
-
+  <!-- 额外的追加注入项 -->
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
-
-<body>
-  
-
-  <header>
-    
-
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>kid的blog</strong>
-    </a>
-
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
-
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>Home</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>Archives</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Categories</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Tags</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>About</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="树"></span>
-          
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    <li>
+                                        
+                                            <a href="/">
+                                        
+                                            
+                                                <i class="fa fa-home"></i>
+                                            
+                                            首页
+                                        </a>
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            <a href="/archives/">
+                                        
+                                            
+                                                <i class="fa fa-file"></i>
+                                            
+                                            档案馆
+                                        </a>
+                                        
+                                    </li>
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Kid</a></div>
+                    <div id="kratos-nav-toggle-wrapper" class="nav-toggle">
+                        <a id="kratos-nav-toggle" class="kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Kid</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
         </div>
 
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-11-09 16:00" pubdate>
-          November 9, 2024 pm
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          7.5k words
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          63 mins
-        
-      </span>
-    
-
-    
-    
-  </div>
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
 
 
         
-      </div>
 
-      
-    </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">树</h1>
             
+
+            <section class="kr-main-col col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/11/09/%E6%A0%91/">
+    <div class="kratos-hentry kratos-page-inner clearfix">
+        <header class="kratos-page-header">
             
-              <div class="markdown-body">
+                <h1 class="kratos-page-title text-center" itemprop="name headline">树</h1>
+            
+            <ul class="kratos-page-meta text-center">
+                <li><time datetime="2024-11-09T08:00:00.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2024-11-09</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">kid</span>
+                </li>
                 
-                <h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h2 id="1、树的基本概念"><a href="#1、树的基本概念" class="headerlink" title="1、树的基本概念"></a>1、树的基本概念</h2><p><strong>1.树的定义</strong></p>
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~14.54K
+                        
+                        字
+                    </li>
+                
+                
+                
+            </ul>
+        </header>
+        <div class="kratos-page-content kr-post">
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><h1 id="树"><a href="#树" class="headerlink" title="树"></a>树</h1><h2 id="1、树的基本概念"><a href="#1、树的基本概念" class="headerlink" title="1、树的基本概念"></a>1、树的基本概念</h2><p><strong>1.树的定义</strong></p>
 <p>树是n（n&gt;&#x3D;0）个结点的有限集。当n &#x3D; 0时，称为空树。在任意一棵非空树中应满足：有且仅有一个特定的称为根的结点。</p>
 <p>当n&gt;1时，其余节点可分为m（m&gt;0）个互不相交的有限集T1,T2,…,Tm，其中每个集合本身又是一棵树，并且称为根的子树。</p>
 <p>显然，树的定义是递归的，即在树的定义中又用到了自身，树是一种递归的数据结构。树作为一种逻辑结构，同时也是一种分层结构，具有以下两个特点：</p>
@@ -334,11 +208,11 @@
 <p>7.双亲结点或父结点：若一个结点含有子结点，则这个结点称为其子结点的双亲结点或父结点。</p>
 <p>8.兄弟结点：同一个双亲的孩子之间互称兄弟。</p>
 <p>9.树的深度或高度：树中结点的最大层次。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img.png"></p>
 <p><strong>3.树状结构的应用</strong></p>
 <p><strong>文件系统</strong></p>
 <p>最为基础的应用就是计算机中对文件的管理结构，在计算机的文件系统中，目录和文件以树形结构组织。这种结构不仅便于用户和管理员快速定位、访问和管理文件，还能有效利用存储空间。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_1.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_1.png"></p>
 <p><strong>数据库索引</strong></p>
 <p>数据库系统利用树形结构（如B树、B+树）来构建索引，以加快数据检索的速度。B树和B+树是平衡多路搜索树，它们通过减少磁盘I&#x2F;O操作来提高查询效率。在B树中，每个节点包含多个关键字和子节点指针，所有叶子节点都在同一层。B+树则进一步优化了B树的结构，所有关键字都出现在叶子节点中，并且叶子节点之间通过指针相连，形成了有序链表，这使得范围查询更加高效。</p>
 <p><strong>人工智能</strong></p>
@@ -352,16 +226,16 @@
 <p>中序遍历：左子树—&gt; 根结点 —&gt; 右子树</p>
 <p>后序遍历：左子树 —&gt; 右子树 —&gt; 根结点</p>
 <p>层次遍历：只需按层次遍历即可</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_2.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_2.png"></p>
 <p>前序遍历结果为：A B D E C F G</p>
 <p>中序遍历结果为：D B E A F C G</p>
 <p>后序遍历结果为：D E B F G C A</p>
 <p>层序遍历结果为：A B C D E F G</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_3.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_3.png"></p>
 <p>前序遍历结果为：A B D F G H I E C</p>
 <p>中序遍历结果为：F D H G I B E A C</p>
 <p>后序遍历结果为：F H I G D E B C A</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_4.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_4.png"></p>
 <p>前序遍历结果为：A B D G H I C E J F</p>
 <p>中序遍历结果为：G D I H B A E J C F</p>
 <p>后序遍历结果为：G I H D B J E F C A</p>
@@ -371,18 +245,18 @@
 <p>非空右子树的所有键值大于其根结点的键值。</p>
 <p>左、右子树都是二叉搜索树。</p>
 <p><strong>2.代码以及遍历搜索</strong></p>
-<figure class="highlight cpp"><figcaption><span>二叉树代码 [lang:C++] [title] [url] [link text]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span><br>&#123;<br>    <span class="hljs-type">int</span> data; <span class="hljs-comment">//数据域</span><br>    node* lchild; <span class="hljs-comment">//指向左子树根节点的指针</span><br>    node* rchild; <span class="hljs-comment">//指向右子树根节点的指针</span><br>&#125;;<br><span class="hljs-function">node* <span class="hljs-title">newNode</span><span class="hljs-params">(<span class="hljs-type">int</span> v)</span> </span>&#123;<br>    node* Node = <span class="hljs-keyword">new</span> node; <span class="hljs-comment">//申请一个node类型变量的地址空间</span><br>    Node-&gt;data = v; <span class="hljs-comment">//结点权值为v</span><br>    Node-&gt;lchild = Node-&gt;rchild = <span class="hljs-literal">NULL</span>; <span class="hljs-comment">//初始状态下无左右孩子</span><br>    <span class="hljs-keyword">return</span> Node; <span class="hljs-comment">//返回新节点的地址</span><br>&#125;<br><span class="hljs-function">node* <span class="hljs-title">Find</span><span class="hljs-params">(<span class="hljs-type">int</span> x, node* root)</span></span>&#123;<br>    <span class="hljs-keyword">if</span> (!root) <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>; <span class="hljs-comment">/*查找失败*/</span><br>    <span class="hljs-keyword">if</span> (x &gt; root-&gt;data)<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Find</span>(x, root-&gt;rchild); <span class="hljs-comment">/*在右子树中继续查找*/</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (x &lt; root-&gt;data)<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">Find</span>(x, root-&gt;lchild); <span class="hljs-comment">/*在左子树中继续查找*/</span><br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> root; <span class="hljs-comment">/*查找成功，返回结点的找到结点的地址*/</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(node*&amp; root, <span class="hljs-type">int</span> x)</span> </span>&#123;  <span class="hljs-comment">//注意 传入的是结点指针的引用</span><br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) &#123; <span class="hljs-comment">//空树，即查找失败，插入结点（递归边界）</span><br>        root = <span class="hljs-built_in">newNode</span>(x);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (root-&gt;data &gt; x) &#123; <span class="hljs-comment">//往左子树搜索</span><br>        <span class="hljs-built_in">insert</span>(root-&gt;lchild, x);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-built_in">insert</span>(root-&gt;rchild, x); <span class="hljs-comment">//往右子树搜索</span><br>&#125;<br><span class="hljs-function">node* <span class="hljs-title">create</span><span class="hljs-params">(<span class="hljs-type">int</span> data[], <span class="hljs-type">int</span> n)</span> </span>&#123;<br>    node* root = <span class="hljs-literal">NULL</span>;     <span class="hljs-comment">//新建空根结点</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) &#123;<br>        <span class="hljs-built_in">insert</span>(root, data[i]); <span class="hljs-comment">//插入二叉树</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> root; <span class="hljs-comment">//返回根节点</span><br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">preorder</span><span class="hljs-params">(node* root)</span> </span>&#123; <span class="hljs-comment">//前序遍历</span><br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span>; <span class="hljs-comment">//到达空树，即递归边界</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, root-&gt;data); <span class="hljs-comment">//访问根节点数据域</span><br>    <span class="hljs-built_in">preorder</span>(root-&gt;lchild); <span class="hljs-comment">//访问左子树</span><br>    <span class="hljs-built_in">preorder</span>(root-&gt;rchild); <span class="hljs-comment">//访问右子树</span><br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">inorder</span><span class="hljs-params">(node* root)</span> </span>&#123; <span class="hljs-comment">//中序遍历</span><br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span>; <span class="hljs-comment">//到达空树，即递归边界</span><br>    <span class="hljs-built_in">inorder</span>(root-&gt;lchild); <span class="hljs-comment">//访问左子树</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, root-&gt;data); <span class="hljs-comment">//访问根节点数据域</span><br>    <span class="hljs-built_in">inorder</span>(root-&gt;rchild); <span class="hljs-comment">//访问右子树</span><br>&#125;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">postorder</span><span class="hljs-params">(node* root)</span> </span>&#123; <span class="hljs-comment">//后序遍历</span><br>    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">NULL</span>) <span class="hljs-keyword">return</span>; <span class="hljs-comment">//到达空树，即递归边界</span><br>    <span class="hljs-built_in">preorder</span>(root-&gt;lchild); <span class="hljs-comment">//访问左子树</span><br>    <span class="hljs-built_in">preorder</span>(root-&gt;rchild); <span class="hljs-comment">//访问右子树</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, root-&gt;data); <span class="hljs-comment">//访问根节点数据域</span><br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-type">int</span> nums[<span class="hljs-number">10</span>] = &#123; <span class="hljs-number">5</span>,<span class="hljs-number">3</span>,<span class="hljs-number">8</span>,<span class="hljs-number">2</span>,<span class="hljs-number">4</span>,<span class="hljs-number">1</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>,<span class="hljs-number">9</span>,<span class="hljs-number">0</span> &#125;;<br>    node* root = <span class="hljs-built_in">create</span>(nums, <span class="hljs-built_in">sizeof</span>(nums)/<span class="hljs-built_in">sizeof</span>(<span class="hljs-type">int</span>));<br>    <span class="hljs-built_in">preorder</span>(root);<span class="hljs-comment">//前序遍历</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>    <span class="hljs-built_in">inorder</span>(root);    <span class="hljs-comment">//中序遍历</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>    <span class="hljs-built_in">postorder</span>(root);<span class="hljs-comment">//后序遍历</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;\n&quot;</span>);<br>    node* x = <span class="hljs-built_in">Find</span>(<span class="hljs-number">5</span>, root);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%p&quot;</span>, x);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><figcaption><span>二叉树代码 [lang:C++] [title] [url] [link text]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">struct node</span><br><span class="line">&#123;</span><br><span class="line">    int data; //数据域</span><br><span class="line">    node* lchild; //指向左子树根节点的指针</span><br><span class="line">    node* rchild; //指向右子树根节点的指针</span><br><span class="line">&#125;;</span><br><span class="line">node* newNode(int v) &#123;</span><br><span class="line">    node* Node = new node; //申请一个node类型变量的地址空间</span><br><span class="line">    Node-&gt;data = v; //结点权值为v</span><br><span class="line">    Node-&gt;lchild = Node-&gt;rchild = NULL; //初始状态下无左右孩子</span><br><span class="line">    return Node; //返回新节点的地址</span><br><span class="line">&#125;</span><br><span class="line">node* Find(int x, node* root)&#123;</span><br><span class="line">    if (!root) return NULL; /*查找失败*/</span><br><span class="line">    if (x &gt; root-&gt;data)</span><br><span class="line">        return Find(x, root-&gt;rchild); /*在右子树中继续查找*/</span><br><span class="line">    else if (x &lt; root-&gt;data)</span><br><span class="line">        return Find(x, root-&gt;lchild); /*在左子树中继续查找*/</span><br><span class="line">    else</span><br><span class="line">        return root; /*查找成功，返回结点的找到结点的地址*/</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void insert(node*&amp; root, int x) &#123;  //注意 传入的是结点指针的引用</span><br><span class="line">    if (root == NULL) &#123; //空树，即查找失败，插入结点（递归边界）</span><br><span class="line">        root = newNode(x);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    if (root-&gt;data &gt; x) &#123; //往左子树搜索</span><br><span class="line">        insert(root-&gt;lchild, x);</span><br><span class="line">    &#125;</span><br><span class="line">    else insert(root-&gt;rchild, x); //往右子树搜索</span><br><span class="line">&#125;</span><br><span class="line">node* create(int data[], int n) &#123;</span><br><span class="line">    node* root = NULL;     //新建空根结点</span><br><span class="line">    for (int i = 0; i &lt; n; i++) &#123;</span><br><span class="line">        insert(root, data[i]); //插入二叉树</span><br><span class="line">    &#125;</span><br><span class="line">    return root; //返回根节点</span><br><span class="line">&#125;</span><br><span class="line">void preorder(node* root) &#123; //前序遍历</span><br><span class="line">    if (root == NULL) return; //到达空树，即递归边界</span><br><span class="line">    printf(&quot;%d&quot;, root-&gt;data); //访问根节点数据域</span><br><span class="line">    preorder(root-&gt;lchild); //访问左子树</span><br><span class="line">    preorder(root-&gt;rchild); //访问右子树</span><br><span class="line">&#125;</span><br><span class="line">void inorder(node* root) &#123; //中序遍历</span><br><span class="line">    if (root == NULL) return; //到达空树，即递归边界</span><br><span class="line">    inorder(root-&gt;lchild); //访问左子树</span><br><span class="line">    printf(&quot;%d&quot;, root-&gt;data); //访问根节点数据域</span><br><span class="line">    inorder(root-&gt;rchild); //访问右子树</span><br><span class="line">&#125;</span><br><span class="line">void postorder(node* root) &#123; //后序遍历</span><br><span class="line">    if (root == NULL) return; //到达空树，即递归边界</span><br><span class="line">    preorder(root-&gt;lchild); //访问左子树</span><br><span class="line">    preorder(root-&gt;rchild); //访问右子树</span><br><span class="line">    printf(&quot;%d&quot;, root-&gt;data); //访问根节点数据域</span><br><span class="line">&#125;</span><br><span class="line">int main() &#123;</span><br><span class="line">    int nums[10] = &#123; 5,3,8,2,4,1,6,7,9,0 &#125;;</span><br><span class="line">    node* root = create(nums, sizeof(nums)/sizeof(int));</span><br><span class="line">    preorder(root);//前序遍历</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    inorder(root);    //中序遍历</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    postorder(root);//后序遍历</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    node* x = Find(5, root);</span><br><span class="line">    printf(&quot;%p&quot;, x);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 <p><strong>3.二叉搜索树的问题</strong></p>
 <p>二叉查找树比普通树查找更快，查找、插入、删除的时间复杂度为O（logN）。但是二叉查找树有一种极端的情况，就是会变成一种线性链表似的结构。此时时间复杂度就变成了O（N），为了解决这种情况，出现了二叉平衡树</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_5.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_5.png"></p>
 <h2 id="4-平衡二叉树"><a href="#4-平衡二叉树" class="headerlink" title="4.平衡二叉树"></a>4.平衡二叉树</h2><p><strong>1.基本概念</strong></p>
 <p>平衡二叉树也叫AVL树，它或者是一颗空树，或者具有以下性质的二叉排序树：它的左子树和左子树的高度之差(平衡因子)的绝对值不超过1，且它的左子树和右子树都是一颗平衡二叉树。所以由于要维持自身的平衡，所以进行插入和删除结点操作的时候，需要对结点进行频繁的旋转。</p>
 <p><strong>2.平衡因子</strong></p>
 <p>BF（平衡因子）的值为：左子树高度 - 右子树高度</p>
 <p><strong>3.平衡方法</strong></p>
-<p><img src="/2024/11/09/%E6%A0%91/img_6.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_6.png"></p>
 <p>当我们在一个平衡二叉树中进行插入和删除操作时，可能会导致它的平衡性被破坏。如上图，本是平衡的，如果我插入了一个新值是30的节点，那么这棵树的平衡性就会被破坏，它一共破坏了节点32和节点25的平衡性，虽然破坏了2个节点的平衡性，但我们只讨论最近被破坏节点的平衡性（因为底下的处理好了，上面的节点平衡性也会随之处理好），即新插入节点30破坏了节点32的平衡性，因为新插入节点而导致平衡性被破坏的节点也叫麻烦节点，而被其破坏平衡的节点叫被破坏节点。一共把破坏平衡型的类型分为了四种，分别是LL型、RR型、LR型和RL型，每一种破坏方式都有对应的旋转方式来保持树的平衡性。</p>
 <p><strong>1.LL型</strong></p>
 <table>
@@ -393,8 +267,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="left"><img src="/2024/11/09/%E6%A0%91/img_7.png" srcset="/img/loading.gif" lazyload></td>
-<td align="left"><img src="/2024/11/09/%E6%A0%91/img_8.png" srcset="/img/loading.gif" lazyload></td>
+<td align="left"><img src="/2024/11/09/%E6%A0%91/img_7.png"></td>
+<td align="left"><img src="/2024/11/09/%E6%A0%91/img_8.png"></td>
 </tr>
 </tbody></table>
 <p>如上两图图，LL型也为左左型，在被破坏节点的左边的左边插入而导致失衡，则为LL型。</p>
@@ -407,8 +281,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="left"><img src="/2024/11/09/%E6%A0%91/img_9.png" srcset="/img/loading.gif" lazyload></td>
-<td align="left"><img src="/2024/11/09/%E6%A0%91/img_10.png" srcset="/img/loading.gif" lazyload></td>
+<td align="left"><img src="/2024/11/09/%E6%A0%91/img_9.png"></td>
+<td align="left"><img src="/2024/11/09/%E6%A0%91/img_10.png"></td>
 </tr>
 </tbody></table>
 <p><strong>2.RR型</strong></p>
@@ -420,8 +294,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><img src="/2024/11/09/%E6%A0%91/img_11.png" srcset="/img/loading.gif" lazyload></td>
-<td align="left"><img src="/2024/11/09/%E6%A0%91/img_12.png" srcset="/img/loading.gif" lazyload></td>
+<td align="center"><img src="/2024/11/09/%E6%A0%91/img_11.png"></td>
+<td align="left"><img src="/2024/11/09/%E6%A0%91/img_12.png"></td>
 </tr>
 </tbody></table>
 <p>如上两图图，RR型也为右右型，在被破坏节点的右边的右边插入而导致失衡，则为RR型。</p>
@@ -434,12 +308,12 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center"><img src="/2024/11/09/%E6%A0%91/img_13.png" srcset="/img/loading.gif" lazyload></td>
-<td align="left"><img src="/2024/11/09/%E6%A0%91/img_14.png" srcset="/img/loading.gif" lazyload></td>
+<td align="center"><img src="/2024/11/09/%E6%A0%91/img_13.png"></td>
+<td align="left"><img src="/2024/11/09/%E6%A0%91/img_14.png"></td>
 </tr>
 </tbody></table>
 <p><strong>3.LR型</strong></p>
-<p><img src="/2024/11/09/%E6%A0%91/img_15.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_15.png"></p>
 <p>如上图，LR型也为左右型，在被破坏节点的左边的右边插入而导致失衡，则为LR型。</p>
 <p>LR型解决方案：以被破坏节点L（左）节点为基础先进行一次L（左）旋，再以被破坏节点为基础进行右旋。</p>
 <table>
@@ -450,13 +324,13 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="left"><img src="/2024/11/09/%E6%A0%91/img_16.png" srcset="/img/loading.gif" lazyload></td>
-<td align="center"><img src="/2024/11/09/%E6%A0%91/img_17.png" srcset="/img/loading.gif" lazyload></td>
+<td align="left"><img src="/2024/11/09/%E6%A0%91/img_16.png"></td>
+<td align="center"><img src="/2024/11/09/%E6%A0%91/img_17.png"></td>
 </tr>
 </tbody></table>
 <p>先以20为基础进行一次左旋。再以25为基础进行一次右旋，可以看出经过两次旋转后，该树已经平衡。</p>
 <p><strong>4.RL型</strong></p>
-<p><img src="/2024/11/09/%E6%A0%91/img_18.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_18.png"></p>
 <p>如上图，RL型也为右左型，在被破坏节点的右边的左边插入而导致失衡，则为RL型。</p>
 <p>RL型解决方案：以被破坏节点R（右）节点为基础先进行一次R（右）旋，再以被破坏节点为基础进行左旋。</p>
 <table>
@@ -467,8 +341,8 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="left"><img src="/2024/11/09/%E6%A0%91/img_19.png" srcset="/img/loading.gif" lazyload></td>
-<td align="center"><img src="/2024/11/09/%E6%A0%91/img_20.png" srcset="/img/loading.gif" lazyload></td>
+<td align="left"><img src="/2024/11/09/%E6%A0%91/img_19.png"></td>
+<td align="center"><img src="/2024/11/09/%E6%A0%91/img_20.png"></td>
 </tr>
 </tbody></table>
 <p>先以25为基础进行一次右旋。再以20为基础进行一次右旋，可以看出经过两次旋转后，该树已经平衡。</p>
@@ -477,7 +351,7 @@
 <p>RR型和LL型，以被破坏节点为基础进行其反向的旋转即可，即RR型进行左旋，LL型进行右旋。</p>
 <p>RL型和LR型，先以被破坏节点的LR或RL首字母的节点进行LR或RL首字母旋转，再以被破坏节点为基础进行LR或RL尾字母旋转，即RL型先以被破坏节点的R（右）节点为基础进行一次R（右）选，再以被破坏节点为基础进行一次L（左）旋；LR旋先以被破坏节点的L（左）节点为基础进行一次L（左）选，再以被破坏节点为基础进行一次R（右）旋。</p>
 <p><strong>4.代码实现</strong></p>
-<figure class="highlight xl"><figcaption><span>平衡二叉树代码 [lang:C++] [title] [url] [link text]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><code class="hljs xl">#include&lt;iostream&gt;<br><br>typedef int ElenmentType;<br><span class="hljs-comment">//平衡二叉树的结构</span><br>typedef struct AVLNode &#123;<br>    int depth;<span class="hljs-comment">//深度</span><br>    struct AVLNode* left;<br>    struct AVLNode* right;<br>    struct AVLNode* parent;<br>    ElenmentType value;<br>    <span class="hljs-comment">//构造器</span><br>    AVLNode(ElenmentType value = <span class="hljs-number">0</span>) &#123;<br>    parent = NULL;<br>    depth = <span class="hljs-number">0</span>;<br>    left = right = NULL;<br>    <span class="hljs-function"><span class="hljs-title">this</span>-&gt;</span>value = value;<br>&#125;<br>&#125;Tree;<br>Tree* LL_rotate(Tree* root) &#123;<span class="hljs-comment">//LL执行右旋</span><br>    <span class="hljs-comment">//root是原来的平衡二叉树的根结点</span><br>    Tree* temp;<span class="hljs-comment">//临时变量</span><br>    <span class="hljs-comment">//获取根结点的左孩子</span><br>    <span class="hljs-function"><span class="hljs-title">temp</span> = root-&gt;</span>left;<br>    <span class="hljs-comment">//根结点的左孩子变更为其原来左孩子的右孩子</span><br>    <span class="hljs-function"><span class="hljs-title">root</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">left</span> = temp-&gt;</span>right;<br>    <span class="hljs-comment">//原来的根结点的左孩子变为了根结点</span><br>    <span class="hljs-function"><span class="hljs-title">temp</span>-&gt;</span>right = root;<br>    return temp;<br>&#125;<br>Tree* RR_rotate(Tree* root) &#123;<span class="hljs-comment">//RR执行左旋</span><br>    Tree* temp;<br>    <span class="hljs-function"><span class="hljs-title">temp</span> = root-&gt;</span>right;<span class="hljs-comment">//获取根结点的右孩子</span><br>    <span class="hljs-function"><span class="hljs-title">root</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">right</span> = temp-&gt;</span>left;<span class="hljs-comment">//根结点的右孩子变为其原来右孩子的左孩子</span><br>    <span class="hljs-function"><span class="hljs-title">temp</span>-&gt;</span>left = root;<span class="hljs-comment">//原来的根结点的右孩子变为了新的根结点</span><br>    return temp;<br>&#125;<br>Tree* LR_rotate(Tree* root) &#123;<br>    Tree* temp;<br>    <span class="hljs-function"><span class="hljs-title">temp</span> = root-&gt;</span>left;<br>    <span class="hljs-function"><span class="hljs-title">root</span>-&gt;</span>left = RR_rotate(temp);<br>    return LL_rotate(root);<br>&#125;<br>Tree* RL_rotate(Tree* root) &#123;<br>    Tree* temp;<br>    <span class="hljs-function"><span class="hljs-title">temp</span> = root-&gt;</span>right;<br>    <span class="hljs-function"><span class="hljs-title">root</span>-&gt;</span>right = LL_rotate(temp);<br>    return RR_rotate(root);<br>&#125;<br>int height(const Tree* root)<span class="hljs-comment">//求树高，递归</span><br>&#123;<br>    <span class="hljs-keyword">if</span> (root == NULL)<br>        return <span class="hljs-number">0</span>;<br>    <span class="hljs-function"><span class="hljs-title">return</span> std::max(height(root-&gt;</span>left),<br>    <span class="hljs-function"><span class="hljs-title">height</span>(root-&gt;</span>right)) + <span class="hljs-number">1</span>;<br>&#125;<br>int diff(const Tree* root)<span class="hljs-comment">//求平衡因子，即当前节点左右子树的差</span><br>&#123;<br>    <span class="hljs-function"><span class="hljs-title">return</span> height(root-&gt;</span><span class="hljs-function"><span class="hljs-title">left</span>) - height(root-&gt;</span>right);<br>&#125;<br><br>Tree* Balance(Tree* root)<br>&#123;<br>    int balanceFactor = diff(root);<span class="hljs-comment">//diff用来计算平衡因子（左右子树高度差）</span><br>    <span class="hljs-keyword">if</span> (balanceFactor &gt; <span class="hljs-number">1</span>)<span class="hljs-comment">//左子树高于右子树</span><br>    &#123;<br>        <span class="hljs-function"><span class="hljs-title">if</span> (diff(root-&gt;</span>left) &gt; <span class="hljs-number">0</span>)<span class="hljs-comment">//LL的情况</span><br>        root = LL_rotate(root);<br>        <span class="hljs-keyword">else</span><span class="hljs-comment">//LR的情况</span><br>        root = LR_rotate(root);<br>    &#125;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (balanceFactor &lt; -<span class="hljs-number">1</span>)<span class="hljs-comment">//右子树高于左子树</span><br>    &#123;<br>    <span class="hljs-function"><span class="hljs-title">if</span> (diff(root-&gt;</span>right) &gt; <span class="hljs-number">0</span>)<span class="hljs-comment">//RL的情况</span><br>        root = RL_rotate(root);<br>        <span class="hljs-keyword">else</span><span class="hljs-comment">//RR的情况</span><br>        root = RR_rotate(root);<br>    &#125;<br>    return root;<br>&#125;<br><span class="hljs-comment">//插入结点</span><br>Tree* Insert(Tree* root, ElenmentType k)<br>&#123;<br>    <span class="hljs-keyword">if</span> (NULL == root)&#123;<br>        root = new AVLNode(k);<span class="hljs-comment">//如果根结点为null，则直接将值为根结点</span><br>        <span class="hljs-keyword">if</span> (root == NULL)<br>        printf(<span class="hljs-string">&quot;创建失败&quot;</span>);<br>        return root;<br>    &#125;<span class="hljs-comment">//递归返回条件</span><br>    <span class="hljs-function"><span class="hljs-title">else</span> <span class="hljs-keyword">if</span> (k &lt; root-&gt;</span>value)<br>    &#123;<br>        <span class="hljs-function"><span class="hljs-title">root</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">left</span> = Insert(root-&gt;</span>left, k);<span class="hljs-comment">//递归左子树</span><br>        <span class="hljs-comment">//balance operation</span><br>        root = Balance(root);<span class="hljs-comment">//平衡操作包含了四种旋转</span><br>    &#125;<br>    <span class="hljs-function"><span class="hljs-title">else</span> <span class="hljs-keyword">if</span> (k &gt; root-&gt;</span>value)<br>    &#123;<br>        <span class="hljs-function"><span class="hljs-title">root</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">right</span> = Insert(root-&gt;</span>right, k);<span class="hljs-comment">//递归右子树</span><br>        <span class="hljs-comment">//balance operation</span><br>        root = Balance(root);<span class="hljs-comment">//平衡操作包含了四种旋转</span><br>    &#125;<br>    return root;<br>&#125;<br><span class="hljs-comment">//中序遍历,获取的数列是有序的</span><br>void displayTree(Tree* node) &#123;<br>    <span class="hljs-keyword">if</span> (node == NULL) return;<br>    <span class="hljs-function"><span class="hljs-title">if</span> (node-&gt;</span>left != NULL) &#123;<br>            <span class="hljs-function"><span class="hljs-title">displayTree</span>(node-&gt;</span>left);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-title">printf</span>(&quot;%d &quot;, node-&gt;</span>value);<br>    <span class="hljs-function"><span class="hljs-title">if</span> (node-&gt;</span>right != NULL) &#123;<br>            <span class="hljs-function"><span class="hljs-title">displayTree</span>(node-&gt;</span>right);<br>    &#125;<br>&#125;<br><span class="hljs-comment">//查找value，成功则返回该结点</span><br>Tree* binaryTreeSearch(Tree* node, int value) &#123;<br>    <span class="hljs-function"><span class="hljs-title">if</span> (node-&gt;</span>value == value)<br>    return node;<br>    <span class="hljs-function"><span class="hljs-title">else</span> <span class="hljs-keyword">if</span> (node-&gt;</span>value &gt; value) &#123;<br>        <span class="hljs-function"><span class="hljs-title">if</span> (node-&gt;</span>left != NULL)<br>        <span class="hljs-function"><span class="hljs-title">return</span> binaryTreeSearch(node-&gt;</span>left, value);<br>        <span class="hljs-keyword">else</span> return NULL;<br>    &#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-function"><span class="hljs-title">if</span> (node-&gt;</span>right != NULL)<br>        <span class="hljs-function"><span class="hljs-title">return</span> binaryTreeSearch(node-&gt;</span>right, value);<br>        <span class="hljs-keyword">else</span><br>        return NULL;<br>    &#125;<br>&#125;<br>int main() &#123;<br>    int a[<span class="hljs-number">10</span>] = &#123; <span class="hljs-number">12</span>,<span class="hljs-number">13</span>,<span class="hljs-number">55</span>,<span class="hljs-number">66</span>,<span class="hljs-number">44</span>,<span class="hljs-number">77</span>,<span class="hljs-number">99</span>,<span class="hljs-number">33</span>,<span class="hljs-number">46</span>,<span class="hljs-number">79</span> &#125;;<br>    Tree* root = NULL;<br>    printf(<span class="hljs-string">&quot;第一次构建的平衡二叉树中序遍历：&quot;</span>);<br>    <span class="hljs-keyword">for</span> (int i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>    root = Insert(root, a[i]);<br>    &#125;<br>    displayTree(root);<br>    printf(<span class="hljs-string">&quot;\n&quot;</span>);<br>    <span class="hljs-comment">//查找33</span><br>    int value = <span class="hljs-number">33</span>;<br>    Tree* obj;<br>    <span class="hljs-keyword">if</span> ((obj = binaryTreeSearch(root, value)) == NULL) &#123;<br>    printf(<span class="hljs-string">&quot;%d值不存在&quot;</span>, value);<br>    &#125;<br>    <span class="hljs-keyword">else</span> printf(<span class="hljs-string">&quot;%d值存在,地址是%p&quot;</span>, value, obj);<br>    printf(<span class="hljs-string">&quot;\n&quot;</span>);<br>    root = Insert(root, <span class="hljs-number">5</span>);<br>    printf(<span class="hljs-string">&quot;插入了结点值为5的结点以后，中序遍历：&quot;</span>);<br>    displayTree(root); <br>    return <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><figcaption><span>平衡二叉树代码 [lang:C++] [title] [url] [link text]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br></pre></td><td class="code"><pre><span class="line">#include&lt;iostream&gt;</span><br><span class="line"></span><br><span class="line">typedef int ElenmentType;</span><br><span class="line">//平衡二叉树的结构</span><br><span class="line">typedef struct AVLNode &#123;</span><br><span class="line">    int depth;//深度</span><br><span class="line">    struct AVLNode* left;</span><br><span class="line">    struct AVLNode* right;</span><br><span class="line">    struct AVLNode* parent;</span><br><span class="line">    ElenmentType value;</span><br><span class="line">    //构造器</span><br><span class="line">    AVLNode(ElenmentType value = 0) &#123;</span><br><span class="line">    parent = NULL;</span><br><span class="line">    depth = 0;</span><br><span class="line">    left = right = NULL;</span><br><span class="line">    this-&gt;value = value;</span><br><span class="line">&#125;</span><br><span class="line">&#125;Tree;</span><br><span class="line">Tree* LL_rotate(Tree* root) &#123;//LL执行右旋</span><br><span class="line">    //root是原来的平衡二叉树的根结点</span><br><span class="line">    Tree* temp;//临时变量</span><br><span class="line">    //获取根结点的左孩子</span><br><span class="line">    temp = root-&gt;left;</span><br><span class="line">    //根结点的左孩子变更为其原来左孩子的右孩子</span><br><span class="line">    root-&gt;left = temp-&gt;right;</span><br><span class="line">    //原来的根结点的左孩子变为了根结点</span><br><span class="line">    temp-&gt;right = root;</span><br><span class="line">    return temp;</span><br><span class="line">&#125;</span><br><span class="line">Tree* RR_rotate(Tree* root) &#123;//RR执行左旋</span><br><span class="line">    Tree* temp;</span><br><span class="line">    temp = root-&gt;right;//获取根结点的右孩子</span><br><span class="line">    root-&gt;right = temp-&gt;left;//根结点的右孩子变为其原来右孩子的左孩子</span><br><span class="line">    temp-&gt;left = root;//原来的根结点的右孩子变为了新的根结点</span><br><span class="line">    return temp;</span><br><span class="line">&#125;</span><br><span class="line">Tree* LR_rotate(Tree* root) &#123;</span><br><span class="line">    Tree* temp;</span><br><span class="line">    temp = root-&gt;left;</span><br><span class="line">    root-&gt;left = RR_rotate(temp);</span><br><span class="line">    return LL_rotate(root);</span><br><span class="line">&#125;</span><br><span class="line">Tree* RL_rotate(Tree* root) &#123;</span><br><span class="line">    Tree* temp;</span><br><span class="line">    temp = root-&gt;right;</span><br><span class="line">    root-&gt;right = LL_rotate(temp);</span><br><span class="line">    return RR_rotate(root);</span><br><span class="line">&#125;</span><br><span class="line">int height(const Tree* root)//求树高，递归</span><br><span class="line">&#123;</span><br><span class="line">    if (root == NULL)</span><br><span class="line">        return 0;</span><br><span class="line">    return std::max(height(root-&gt;left),</span><br><span class="line">    height(root-&gt;right)) + 1;</span><br><span class="line">&#125;</span><br><span class="line">int diff(const Tree* root)//求平衡因子，即当前节点左右子树的差</span><br><span class="line">&#123;</span><br><span class="line">    return height(root-&gt;left) - height(root-&gt;right);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Tree* Balance(Tree* root)</span><br><span class="line">&#123;</span><br><span class="line">    int balanceFactor = diff(root);//diff用来计算平衡因子（左右子树高度差）</span><br><span class="line">    if (balanceFactor &gt; 1)//左子树高于右子树</span><br><span class="line">    &#123;</span><br><span class="line">        if (diff(root-&gt;left) &gt; 0)//LL的情况</span><br><span class="line">        root = LL_rotate(root);</span><br><span class="line">        else//LR的情况</span><br><span class="line">        root = LR_rotate(root);</span><br><span class="line">    &#125;</span><br><span class="line">    else if (balanceFactor &lt; -1)//右子树高于左子树</span><br><span class="line">    &#123;</span><br><span class="line">    if (diff(root-&gt;right) &gt; 0)//RL的情况</span><br><span class="line">        root = RL_rotate(root);</span><br><span class="line">        else//RR的情况</span><br><span class="line">        root = RR_rotate(root);</span><br><span class="line">    &#125;</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br><span class="line">//插入结点</span><br><span class="line">Tree* Insert(Tree* root, ElenmentType k)</span><br><span class="line">&#123;</span><br><span class="line">    if (NULL == root)&#123;</span><br><span class="line">        root = new AVLNode(k);//如果根结点为null，则直接将值为根结点</span><br><span class="line">        if (root == NULL)</span><br><span class="line">        printf(&quot;创建失败&quot;);</span><br><span class="line">        return root;</span><br><span class="line">    &#125;//递归返回条件</span><br><span class="line">    else if (k &lt; root-&gt;value)</span><br><span class="line">    &#123;</span><br><span class="line">        root-&gt;left = Insert(root-&gt;left, k);//递归左子树</span><br><span class="line">        //balance operation</span><br><span class="line">        root = Balance(root);//平衡操作包含了四种旋转</span><br><span class="line">    &#125;</span><br><span class="line">    else if (k &gt; root-&gt;value)</span><br><span class="line">    &#123;</span><br><span class="line">        root-&gt;right = Insert(root-&gt;right, k);//递归右子树</span><br><span class="line">        //balance operation</span><br><span class="line">        root = Balance(root);//平衡操作包含了四种旋转</span><br><span class="line">    &#125;</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br><span class="line">//中序遍历,获取的数列是有序的</span><br><span class="line">void displayTree(Tree* node) &#123;</span><br><span class="line">    if (node == NULL) return;</span><br><span class="line">    if (node-&gt;left != NULL) &#123;</span><br><span class="line">            displayTree(node-&gt;left);</span><br><span class="line">    &#125;</span><br><span class="line">    printf(&quot;%d &quot;, node-&gt;value);</span><br><span class="line">    if (node-&gt;right != NULL) &#123;</span><br><span class="line">            displayTree(node-&gt;right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//查找value，成功则返回该结点</span><br><span class="line">Tree* binaryTreeSearch(Tree* node, int value) &#123;</span><br><span class="line">    if (node-&gt;value == value)</span><br><span class="line">    return node;</span><br><span class="line">    else if (node-&gt;value &gt; value) &#123;</span><br><span class="line">        if (node-&gt;left != NULL)</span><br><span class="line">        return binaryTreeSearch(node-&gt;left, value);</span><br><span class="line">        else return NULL;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        if (node-&gt;right != NULL)</span><br><span class="line">        return binaryTreeSearch(node-&gt;right, value);</span><br><span class="line">        else</span><br><span class="line">        return NULL;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">int main() &#123;</span><br><span class="line">    int a[10] = &#123; 12,13,55,66,44,77,99,33,46,79 &#125;;</span><br><span class="line">    Tree* root = NULL;</span><br><span class="line">    printf(&quot;第一次构建的平衡二叉树中序遍历：&quot;);</span><br><span class="line">    for (int i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">    root = Insert(root, a[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    displayTree(root);</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    //查找33</span><br><span class="line">    int value = 33;</span><br><span class="line">    Tree* obj;</span><br><span class="line">    if ((obj = binaryTreeSearch(root, value)) == NULL) &#123;</span><br><span class="line">    printf(&quot;%d值不存在&quot;, value);</span><br><span class="line">    &#125;</span><br><span class="line">    else printf(&quot;%d值存在,地址是%p&quot;, value, obj);</span><br><span class="line">    printf(&quot;\n&quot;);</span><br><span class="line">    root = Insert(root, 5);</span><br><span class="line">    printf(&quot;插入了结点值为5的结点以后，中序遍历：&quot;);</span><br><span class="line">    displayTree(root); </span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h2 id="5-B树"><a href="#5-B树" class="headerlink" title="5.B树"></a>5.B树</h2><p><strong>1.概述</strong></p>
 <p>B树也称B-树,它是一颗多路平衡查找树。我们描述一颗B树时需要指定它的阶数，阶数表示了一个结点最多有多少个孩子结点，一般用字母m表示阶数。当m取2时，就是我们常见的二叉搜索树。</p>
@@ -493,7 +367,7 @@
 <p>3）非根结点至少有Math.ceil(m&#x2F;2)-1个key。</p>
 <p>4）每个结点中的关键字都按照从小到大的顺序排列，每个关键字的左子树中的所有关键字都小于它，而右子树中的所有关键字都大于它。</p>
 <p>5）所有叶子结点都位于同一层，或者说根结点到每个叶子结点的长度都相同。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_21.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_21.png"></p>
 <p>上图是一颗阶数为4的B树。在实际应用中的B树的阶数m都非常大（通常大于100），所以即使存储大量的数据，B树的高度仍然比较小。每个结点中存储了关键字（key）和关键字对应的数据（data），以及孩子结点的指针。我们将一个key和其对应的data称为一个记录。在数据库中我们将B树（和B+树）作为索引结构，可以加快查询速度，此时B树中的key就表示键，而data表示了这个键对应的条目在硬盘上的逻辑地址。</p>
 <p><strong>4.插入操作</strong></p>
 <p>插入操作是指插入一条记录，即（key, value）的键值对。如果B树中已存在需要插入的键值对，则用需要插入的value替换旧的value。若B树不存在这个key,则一定是在叶子结点中进行插入操作。</p>
@@ -501,27 +375,27 @@
 <p>2）判断当前结点key的个数是否小于等于m-1，若满足则结束，否则进行第3步。</p>
 <p>3）以结点中间的key为中心分裂成左右两部分，然后将这个中间的key插入到父结点中，这个key的左子树指向分裂后的左半部分，这个key的右子支指向分裂后的右半部分，然后将当前结点指向父结点，继续进行第3步。</p>
 <p>a）在空树中插入39</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_22.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_22.png"></p>
 <p>此时根结点就一个key，此时根结点也是叶子结点</p>
 <p>b）继续插入22，97和41</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_23.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_23.png"></p>
 <p>根结点此时有4个key</p>
 <p>c）继续插入53</p>
 <p>插入后超过了最大允许的关键字个数4，所以以key值为41为中心进行分裂，结果如下图所示，分裂后当前结点指针指向父结点，满足B树条件，插入操作结束。当阶数m为偶数时，需要分裂时就不存在排序恰好在中间的key，那么我们选择中间位置的前一个key或中间位置的后一个key为中心进行分裂即可。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_24.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_24.png"></p>
 <p>d）依次插入13，21，40，同样会造成分裂，结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_25.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_25.png"></p>
 <p>e）依次插入30，27, 33 ；36，35，34 ；24，29，结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_26.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_26.png"></p>
 <p>f）插入key值为26的记录，插入后的结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_27.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_27.png"></p>
 <p>当前结点需要以27为中心分裂，并向父结点进位27，然后当前结点指向父结点，结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_28.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_28.png"></p>
 <p>进位后导致当前结点（即根结点）也需要分裂，分裂的结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_29.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_29.png"></p>
 <p>分裂后当前结点指向新的根，此时无需调整。</p>
 <p>g）最后再依次插入key为17,28,29,31,32的记录，结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_30.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_30.png"></p>
 <p><strong>5.删除操作</strong></p>
 <p>删除操作是指，根据key删除记录，如果B树中的记录中不存对应key的记录，则删除失败。</p>
 <p>1）如果当前需要删除的key位于非叶子结点上，则用后继key（这里的后继key均指后继记录的意思）覆盖要删除的key，然后在后继key所在的子支中删除该后继key。此时后继key一定位于叶子结点上，这个过程和二叉搜索树删除结点的方式类似。删除这个记录后执行第2步</p>
@@ -531,28 +405,28 @@
 <p>有些结点它可能即有左兄弟，又有右兄弟，那么我们任意选择一个兄弟结点进行操作即可。</p>
 <p>下面以5阶B树为例，介绍B树的删除操作，5阶B树中，结点最多有4个key,最少有2个key</p>
 <p>a）原始状态</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_31.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_31.png"></p>
 <p>b）在上面的B树中删除21，删除后结点中的关键字个数仍然大于等2，所以删除结束。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_32.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_32.png"></p>
 <p>c）在上述情况下接着删除27。从上图可知27位于非叶子结点中，所以用27的后继替换它。从图中可以看出，27的后继为28，我们用28替换27，然后在28（原27）的右孩子结点中删除28。删除后的结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_33.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_33.png"></p>
 <p>删除后发现，当前叶子结点的记录的个数小于2，而它的兄弟结点中有3个记录（当前结点还有一个右兄弟，选择右兄弟就会出现合并结点的情况，不论选哪一个都行，只是最后B树的形态会不一样而已），我们可以从兄弟结点中借取一个key。所以父结点中的28下移，兄弟结点中的26上移,删除结束。结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_34.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_34.png"></p>
 <p>d）在上述情况下接着32，结果如下图。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_35.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_35.png"></p>
 <p>当删除后，当前结点中只key，而兄弟结点中也仅有2个key。所以只能让父结点中的30下移和这个两个孩子结点中的key合并，成为一个新的结点，当前结点的指针指向父结点。结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_36.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_36.png"></p>
 <p>当前结点key的个数满足条件，故删除结束。</p>
 <p>e）上述情况下，我们接着删除key为40的记录，删除后结果如下图所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_37.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_37.png"></p>
 <p>同理，当前结点的记录数小于2，兄弟结点中没有多余key，所以父结点中的key下移，和兄弟（这里我们选择左兄弟，选择右兄弟也可以）结点合并，合并后的指向当前结点的指针就指向了父结点。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_38.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_38.png"></p>
 <p>同理，对于当前结点而言只能继续合并了，最后结果如下所示。</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_39.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_39.png"></p>
 <p>合并后结点当前结点满足条件，删除结束。</p>
 <p><strong>6.查找操作</strong></p>
 <p>以查找6为例子：</p>
-<p><img src="/2024/11/09/%E6%A0%91/img_40.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/2024/11/09/%E6%A0%91/img_40.png"></p>
 <p>B树的查找包括两个基本操作： ① 在B树中找结点 ② 在结点中找关键字。</p>
 <p>更具体的说，根据指针拿到一个结点，是一次磁盘I&#x2F;O，即第①个动作是在磁盘上进行的；根据有序关键字查找目标，是一次顺序查找或二分查找，即第②个动作是在内存中进行的。</p>
 <p>这时，你是不是已经明白了为什么数据库要使用B树而非二叉搜索树呢？</p>
@@ -563,7 +437,7 @@
 <li>叶子节点（最底部的节点）才会存放实际数据（索引+记录），非叶子节点只会存放索引。</li>
 <li>所有索引都会在叶子节点出现，叶子节点之间构成一个有序链表。</li>
 <li>非叶子节点的索引也会同时存在在子节点中，并且是在子节点中所有索引的最大（或最小）。</li>
-<li>非叶子节点中有多少个子节点，就有多少个索引。<br><img src="/2024/11/09/%E6%A0%91/img_41.png" srcset="/img/loading.gif" lazyload><br><strong>2.在存储上的优势</strong><br>MySQL数据库里的InnoDB存储引擎就是使用B+树进行数据存储的。<br>下面通过三个方面，比较下 B+ 和 B 树的性能区别。<br><strong>1、单点查询</strong><br>B 树进行单个索引查询时，最快可以在 O(1) 的时间代价内就查到，而从平均时间代价来看，会比 B+ 树稍快一些。但是 B 树的查询波动会比较大，因为每个节点即存索引又存记录，所以有时候访问到了非叶子节点就可以找到索引，而有时需要访问到叶子节点才能找到索引。B+ 树的非叶子节点不存放实际的记录数据，仅存放索引，因此数据量相同的情况下，相比存储即存索引又存记录的 B 树，B+树的非叶子节点可以存放更多的索引，因此 B+ 树可以比 B 树更「矮胖」，查询底层节点的磁盘 I&#x2F;O次数会更少。<br><strong>2、插入和删除效率</strong><br>B+ 树有大量的冗余节点，这样使得删除一个节点的时候，可以直接从叶子节点中删除，甚至可以不动非叶子节点，这样删除非常快。<br>B 树则不同，B 树没有冗余节点，删除节点的时候非常复杂，比如删除根节点中的数据，可能涉及复杂的树的变形，比如下面这个动图是删除 B 树根节点的过程：<br><strong>3、范围查询</strong><br>B 树和 B+ 树等值查询原理基本一致，先从根节点查找，然后对比目标数据的范围，最后递归的进入子节点查找。因为 B+ 树所有叶子节点间还有一个链表进行连接，这种设计对范围查找非常有帮助，比如说我们想知道 12 月 1 日和 12 月 12 日之间的订单，这个时候可以先查找到 12 月 1 日所在的叶子节点，然后利用链表向右遍历，直到找到 12 月12 日的节点，这样就不需要从根节点查询了，进一步节省查询需要的时间。而 B 树没有将所有叶子节点用链表串联起来的结构，因此只能通过树的遍历来完成范围查询，这会涉及多个节点的磁盘 I&#x2F;O 操作，范围查询效率不如 B+ 树。因此，存在大量范围检索的场景，适合使用 B+树，比如数据库。而对于大量的单个索引查询的场景，可以考虑 B 树，比如 nosql 的MongoDB。</li>
+<li>非叶子节点中有多少个子节点，就有多少个索引。<br><img src="/2024/11/09/%E6%A0%91/img_41.png"><br><strong>2.在存储上的优势</strong><br>MySQL数据库里的InnoDB存储引擎就是使用B+树进行数据存储的。<br>下面通过三个方面，比较下 B+ 和 B 树的性能区别。<br><strong>1、单点查询</strong><br>B 树进行单个索引查询时，最快可以在 O(1) 的时间代价内就查到，而从平均时间代价来看，会比 B+ 树稍快一些。但是 B 树的查询波动会比较大，因为每个节点即存索引又存记录，所以有时候访问到了非叶子节点就可以找到索引，而有时需要访问到叶子节点才能找到索引。B+ 树的非叶子节点不存放实际的记录数据，仅存放索引，因此数据量相同的情况下，相比存储即存索引又存记录的 B 树，B+树的非叶子节点可以存放更多的索引，因此 B+ 树可以比 B 树更「矮胖」，查询底层节点的磁盘 I&#x2F;O次数会更少。<br><strong>2、插入和删除效率</strong><br>B+ 树有大量的冗余节点，这样使得删除一个节点的时候，可以直接从叶子节点中删除，甚至可以不动非叶子节点，这样删除非常快。<br>B 树则不同，B 树没有冗余节点，删除节点的时候非常复杂，比如删除根节点中的数据，可能涉及复杂的树的变形，比如下面这个动图是删除 B 树根节点的过程：<br><strong>3、范围查询</strong><br>B 树和 B+ 树等值查询原理基本一致，先从根节点查找，然后对比目标数据的范围，最后递归的进入子节点查找。因为 B+ 树所有叶子节点间还有一个链表进行连接，这种设计对范围查找非常有帮助，比如说我们想知道 12 月 1 日和 12 月 12 日之间的订单，这个时候可以先查找到 12 月 1 日所在的叶子节点，然后利用链表向右遍历，直到找到 12 月12 日的节点，这样就不需要从根节点查询了，进一步节省查询需要的时间。而 B 树没有将所有叶子节点用链表串联起来的结构，因此只能通过树的遍历来完成范围查询，这会涉及多个节点的磁盘 I&#x2F;O 操作，范围查询效率不如 B+ 树。因此，存在大量范围检索的场景，适合使用 B+树，比如数据库。而对于大量的单个索引查询的场景，可以考虑 B 树，比如 nosql 的MongoDB。</li>
 </ol>
 <h2 id="7-总结"><a href="#7-总结" class="headerlink" title="7.总结"></a>7.总结</h2><p>二分查找树虽然是一个天然的二分结构，能很好的利用二分查找快速定位数据，但是它存在一种极端的情况，每当插入的元素都是树内最大的元素，就会导致二分查找树退化成一个链表，此时查询复杂度就会从 O(logn)降低为 O(n)。<br>为了解决二分查找树退化成链表的问题，就出现了平衡二叉树，保证了查询操作的时间复杂度就会一直维持在 O(logn) 。但是它本质上还是一个二叉树，每个节点只能有 2 个子节点，随着元素的增多，树的高度会越来越高。而树的高度决定于磁盘 I&#x2F;O 操作的次数，因为树是存储在磁盘中的，访问每个节点，都对应一次磁盘 I&#x2F;O 操作，也就是说树的高度就等于每次查询数据时磁盘 IO 操作的次数，所以树的高度越高，就会影响查询性能。<br>B 树和 B+ 都是通过多叉树的方式，会将树的高度变矮，所以这两个数据结构非常适合检索存于磁盘中的数据。但是 MySQL 默认的存储引擎 InnoDB 采用的是 B+ 作为索引的数据结构。<br>原因有：</p>
 <ol>
@@ -571,344 +445,304 @@
 <li>B+ 树有大量的冗余节点（所有非叶子节点都是冗余索引），这些冗余索引让 B+ 树在插入、删除的效率都更高，比如删除根节点的时候，不会像 B 树那样会发生复杂的树的变化。</li>
 <li>B+ 树叶子节点之间用链表连接了起来，有利于范围查询，而 B 树要实现范围查询，因此只能通过树的遍历来完成范围查询，这会涉及多个节点的磁盘 I&#x2F;O 操作，范围查询效率不如 B+ 树。</li>
 </ol>
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-  
 </div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>树</div>
-      <div>http://example.com/2024/11/09/树/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>Author</div>
-          <div>kid</div>
         </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>Posted on</div>
-          <div>November 9, 2024</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>Licensed under</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
-
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                      <a href="/2024/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" title="计算机网络">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">计算机网络</span>
-                        <span class="visible-mobile">Previous</span>
-                      </a>
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/11/08/post/" title="我的第一篇文章">
-                        <span class="hidden-mobile">我的第一篇文章</span>
-                        <span class="visible-mobile">Next</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
+        
+            <div class="kratos-copyright text-center clearfix">
+                <span itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</span>
             </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            
+            
+                <div class="post-actions text-center clearfix" id="post-actions">
+                
+                    <a class="donate" href="javascript:;" onclick="krOpenDonateModal()"><i class="fa fa-bitcoin"></i> 打赏</a>
+                
+                
+                    <a class="share" href="javascript:;" onclick="krOpenShareModal()"><i class="fa fa-share-alt"></i> 分享</a>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-06-28T09:08:59.906Z" itemprop="dateModified">最后编辑：2025-06-28</time>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" 我的第一篇文章" href="/2024/11/08/post/"><i class="fa fa-angle-left"></i> 上一篇</a>
+            </div>
+            
+            
+            <div class="nav-next clearfix">
+                <a title=" 计算机网络" href="/2024/11/14/计算机网络/">下一篇 <i class="fa fa-angle-right"></i></a>
+            </div>
+            
+        </nav>
+    
+    
+        <div class="comment-post">
+            
+        </div>
+    
+</article>
+
+        
+
+            </section>
 
             
-          </article>
+                
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="image/img2.jpg" alt="John Doe" loading="lazy" decoding="auto" />
         </div>
-      </div>
     </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                5
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                0
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                0
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
 
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>Table of Contents</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
+            
+                
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/05/18/%E6%AF%8F%E6%97%A5%E6%90%93%E5%AE%89%E5%8D%93%E7%BB%84%E4%BB%B6/"><i class="fa fa-book"></i> 每日搓安卓组件</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/12/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="fa fa-book"></i> golang并发编程</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa fa-book"></i> 计算机网络</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/11/09/%E6%A0%91/"><i class="fa fa-book"></i> 树</a>
+            
+          
+        
+          
+          
+            <a class="list-group-item" href="/2024/11/08/post/"><i class="fa fa-book"></i> 我的第一篇文章</a>
+            
+          
+        
+      </ul>
+  </div>
   </aside>
 
-
+            
     </div>
-  </div>
+</section>
+            
+
+        
+
+                </div>
+    </div>
 </div>
 
-
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+<footer>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 Kid 版权所有.</li>
+                            <li>本站已运行<span id="kr-since">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>自豪地使用 <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a> 主题</li>
+                            <li>站点由 John Doe 用 <i class="fa fa-heart" style="color:#d43f57"></i> 搭建</li>
+                        </div>
+                        <!-- 额外的追加注入项 -->
+                        
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                <div class="box theme-box" id="theme-toggle">
+                    <span class="fa fa-adjust"></span>
+                </div>
+            </div>
+            <div id="gotop-box" class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
     </div>
-  </div>
+</footer>
+</div>
 </div>
 
-    
 
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <div id="kr-donate-modal" class="kr-modal">
+    <div class="kr-modal-bg" onclick="krCloseDonateModal()"></div>
+    <div class="kr-modal-content">
+        <div class="kr-modal-header">
+            <div class="kr-modal-icon">
+                <i class="fa fa-bitcoin"></i>
+            </div>
+            <div class="kr-modal-title">赞助喵</div>
+            <button class="kr-modal-close" onclick="krCloseDonateModal()">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
+        <div class="kr-modal-body">
+            <div class="kr-donate-message">非常感谢您的喜欢！ <i class="fa fa-heart" style="color:#d43f57"></i></div>
+            <div class="kr-donate-qr" id="kr-donate-qr">
+                
+                    <img class="kr-donate-placeholder" src="https://dev.krt.moe/demo-assets/donate.webp" alt="赞助喵" />
+                
+            </div>
+            <div class="kr-donate-platforms">
+                
+                    
+                        <button class="kr-donate-platform-button" style="color: skyblue;" title="模拟支付" onclick="krDonateModalShowPlatformQR('example_payment', 'skyblue')">
+                            <i class="fa fa-credit-card"></i>
+                        </button>
+                    
+                
+            </div>
+        </div>
     </div>
-  
-  
-  
 </div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
+<script defer src="/js/kr-modal/donate.min.js"></script>
 
 
 
 
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
+    <div id="kr-share-modal" class="kr-modal">
+    <div class="kr-modal-bg" onclick="krCloseShareModal()"></div>
+    <div class="kr-modal-content">
+        <div class="kr-modal-header">
+            <div class="kr-modal-icon">
+                <i class="fa fa-share-alt"></i>
+            </div>
+            <div class="kr-modal-title">分享这一刻</div>
+            <button class="kr-modal-close" onclick="krCloseShareModal()">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
+        <div class="kr-modal-body">
+            <div class="kr-share-message">让朋友们也来瞅瞅！</div>
+            <div class="kr-share-qr" id="kr-share-qr"></div>
+            <div class="kr-share-platforms">
+                
+                    <button class="kr-share-platform-button" style="color: #62b6e7;" title="喵窝" onclick="krShareModalOpenPlatform('https://nya.one/share?text=%3E%20$TITLE%0A%3E%0A%3E%20$SUMMARY%0A----%20$SITE%0A%0A$URL')">
+                        <svg fill="currentColor" width="18" height="18" viewBox="0 0 329 388"><path d="M0,36.226c0,-19.993 16.233,-36.226 36.226,-36.226c13.788,0 25.787,7.719 31.908,19.068l188.366,229.845l0,-111.259c-6.356,5.508 -14.645,8.843 -23.707,8.843c-19.994,0 -36.226,-16.232 -36.226,-36.226c-0,-8.551 2.968,-16.413 7.93,-22.613l-0.015,-0.013l56.614,-69.08c6.2,-11.073 18.047,-18.565 31.63,-18.565c19.994,0 36.227,16.233 36.227,36.226l-0,314.644c-0,19.994 -16.233,36.226 -36.227,36.226c-13.166,0 -24.701,-7.039 -31.044,-17.555l-189.229,-230.899l-0,212.228c-0,19.994 -16.233,36.226 -36.227,36.226c-19.993,0 -36.226,-16.232 -36.226,-36.226l0,-314.644Z" /></svg>
+                    </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script defer src="/js/kr-modal/share.min.js"></script>
 
 
 
+<!-- 额外的追加注入项 -->
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
 
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+        <script>
+    if (!window.kr) {
+        window.kr = {};
     }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
 </script>
 
 
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+  <script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
 
 
 
+  <script defer src="/vendors/viewerjs@1.11.6/dist/viewer.min.js"></script>
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script defer src="/js/kr-core.min.js"></script>
 
 
-  
+  <script defer src="/js/kr-pjax.min.js"></script>
 
-  <noscript>
-    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
-  </noscript>
-</body>
+
+<!-- 额外的追加注入项 -->
+
+
+    </body>
 </html>

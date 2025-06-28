@@ -1,620 +1,499 @@
-
-
 <!DOCTYPE html>
-<html lang="en" data-default-color-scheme=auto>
-
-
-
-<head>
-  <meta charset="UTF-8">
-
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+<html lang="en">
+    <head>
+  <!-- 元数据 -->
+  <meta charset="utf-8">
   
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <link rel="icon" href="/assets/favicon.png">
   
-  <meta name="theme-color" content="#58C9B9">
-  <meta name="author" content="kid">
-  <meta name="keywords" content="">
   
-    <meta name="description" content="本人跟着安卓开发者手册学下来，又自己找了一个项目跟着做，发现想在项目中融入自己的小idea这个过程并不是很顺利，去搜资料发现网上安卓相关资料并不多，问ai，ai有时也和我胡言乱语，所以为了记录学习安卓的各种问题，也算是为网上稀少的安卓开发相关资料贡献一份自己的力量，这篇博客就是展示一些自己做的小组件，我可能还会讲讲当时折磨我好久的原因是什么，希望避坑吧。 一. 搜索组件12345678910111">
+  <title>每日搓安卓组件 | Kid</title>
+  <link rel="canonical" href="http://example.com/2025/05/18/%E6%AF%8F%E6%97%A5%E6%90%93%E5%AE%89%E5%8D%93%E7%BB%84%E4%BB%B6/">
+  <meta name="author" content="kid" />
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="format-detection" content="telphone=no, email=no" />
+  
+    <meta name="keywords" content="" />
+  
+  <meta name="description" content="本人跟着安卓开发者手册学下来，又自己找了一个项目跟着做，发现想在项目中融入自己的小idea这个过程并不是很顺利，去搜资料发现网上安卓相关资料并不多，问ai，ai有时也和我胡言乱语，所以为了记录学习安卓的各种问题，也算是为网上稀少的安卓开发相关资料贡献一份自己的力量，这篇博客就是展示一些自己做的小组件，我可能还会讲讲当时折磨我好久的原因是什么，希望避坑吧。 一. 搜索组件12345678910111">
 <meta property="og:type" content="article">
 <meta property="og:title" content="每日搓安卓组件">
 <meta property="og:url" content="http://example.com/2025/05/18/%E6%AF%8F%E6%97%A5%E6%90%93%E5%AE%89%E5%8D%93%E7%BB%84%E4%BB%B6/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Kid">
 <meta property="og:description" content="本人跟着安卓开发者手册学下来，又自己找了一个项目跟着做，发现想在项目中融入自己的小idea这个过程并不是很顺利，去搜资料发现网上安卓相关资料并不多，问ai，ai有时也和我胡言乱语，所以为了记录学习安卓的各种问题，也算是为网上稀少的安卓开发相关资料贡献一份自己的力量，这篇博客就是展示一些自己做的小组件，我可能还会讲讲当时折磨我好久的原因是什么，希望避坑吧。 一. 搜索组件12345678910111">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2025/05/18/%E6%AF%8F%E6%97%A5%E6%90%93%E5%AE%89%E5%8D%93%E7%BB%84%E4%BB%B6/img.png">
 <meta property="article:published_time" content="2025-05-18T06:42:36.000Z">
-<meta property="article:modified_time" content="2025-06-05T07:40:24.896Z">
+<meta property="article:modified_time" content="2025-06-28T09:06:30.072Z">
 <meta property="article:author" content="John Doe">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2025/05/18/%E6%AF%8F%E6%97%A5%E6%90%93%E5%AE%89%E5%8D%93%E7%BB%84%E4%BB%B6/img.png">
+  
+  <!-- 样式表文件 -->
+  <link rel="stylesheet" id="kratos-css" href="/css/kr-core.min.css" media="all"></link>
+  
+    <link rel="stylesheet" id="highlight-css" href="/css/highlight/highlight.js/night-eighties.min.css" media="all"></link>
+  
+  <link rel="stylesheet" id="theme-light-css" href="/css/kr-theme/light.min.css" media="all"></link>
+  <link rel="stylesheet" id="theme-dark-css" href="/css/kr-theme/dark.min.css" media="(prefers-color-scheme: dark)"></link>
+  <script src="/js/kr-theme.min.js"></script>
+  <link rel="stylesheet" id="fontawe-css" href="/vendors/font-awesome@4.7.0/css/font-awesome.min.css" media="all"></link>
+  
+    <link rel="stylesheet" id="nprogress-css" href="/vendors/nprogress@0.2.0/nprogress.css" media="all"></link>
   
   
+    <link rel="stylesheet" href="/vendors/viewerjs@1.11.6/dist/viewer.min.css"></link>
   
-  <title>每日搓安卓组件 - Hexo</title>
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
-
-
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-
-
-<!-- 主题依赖的图标库，不要自行修改 -->
-<!-- Do not modify the link that theme dependent icons -->
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
-
-
-
-<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
-
-
-<link  rel="stylesheet" href="/css/main.css" />
-
-
-  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  <!-- 不得不预先加载的一些JS文件 -->
   
-    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+    <script src="/vendors/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
   
+  <!-- 自定义站点横幅和背景 -->
+  <style>
+    
+      .kratos-cover.kratos-cover-2 {
+        background-image: url('https://dev.krt.moe/demo-assets/banner.webp');
+      }
+      html[data-theme="dark"] .kratos-cover.kratos-cover-2 {
+        background-image: url('https://dev.krt.moe/demo-assets/banner_dark.webp');
+      }
+    
+    
+      @media(min-width:768px) {
+        body.custom-background {
+          background-image: url('https://dev.krt.moe/demo-assets/bg.webp');
+        }
+        html[data-theme="dark"] body.custom-background {
+          background-image: url('https://dev.krt.moe/demo-assets/bg.webp');
+        }
+      }
+    
+    
+      .widget-kratos-about .photo-background {
+        background-image: url('/images/default.webp');
+      }
+      html[data-theme="dark"] .widget-kratos-about .photo-background {
+        background-image: url('/images/default.webp');
+      }
+    
+  </style>
 
-
-
-
-  <script id="fluid-configs">
-    var Fluid = window.Fluid || {};
-    Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
-
-    if (CONFIG.web_analytics.follow_dnt) {
-      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
-      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
-    }
-  </script>
-  <script  src="/js/utils.js" ></script>
-  <script  src="/js/color-schema.js" ></script>
-  
-
-
+  <!-- 额外的追加注入项 -->
   
 <meta name="generator" content="Hexo 7.3.0"></head>
 
+    <body class="custom-background">
+        <div id="kratos-wrapper">
+    <div id="kratos-page">
+        <div id="kratos-header">
+            <header id="kratos-desktop-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="nav-header">
+                        <nav id="kratos-menu-wrap">
+                            <ul id="kratos-primary-menu" class="sf-menu">
+                                
+                                    <li>
+                                        
+                                            <a href="/">
+                                        
+                                            
+                                                <i class="fa fa-home"></i>
+                                            
+                                            首页
+                                        </a>
+                                        
+                                    </li>
+                                
+                                    <li>
+                                        
+                                            <a href="/archives/">
+                                        
+                                            
+                                                <i class="fa fa-file"></i>
+                                            
+                                            档案馆
+                                        </a>
+                                        
+                                    </li>
+                                
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </header>
+            <header id="kratos-mobile-topnav" class="kratos-topnav">
+                <div class="container">
+                    <div class="color-logo"><a href="/">Kid</a></div>
+                    <div id="kratos-nav-toggle-wrapper" class="nav-toggle">
+                        <a id="kratos-nav-toggle" class="kratos-nav-toggle">
+                            <i></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+        </div>
+        <div class="kratos-start kratos-hero-2">
+            <!-- <div class="kratos-overlay"></div> -->
+            <div class="kratos-cover kratos-cover-2 text-center">
+                <div class="desc desc2 animate-box">
+                    <a href="/">
+                        <h2>Kid</h2> <br />
+                        <span></span>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-<body>
-  
+        <div id="kratos-blog-post">
+            <div class="container">
+                <div id="main" class="row">
 
-  <header>
+
+        
+
+            
+
+            <section class="kr-main-col col-md-8">
+
+        
+
+            <article itemscope itemtype="https://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/05/18/%E6%AF%8F%E6%97%A5%E6%90%93%E5%AE%89%E5%8D%93%E7%BB%84%E4%BB%B6/">
+    <div class="kratos-hentry kratos-page-inner clearfix">
+        <header class="kratos-page-header">
+            
+                <h1 class="kratos-page-title text-center" itemprop="name headline">每日搓安卓组件</h1>
+            
+            <ul class="kratos-page-meta text-center">
+                <li><time datetime="2025-05-18T06:42:36.000Z" itemprop="datePublished"><i class="fa fa-calendar"></i> 2025-05-18</time></li>
+                <li itemprop="author" itemscope itemtype="https://schema.org/Person">
+                    <i class="fa fa-user"></i> 作者 <span itemprop="name">kid</span>
+                </li>
+                
+                    <li>
+                        <i class="fa fa-edit"></i> 
+                        
+                        
+                            ~13.04K
+                        
+                        字
+                    </li>
+                
+                
+                
+            </ul>
+        </header>
+        <div class="kratos-page-content kr-post">
+            
+            
+            
+            <hr />
+            <div itemprop="articleBody"><p>本人跟着安卓开发者手册学下来，又自己找了一个项目跟着做，发现想在项目中融入自己的小idea这个过程并不是很顺利，去搜资料发现网上安卓相关资料并不多，问ai，ai有时也和我胡言乱语，所以为了记录学习安卓的各种问题，也算是为网上稀少的安卓开发相关资料贡献一份自己的力量，这篇博客就是展示一些自己做的小组件，我可能还会讲讲当时折磨我好久的原因是什么，希望避坑吧。</p>
+<h1 id="一-搜索组件"><a href="#一-搜索组件" class="headerlink" title="一. 搜索组件"></a>一. 搜索组件</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">@Composable  </span><br><span class="line">fun CustomEditSearch(  </span><br><span class="line">    text: String = &quot;&quot;,  </span><br><span class="line">    onValueChange: (String) -&gt; Unit,  </span><br><span class="line">    modifier: Modifier,  </span><br><span class="line">    hint: String = &quot;请输入&quot;,  </span><br><span class="line">    @DrawableRes startIcon: Int = -1,  </span><br><span class="line">    iconSpacing: Dp = 6.dp,  </span><br><span class="line">    enabled: Boolean = true,  </span><br><span class="line">    readOnly: Boolean = false,  </span><br><span class="line">    textStyle: TextStyle = TextStyle.Default,  </span><br><span class="line">    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,  </span><br><span class="line">    keyboardActions: KeyboardActions = KeyboardActions.Default,  </span><br><span class="line">    visualTransformation: VisualTransformation = VisualTransformation.None,  </span><br><span class="line">    cursorBrush: Brush = SolidColor(MaterialTheme.colorScheme.primary)  </span><br><span class="line">) &#123;  </span><br><span class="line">    // 焦点, 用于控制是否显示 右侧叉号  </span><br><span class="line">    var hasFocus by remember &#123; mutableStateOf(false) &#125;  </span><br><span class="line">  </span><br><span class="line">    BasicTextField(  </span><br><span class="line">        value = text,  </span><br><span class="line">        onValueChange = onValueChange,  </span><br><span class="line">        modifier = modifier.onFocusChanged &#123; hasFocus = it.isFocused &#125;,  </span><br><span class="line">        singleLine = true,  </span><br><span class="line">        enabled = enabled,  </span><br><span class="line">        readOnly = readOnly,  </span><br><span class="line">        textStyle = textStyle,  </span><br><span class="line">        keyboardOptions = keyboardOptions,  </span><br><span class="line">        keyboardActions = keyboardActions,  </span><br><span class="line">        visualTransformation = visualTransformation,  </span><br><span class="line">        cursorBrush = cursorBrush,  </span><br><span class="line">        decorationBox = @Composable &#123; innerTextField -&gt;  </span><br><span class="line">            Row(  </span><br><span class="line">                modifier = Modifier.fillMaxWidth(),  </span><br><span class="line">                verticalAlignment = Alignment.CenterVertically  </span><br><span class="line">            ) &#123;  </span><br><span class="line">                // -1 不显示 左侧Icon  </span><br><span class="line">                if (startIcon != -1) &#123;  </span><br><span class="line">                    Image(painter = painterResource(id = startIcon), contentDescription = null)  </span><br><span class="line">                    Spacer(modifier = Modifier.width(iconSpacing))  </span><br><span class="line">                &#125;  </span><br><span class="line">  </span><br><span class="line">                Box(modifier = Modifier.weight(1f)) &#123;  </span><br><span class="line">                    // 当空字符时, 显示hint  </span><br><span class="line">                    if (text.isEmpty())  </span><br><span class="line">                        Text(text = hint, color = Color.Gray, style = textStyle)  </span><br><span class="line">  </span><br><span class="line">                    // 原本输入框的内容  </span><br><span class="line">                    innerTextField()  </span><br><span class="line">                &#125;  </span><br><span class="line">  </span><br><span class="line">                // 存在焦点 且 有输入内容时. 显示叉号  </span><br><span class="line">                if (hasFocus &amp;&amp; text.isNotEmpty()) &#123;  </span><br><span class="line">                    Icon(imageVector = Icons.Filled.Clear, // 清除图标  </span><br><span class="line">                        contentDescription = null,  </span><br><span class="line">                        // 点击就清空text  </span><br><span class="line">                        modifier = Modifier.clickable &#123; onValueChange.invoke(&quot;&quot;) &#125;)  </span><br><span class="line">                &#125;  </span><br><span class="line">                Icon(  </span><br><span class="line">                    imageVector = Icons.Filled.Search,  </span><br><span class="line">                    contentDescription = null,  </span><br><span class="line">                    modifier = Modifier  </span><br><span class="line">                        .padding(start = 10.dp)  </span><br><span class="line">                )  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;    )  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用BasicTextField定制化程度更高，我最开始一直在TextField的基础上稿，弄出的东西就很难看。</p>
+<h1 id="二-轮播图组件"><a href="#二-轮播图组件" class="headerlink" title="二. 轮播图组件"></a>二. 轮播图组件</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">@Composable  </span><br><span class="line">fun SwiperContent(vm: MainViewModel = viewModel())&#123;  </span><br><span class="line">  </span><br><span class="line">    val realPageCount = vm.swiperData.size  </span><br><span class="line">    val initialPage = 1000 * realPageCount // 从一个较大的页面开始，营造无限滚动的感觉  </span><br><span class="line">    var isPlaying by remember &#123; mutableStateOf(true) &#125;  </span><br><span class="line">  </span><br><span class="line">    val pagerState = rememberPagerState(initialPage = initialPage) &#123;  </span><br><span class="line">        Int.MAX_VALUE // 几乎无限的页面  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    if (realPageCount &lt;= 1) &#123;  </span><br><span class="line">        if (realPageCount == 1) &#123;  </span><br><span class="line">            AsyncImage(  </span><br><span class="line">                model = vm.swiperData[0].imageUrl,  </span><br><span class="line">                contentDescription = null,  </span><br><span class="line">                modifier = Modifier  </span><br><span class="line">                    .fillMaxWidth()  </span><br><span class="line">                    .aspectRatio(7 / 3f)  </span><br><span class="line">                    .padding(horizontal = 8.dp)  </span><br><span class="line">                    .clip(RoundedCornerShape(8.dp)),  </span><br><span class="line">                contentScale = ContentScale.Crop  </span><br><span class="line">            )  </span><br><span class="line">        &#125;  </span><br><span class="line">        return  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    // 轮播效果  </span><br><span class="line">    LaunchedEffect(isPlaying) &#123;  </span><br><span class="line">        if (!isPlaying) return@LaunchedEffect  </span><br><span class="line">        while (true) &#123;  </span><br><span class="line">            delay(3000)   </span><br><span class="line">            // 在切换页面之前，确认是否正在被用户操作  </span><br><span class="line">            if (!pagerState.isScrollInProgress) &#123;  </span><br><span class="line">                withContext(Dispatchers.Main) &#123;  </span><br><span class="line">                    pagerState.animateScrollToPage(pagerState.currentPage + 1)  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    // 判断用户是否有自己滑动，如果滑动则不进行轮播  </span><br><span class="line">    LaunchedEffect(pagerState.isScrollInProgress) &#123; // 使用稳定的 Key        </span><br><span class="line">        snapshotFlow &#123; pagerState.isScrollInProgress &#125;  </span><br><span class="line">            .debounce(500) // 防抖 500ms            </span><br><span class="line">            .distinctUntilChanged() // 去重  </span><br><span class="line">            .collect &#123; isScrolling -&gt;  </span><br><span class="line">                if (isScrolling) &#123;  </span><br><span class="line">                    isPlaying = false  </span><br><span class="line">                &#125; else &#123;  </span><br><span class="line">                    isPlaying = true  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">    </span><br><span class="line">    // 判断是否接近边界，重新定位位置  </span><br><span class="line">    LaunchedEffect(pagerState.currentPage) &#123;  </span><br><span class="line">        if (pagerState.currentPage &lt;= 10) &#123;  </span><br><span class="line">            pagerState.scrollToPage(1000 * realPageCount)  </span><br><span class="line">        &#125; else if (pagerState.currentPage &gt;= Int.MAX_VALUE - 10) &#123;  </span><br><span class="line">            pagerState.scrollToPage(1000 * realPageCount)  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    // 显示轮播图  </span><br><span class="line">    HorizontalPager(  </span><br><span class="line">        state = pagerState,  </span><br><span class="line">        modifier = Modifier.padding(horizontal = 8.dp).clip(RoundedCornerShape(8.dp))  </span><br><span class="line">    ) &#123;index -&gt;  </span><br><span class="line">        val page = index % realPageCount  </span><br><span class="line">        AsyncImage(  </span><br><span class="line">            model = vm.swiperData[page].imageUrl,  </span><br><span class="line">            contentDescription = null,  </span><br><span class="line">            modifier = Modifier.fillMaxWidth().aspectRatio(7/3f),  </span><br><span class="line">            contentScale = ContentScale.Crop,  </span><br><span class="line">        )  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>传入自己的ViewModel，使用ViewModel中的图片数据，在判断用户是否有自己滑动，如果滑动则不进行轮播这个部分，使用了debounce防抖处理<strong>快速连续的事件流</strong>，确保只对最后一个事件做出响应，并忽略中间的事件。我最开始没有使用这个导致状态不断切换使轮播图没有自动变换。</p>
+<h1 id="三-轮播通知"><a href="#三-轮播通知" class="headerlink" title="三. 轮播通知"></a>三. 轮播通知</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">@Composable  </span><br><span class="line">fun NotificationContent(vm: MainViewModel)&#123;  </span><br><span class="line">    Row(modifier = Modifier  </span><br><span class="line">        .padding(8.dp)  </span><br><span class="line">        .clip(RoundedCornerShape(8.dp))  </span><br><span class="line">        .background(Color(0x66149EE7))  </span><br><span class="line">        .height(45.dp)  </span><br><span class="line">        .padding(horizontal = 8.dp),  </span><br><span class="line">        verticalAlignment = Alignment.CenterVertically,  </span><br><span class="line">        horizontalArrangement = Arrangement.SpaceBetween  </span><br><span class="line">    )&#123;  </span><br><span class="line">        val realPageCount = vm.notifications.size  </span><br><span class="line">        val initialPage = 1000 * realPageCount // 从一个较大的页面开始，营造无限滚动的感觉  </span><br><span class="line">        var isPlaying by remember &#123; mutableStateOf(true) &#125;  </span><br><span class="line">  </span><br><span class="line">        val pagerState = rememberPagerState(initialPage = initialPage) &#123;  </span><br><span class="line">            Int.MAX_VALUE // 几乎无限的页面  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        LaunchedEffect(isPlaying) &#123;  </span><br><span class="line">            if (!isPlaying) return@LaunchedEffect  </span><br><span class="line">            while (true) &#123;  </span><br><span class="line">                delay(3000)  </span><br><span class="line">                // 在切换页面之前，确认是否正在被用户操作  </span><br><span class="line">                if (!pagerState.isScrollInProgress) &#123;  </span><br><span class="line">                    withContext(Dispatchers.Main) &#123;  </span><br><span class="line">                        pagerState.animateScrollToPage(pagerState.currentPage + 1)  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        // 判断用户是否有自己滑动，如果滑动则不进行轮播  </span><br><span class="line">        LaunchedEffect(pagerState.isScrollInProgress) &#123; // 使用稳定的 Key            </span><br><span class="line">        snapshotFlow &#123; pagerState.isScrollInProgress &#125;  </span><br><span class="line">                .debounce(500) // 防抖 500ms                </span><br><span class="line">                .distinctUntilChanged() // 去重  </span><br><span class="line">                .collect &#123; isScrolling -&gt;  </span><br><span class="line">                    if (isScrolling) &#123;  </span><br><span class="line">                        isPlaying = false  </span><br><span class="line">                    &#125; else &#123;  </span><br><span class="line">                        isPlaying = true  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">        LaunchedEffect(pagerState.currentPage) &#123;  </span><br><span class="line">            if (pagerState.currentPage &lt;= 10) &#123;  </span><br><span class="line">                pagerState.scrollToPage(1000 * realPageCount)  </span><br><span class="line">            &#125; else if (pagerState.currentPage &gt;= Int.MAX_VALUE - 10) &#123;  </span><br><span class="line">                pagerState.scrollToPage(1000 * realPageCount)  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        Text(  </span><br><span class="line">            text = &quot;最新咨询&quot;,  </span><br><span class="line">            color = Color(0xFF149EE7),  </span><br><span class="line">            fontSize = 16.sp,  </span><br><span class="line">        )  </span><br><span class="line">        Spacer(modifier = Modifier.width(8.dp))  </span><br><span class="line">        VerticalPager(state = pagerState,  </span><br><span class="line">            modifier = Modifier.weight(1f),  </span><br><span class="line">        ) &#123;index -&gt;  </span><br><span class="line">            val page = index % realPageCount  </span><br><span class="line">            Box(  </span><br><span class="line">                modifier = Modifier.fillMaxSize(),  </span><br><span class="line">                contentAlignment = Alignment.CenterStart // 内容居中  </span><br><span class="line">            ) &#123;  </span><br><span class="line">                Text(  </span><br><span class="line">                    text = vm.notifications[page],  </span><br><span class="line">                    maxLines = 1,  </span><br><span class="line">                    overflow = TextOverflow.Ellipsis,  </span><br><span class="line">                    fontSize = 14.sp  </span><br><span class="line">                )  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;        Text(  </span><br><span class="line">            text = &quot;更多&quot;,  </span><br><span class="line">            maxLines = 1,  </span><br><span class="line">            fontSize = 14.sp,  </span><br><span class="line">        )  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通知的VerticalPager组件中没有verticalAlignment参数，所以要在text外包裹box使它内容居中，还有在最外层的Row中padding的顺序也很重要</p>
+<h1 id="四-底部翻页"><a href="#四-底部翻页" class="headerlink" title="四.底部翻页"></a>四.底部翻页</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><span class="line">@Composable  </span><br><span class="line">fun AdvancedPageNavigator(  </span><br><span class="line">    currentPage: Int,  </span><br><span class="line">    totalPages: Int,  </span><br><span class="line">    onPageSelected: (Int) -&gt; Unit  </span><br><span class="line">) &#123;  </span><br><span class="line">    Row(  </span><br><span class="line">        modifier = Modifier.padding(16.dp),  </span><br><span class="line">        verticalAlignment = Alignment.CenterVertically  </span><br><span class="line">    ) &#123;  </span><br><span class="line">        NavigationText(&quot;上一页&quot;, currentPage &gt; 1) &#123;  </span><br><span class="line">            if (currentPage &gt; 1) onPageSelected(currentPage - 1)  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        val pages = calculatePages(currentPage, totalPages)  </span><br><span class="line">        pages.forEach &#123; page -&gt;  </span><br><span class="line">            when (page) &#123;  </span><br><span class="line">                is PageItem.Page -&gt; &#123;  </span><br><span class="line">                    PageBox(page.number, page.number == currentPage) &#123;  </span><br><span class="line">                        onPageSelected(page.number)  </span><br><span class="line">                    &#125;  </span><br><span class="line">                &#125;  </span><br><span class="line">                is PageItem.Ellipsis -&gt; &#123;  </span><br><span class="line">                    EllipsisBox()  </span><br><span class="line">                &#125;  </span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        NavigationText(&quot;下一页&quot;, currentPage &lt; totalPages) &#123;  </span><br><span class="line">            if (currentPage &lt; totalPages) onPageSelected(currentPage + 1)  </span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;&#125;  </span><br><span class="line">  </span><br><span class="line">@Composable  </span><br><span class="line">fun PageBox(number: Int, isSelected: Boolean, onClick: () -&gt; Unit) &#123;  </span><br><span class="line">    Box(  </span><br><span class="line">        modifier = Modifier  </span><br><span class="line">            .background(  </span><br><span class="line">                if (isSelected) Color(0xFF005BAC) else Color.Transparent,  </span><br><span class="line">                shape = RoundedCornerShape(4.dp)  </span><br><span class="line">            )  </span><br><span class="line">            .border(  </span><br><span class="line">                1.dp,  </span><br><span class="line">                if (isSelected) Color(0xFF005BAC) else Color.LightGray,  </span><br><span class="line">                shape = RoundedCornerShape(4.dp)  </span><br><span class="line">            )  </span><br><span class="line">            .clickable &#123; onClick() &#125;  </span><br><span class="line">            .padding(horizontal = 12.dp, vertical = 4.dp)  </span><br><span class="line">    ) &#123;  </span><br><span class="line">        Text(  </span><br><span class="line">            text = number.toString(),  </span><br><span class="line">            color = if (isSelected) Color.White else Color(0xFF005BAC)  </span><br><span class="line">        )  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">@Composable  </span><br><span class="line">fun EllipsisBox() &#123;  </span><br><span class="line">    Box(modifier = Modifier) &#123;  </span><br><span class="line">        Text(&quot;...&quot;, color = Color.Gray)  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">@Composable  </span><br><span class="line">fun NavigationText(text: String, enabled: Boolean, onClick: () -&gt; Unit) &#123;  </span><br><span class="line">    Text(  </span><br><span class="line">        text = text,  </span><br><span class="line">        color = if (enabled) Color(0xFF005BAC) else Color.Gray,  </span><br><span class="line">        fontSize = 12.sp,  </span><br><span class="line">        modifier = Modifier  </span><br><span class="line">            .clickable(enabled = enabled) &#123; onClick() &#125;  </span><br><span class="line">            .padding(horizontal = 8.dp, vertical = 8.dp)  </span><br><span class="line">    )  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">sealed class PageItem &#123;  </span><br><span class="line">    data class Page(val number: Int) : PageItem()  </span><br><span class="line">    object Ellipsis : PageItem()  </span><br><span class="line">&#125;  </span><br><span class="line">  </span><br><span class="line">fun calculatePages(currentPage: Int, totalPages: Int): List&lt;PageItem&gt; &#123;  </span><br><span class="line">    val pages = mutableListOf&lt;PageItem&gt;()  </span><br><span class="line">  </span><br><span class="line">    if (totalPages &lt;= 7) &#123;  </span><br><span class="line">        // 展示所有页码  </span><br><span class="line">        (1..totalPages).forEach &#123; pages.add(PageItem.Page(it)) &#125;  </span><br><span class="line">    &#125; else &#123;  </span><br><span class="line">        // Always show first page  </span><br><span class="line">        pages.add(PageItem.Page(1))  </span><br><span class="line">  </span><br><span class="line">        if (currentPage &gt; 4) &#123;  </span><br><span class="line">            pages.add(PageItem.Ellipsis)  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        val start = maxOf(2, currentPage - 1)  </span><br><span class="line">        val end = minOf(totalPages - 1, currentPage + 1)  </span><br><span class="line">  </span><br><span class="line">        for (i in start..end) &#123;  </span><br><span class="line">            pages.add(PageItem.Page(i))  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        if (currentPage &lt; totalPages - 3) &#123;  </span><br><span class="line">            pages.add(PageItem.Ellipsis)  </span><br><span class="line">        &#125;  </span><br><span class="line">  </span><br><span class="line">        // Always show last page  </span><br><span class="line">        pages.add(PageItem.Page(totalPages))  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    return pages  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div>
+        </div>
+        
+            <div class="kratos-copyright text-center clearfix">
+                <span itemprop="copyrightNotice">本作品采用 <a rel="license nofollow" target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可</span>
+            </div>
+        
+        <footer class="kratos-entry-footer clearfix">
+            
+            
+            
+                <div class="post-actions text-center clearfix" id="post-actions">
+                
+                    <a class="donate" href="javascript:;" onclick="krOpenDonateModal()"><i class="fa fa-bitcoin"></i> 打赏</a>
+                
+                
+                    <a class="share" href="javascript:;" onclick="krOpenShareModal()"><i class="fa fa-share-alt"></i> 分享</a>
+                
+                </div>
+            
+            <div class="footer-tag clearfix">
+                <div class="pull-left">
+                <i class="fa fa-tags"></i>
+                    
+                </div>
+                <div class="pull-date">
+                    <time datetime="2025-06-28T09:06:30.072Z" itemprop="dateModified">最后编辑：2025-06-28</time>
+                </div>
+            </div>
+        </footer>
+    </div>
     
+        <nav class="navigation post-navigation clearfix" role="navigation">
+            
+            <div class="nav-previous clearfix">
+                <a title=" golang并发编程" href="/2024/12/17/golang并发编程/"><i class="fa fa-angle-left"></i> 上一篇</a>
+            </div>
+            
+            
+        </nav>
+    
+    
+        <div class="comment-post">
+            
+        </div>
+    
+</article>
 
-<div class="header-inner" style="height: 70vh;">
-  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
-  <div class="container">
-    <a class="navbar-brand" href="/">
-      <strong>kid的blog</strong>
-    </a>
+        
 
-    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <div class="animated-icon"><span></span><span></span><span></span></div>
-    </button>
+            </section>
 
-    <!-- Collapsible content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto text-center">
+            
+                
+
+<section id="kratos-widget-area" class="col-md-4 hidden-xs hidden-sm">
+    <!-- 文章和页面根据splitter来分割，没有的话就从头开始设置为sticky -->
+    
+    
+                <aside id="krw-about" class="widget widget-kratos-about clearfix">
+    <div class="photo-background"></div>
+    <div class="photo-wrapper clearfix">
+        <div class="photo-wrapper-tip text-center">
+            <img class="about-photo" src="image/img2.jpg" alt="John Doe" loading="lazy" decoding="auto" />
+        </div>
+    </div>
+    <div class="textwidget">
+        <p class="text-center"></p>
+    </div>
+    <div class="site-meta">
+        <a class="meta-item" href="/archives/">
+            <span class="title">
+                文章
+            </span>
+            <span class="count">
+                5
+            </span>
+        </a>
+        <a class="meta-item" href="/categories/">
+            <span class="title">
+                分类
+            </span>
+            <span class="count">
+                0
+            </span>
+        </a>
+        <a class="meta-item" href="/tags/">
+            <span class="title">
+                标签
+            </span>
+            <span class="count">
+                0
+            </span>
+        </a>
+    </div>
+</aside>
+            
+                    <div class="sticky-area">
+                
+                
+
+            
+                
+            
+                
+  <aside id="krw-posts" class="widget widget-kratos-posts">
+  <h4 class="widget-title"><i class="fa fa-file"></i>最新文章</h4>
+  <div class="tab-content">
+      <ul class="list-group">
+        
+        
+          
+          
+            <a class="list-group-item" href="/2025/05/18/%E6%AF%8F%E6%97%A5%E6%90%93%E5%AE%89%E5%8D%93%E7%BB%84%E4%BB%B6/"><i class="fa fa-book"></i> 每日搓安卓组件</a>
+            
+          
         
           
           
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/" target="_self">
-                <i class="iconfont icon-home-fill"></i>
-                <span>Home</span>
-              </a>
-            </li>
+            <a class="list-group-item" href="/2024/12/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/"><i class="fa fa-book"></i> golang并发编程</a>
+            
           
         
           
           
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/archives/" target="_self">
-                <i class="iconfont icon-archive-fill"></i>
-                <span>Archives</span>
-              </a>
-            </li>
+            <a class="list-group-item" href="/2024/11/14/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"><i class="fa fa-book"></i> 计算机网络</a>
+            
           
         
           
           
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/categories/" target="_self">
-                <i class="iconfont icon-category-fill"></i>
-                <span>Categories</span>
-              </a>
-            </li>
+            <a class="list-group-item" href="/2024/11/09/%E6%A0%91/"><i class="fa fa-book"></i> 树</a>
+            
           
         
           
           
+            <a class="list-group-item" href="/2024/11/08/post/"><i class="fa fa-book"></i> 我的第一篇文章</a>
+            
           
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/tags/" target="_self">
-                <i class="iconfont icon-tags-fill"></i>
-                <span>Tags</span>
-              </a>
-            </li>
-          
-        
-          
-          
-          
-          
-            <li class="nav-item">
-              <a class="nav-link" href="/about/" target="_self">
-                <i class="iconfont icon-user-fill"></i>
-                <span>About</span>
-              </a>
-            </li>
-          
-        
-        
-          <li class="nav-item" id="search-btn">
-            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
-              <i class="iconfont icon-search"></i>
-            </a>
-          </li>
-          
-        
-        
-          <li class="nav-item" id="color-toggle-btn">
-            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
-              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
-            </a>
-          </li>
         
       </ul>
-    </div>
   </div>
-</nav>
-
-  
-
-<div id="banner" class="banner" parallax=true
-     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
-  <div class="full-bg-img">
-    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
-      <div class="banner-text text-center fade-in-up">
-        <div class="h2">
-          
-            <span id="subtitle" data-typed-text="每日搓安卓组件"></span>
-          
-        </div>
-
-        
-          
-  <div class="mt-3">
-    
-    
-      <span class="post-meta">
-        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-05-18 14:42" pubdate>
-          May 18, 2025 pm
-        </time>
-      </span>
-    
-  </div>
-
-  <div class="mt-1">
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-chart"></i>
-        
-          1.5k words
-        
-      </span>
-    
-
-    
-      <span class="post-meta mr-2">
-        <i class="iconfont icon-clock-fill"></i>
-        
-        
-        
-          13 mins
-        
-      </span>
-    
-
-    
-    
-  </div>
-
-
-        
-      </div>
-
-      
-    </div>
-  </div>
-</div>
-
-</div>
-
-  </header>
-
-  <main>
-    
-      
-
-<div class="container-fluid nopadding-x">
-  <div class="row nomargin-x">
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-
-    </div>
-
-    <div class="col-lg-8 nopadding-x-md">
-      <div class="container nopadding-x-md" id="board-ctn">
-        <div id="board">
-          <article class="post-content mx-auto">
-            <h1 id="seo-header">每日搓安卓组件</h1>
-            
-            
-              <div class="markdown-body">
-                
-                <p>本人跟着安卓开发者手册学下来，又自己找了一个项目跟着做，发现想在项目中融入自己的小idea这个过程并不是很顺利，去搜资料发现网上安卓相关资料并不多，问ai，ai有时也和我胡言乱语，所以为了记录学习安卓的各种问题，也算是为网上稀少的安卓开发相关资料贡献一份自己的力量，这篇博客就是展示一些自己做的小组件，我可能还会讲讲当时折磨我好久的原因是什么，希望避坑吧。</p>
-<h1 id="一-搜索组件"><a href="#一-搜索组件" class="headerlink" title="一. 搜索组件"></a>一. 搜索组件</h1><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Composable</span>  <br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">CustomEditSearch</span><span class="hljs-params">(  </span></span><br><span class="hljs-params"><span class="hljs-function">    text: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;&quot;</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">    onValueChange: (<span class="hljs-type">String</span>) -&gt; <span class="hljs-type">Unit</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">    modifier: <span class="hljs-type">Modifier</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">    hint: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;请输入&quot;</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">    <span class="hljs-meta">@DrawableRes</span> startIcon: <span class="hljs-type">Int</span> = <span class="hljs-number">-1</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">    iconSpacing: <span class="hljs-type">Dp</span> = <span class="hljs-number">6.</span>dp,  </span></span><br><span class="hljs-params"><span class="hljs-function">    enabled: <span class="hljs-type">Boolean</span> = <span class="hljs-literal">true</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">    readOnly: <span class="hljs-type">Boolean</span> = <span class="hljs-literal">false</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">    textStyle: <span class="hljs-type">TextStyle</span> = TextStyle.Default,  </span></span><br><span class="hljs-params"><span class="hljs-function">    keyboardOptions: <span class="hljs-type">KeyboardOptions</span> = KeyboardOptions.Default,  </span></span><br><span class="hljs-params"><span class="hljs-function">    keyboardActions: <span class="hljs-type">KeyboardActions</span> = KeyboardActions.Default,  </span></span><br><span class="hljs-params"><span class="hljs-function">    visualTransformation: <span class="hljs-type">VisualTransformation</span> = VisualTransformation.None,  </span></span><br><span class="hljs-params"><span class="hljs-function">    cursorBrush: <span class="hljs-type">Brush</span> = SolidColor(MaterialTheme.colorScheme.primary)</span></span>  <br>) &#123;  <br>    <span class="hljs-comment">// 焦点, 用于控制是否显示 右侧叉号  </span><br>    <span class="hljs-keyword">var</span> hasFocus <span class="hljs-keyword">by</span> remember &#123; mutableStateOf(<span class="hljs-literal">false</span>) &#125;  <br>  <br>    BasicTextField(  <br>        value = text,  <br>        onValueChange = onValueChange,  <br>        modifier = modifier.onFocusChanged &#123; hasFocus = it.isFocused &#125;,  <br>        singleLine = <span class="hljs-literal">true</span>,  <br>        enabled = enabled,  <br>        readOnly = readOnly,  <br>        textStyle = textStyle,  <br>        keyboardOptions = keyboardOptions,  <br>        keyboardActions = keyboardActions,  <br>        visualTransformation = visualTransformation,  <br>        cursorBrush = cursorBrush,  <br>        decorationBox = <span class="hljs-meta">@Composable</span> &#123; innerTextField -&gt;  <br>            Row(  <br>                modifier = Modifier.fillMaxWidth(),  <br>                verticalAlignment = Alignment.CenterVertically  <br>            ) &#123;  <br>                <span class="hljs-comment">// -1 不显示 左侧Icon  </span><br>                <span class="hljs-keyword">if</span> (startIcon != -<span class="hljs-number">1</span>) &#123;  <br>                    Image(painter = painterResource(id = startIcon), contentDescription = <span class="hljs-literal">null</span>)  <br>                    Spacer(modifier = Modifier.width(iconSpacing))  <br>                &#125;  <br>  <br>                Box(modifier = Modifier.weight(<span class="hljs-number">1f</span>)) &#123;  <br>                    <span class="hljs-comment">// 当空字符时, 显示hint  </span><br>                    <span class="hljs-keyword">if</span> (text.isEmpty())  <br>                        Text(text = hint, color = Color.Gray, style = textStyle)  <br>  <br>                    <span class="hljs-comment">// 原本输入框的内容  </span><br>                    innerTextField()  <br>                &#125;  <br>  <br>                <span class="hljs-comment">// 存在焦点 且 有输入内容时. 显示叉号  </span><br>                <span class="hljs-keyword">if</span> (hasFocus &amp;&amp; text.isNotEmpty()) &#123;  <br>                    Icon(imageVector = Icons.Filled.Clear, <span class="hljs-comment">// 清除图标  </span><br>                        contentDescription = <span class="hljs-literal">null</span>,  <br>                        <span class="hljs-comment">// 点击就清空text  </span><br>                        modifier = Modifier.clickable &#123; onValueChange.invoke(<span class="hljs-string">&quot;&quot;</span>) &#125;)  <br>                &#125;  <br>                Icon(  <br>                    imageVector = Icons.Filled.Search,  <br>                    contentDescription = <span class="hljs-literal">null</span>,  <br>                    modifier = Modifier  <br>                        .padding(start = <span class="hljs-number">10.</span>dp)  <br>                )  <br>            &#125;  <br>        &#125;    )  <br>&#125;<br></code></pre></td></tr></table></figure>
-<p>使用BasicTextField定制化程度更高，我最开始一直在TextField的基础上稿，弄出的东西就很难看。</p>
-<h1 id="二-轮播图组件"><a href="#二-轮播图组件" class="headerlink" title="二. 轮播图组件"></a>二. 轮播图组件</h1><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Composable</span>  <br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">SwiperContent</span><span class="hljs-params">(vm: <span class="hljs-type">MainViewModel</span> = viewModel()</span></span>)&#123;  <br>  <br>    <span class="hljs-keyword">val</span> realPageCount = vm.swiperData.size  <br>    <span class="hljs-keyword">val</span> initialPage = <span class="hljs-number">1000</span> * realPageCount <span class="hljs-comment">// 从一个较大的页面开始，营造无限滚动的感觉  </span><br>    <span class="hljs-keyword">var</span> isPlaying <span class="hljs-keyword">by</span> remember &#123; mutableStateOf(<span class="hljs-literal">true</span>) &#125;  <br>  <br>    <span class="hljs-keyword">val</span> pagerState = rememberPagerState(initialPage = initialPage) &#123;  <br>        <span class="hljs-built_in">Int</span>.MAX_VALUE <span class="hljs-comment">// 几乎无限的页面  </span><br>    &#125;  <br>  <br>    <span class="hljs-keyword">if</span> (realPageCount &lt;= <span class="hljs-number">1</span>) &#123;  <br>        <span class="hljs-keyword">if</span> (realPageCount == <span class="hljs-number">1</span>) &#123;  <br>            AsyncImage(  <br>                model = vm.swiperData[<span class="hljs-number">0</span>].imageUrl,  <br>                contentDescription = <span class="hljs-literal">null</span>,  <br>                modifier = Modifier  <br>                    .fillMaxWidth()  <br>                    .aspectRatio(<span class="hljs-number">7</span> / <span class="hljs-number">3f</span>)  <br>                    .padding(horizontal = <span class="hljs-number">8.</span>dp)  <br>                    .clip(RoundedCornerShape(<span class="hljs-number">8.</span>dp)),  <br>                contentScale = ContentScale.Crop  <br>            )  <br>        &#125;  <br>        <span class="hljs-keyword">return</span>  <br>    &#125;  <br>      <br>    <span class="hljs-comment">// 轮播效果  </span><br>    LaunchedEffect(isPlaying) &#123;  <br>        <span class="hljs-keyword">if</span> (!isPlaying) <span class="hljs-keyword">return</span><span class="hljs-symbol">@LaunchedEffect</span>  <br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;  <br>            delay(<span class="hljs-number">3000</span>)   <br>            <span class="hljs-comment">// 在切换页面之前，确认是否正在被用户操作  </span><br>            <span class="hljs-keyword">if</span> (!pagerState.isScrollInProgress) &#123;  <br>                withContext(Dispatchers.Main) &#123;  <br>                    pagerState.animateScrollToPage(pagerState.currentPage + <span class="hljs-number">1</span>)  <br>                &#125;  <br>            &#125;  <br>        &#125;  <br>    &#125;  <br>  <br>    <span class="hljs-comment">// 判断用户是否有自己滑动，如果滑动则不进行轮播  </span><br>    LaunchedEffect(pagerState.isScrollInProgress) &#123; <span class="hljs-comment">// 使用稳定的 Key        </span><br>        snapshotFlow &#123; pagerState.isScrollInProgress &#125;  <br>            .debounce(<span class="hljs-number">500</span>) <span class="hljs-comment">// 防抖 500ms            </span><br>            .distinctUntilChanged() <span class="hljs-comment">// 去重  </span><br>            .collect &#123; isScrolling -&gt;  <br>                <span class="hljs-keyword">if</span> (isScrolling) &#123;  <br>                    isPlaying = <span class="hljs-literal">false</span>  <br>                &#125; <span class="hljs-keyword">else</span> &#123;  <br>                    isPlaying = <span class="hljs-literal">true</span>  <br>                &#125;  <br>            &#125;  <br>    &#125;  <br>    <br>    <span class="hljs-comment">// 判断是否接近边界，重新定位位置  </span><br>    LaunchedEffect(pagerState.currentPage) &#123;  <br>        <span class="hljs-keyword">if</span> (pagerState.currentPage &lt;= <span class="hljs-number">10</span>) &#123;  <br>            pagerState.scrollToPage(<span class="hljs-number">1000</span> * realPageCount)  <br>        &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pagerState.currentPage &gt;= <span class="hljs-built_in">Int</span>.MAX_VALUE - <span class="hljs-number">10</span>) &#123;  <br>            pagerState.scrollToPage(<span class="hljs-number">1000</span> * realPageCount)  <br>        &#125;  <br>    &#125;  <br>  <br>    <span class="hljs-comment">// 显示轮播图  </span><br>    HorizontalPager(  <br>        state = pagerState,  <br>        modifier = Modifier.padding(horizontal = <span class="hljs-number">8.</span>dp).clip(RoundedCornerShape(<span class="hljs-number">8.</span>dp))  <br>    ) &#123;index -&gt;  <br>        <span class="hljs-keyword">val</span> page = index % realPageCount  <br>        AsyncImage(  <br>            model = vm.swiperData[page].imageUrl,  <br>            contentDescription = <span class="hljs-literal">null</span>,  <br>            modifier = Modifier.fillMaxWidth().aspectRatio(<span class="hljs-number">7</span>/<span class="hljs-number">3f</span>),  <br>            contentScale = ContentScale.Crop,  <br>        )  <br>    &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
-<p>传入自己的ViewModel，使用ViewModel中的图片数据，在判断用户是否有自己滑动，如果滑动则不进行轮播这个部分，使用了debounce防抖处理<strong>快速连续的事件流</strong>，确保只对最后一个事件做出响应，并忽略中间的事件。我最开始没有使用这个导致状态不断切换使轮播图没有自动变换。</p>
-<h1 id="三-轮播通知"><a href="#三-轮播通知" class="headerlink" title="三. 轮播通知"></a>三. 轮播通知</h1><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@Composable</span>  <br><span class="hljs-function"><span class="hljs-keyword">fun</span> <span class="hljs-title">NotificationContent</span><span class="hljs-params">(vm: <span class="hljs-type">MainViewModel</span>)</span></span>&#123;  <br>    Row(modifier = Modifier  <br>        .padding(<span class="hljs-number">8.</span>dp)  <br>        .clip(RoundedCornerShape(<span class="hljs-number">8.</span>dp))  <br>        .background(Color(<span class="hljs-number">0x66149EE7</span>))  <br>        .height(<span class="hljs-number">45.</span>dp)  <br>        .padding(horizontal = <span class="hljs-number">8.</span>dp),  <br>        verticalAlignment = Alignment.CenterVertically,  <br>        horizontalArrangement = Arrangement.SpaceBetween  <br>    )&#123;  <br>        <span class="hljs-keyword">val</span> realPageCount = vm.notifications.size  <br>        <span class="hljs-keyword">val</span> initialPage = <span class="hljs-number">1000</span> * realPageCount <span class="hljs-comment">// 从一个较大的页面开始，营造无限滚动的感觉  </span><br>        <span class="hljs-keyword">var</span> isPlaying <span class="hljs-keyword">by</span> remember &#123; mutableStateOf(<span class="hljs-literal">true</span>) &#125;  <br>  <br>        <span class="hljs-keyword">val</span> pagerState = rememberPagerState(initialPage = initialPage) &#123;  <br>            <span class="hljs-built_in">Int</span>.MAX_VALUE <span class="hljs-comment">// 几乎无限的页面  </span><br>        &#125;  <br>  <br>        LaunchedEffect(isPlaying) &#123;  <br>            <span class="hljs-keyword">if</span> (!isPlaying) <span class="hljs-keyword">return</span><span class="hljs-symbol">@LaunchedEffect</span>  <br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;  <br>                delay(<span class="hljs-number">3000</span>)  <br>                <span class="hljs-comment">// 在切换页面之前，确认是否正在被用户操作  </span><br>                <span class="hljs-keyword">if</span> (!pagerState.isScrollInProgress) &#123;  <br>                    withContext(Dispatchers.Main) &#123;  <br>                        pagerState.animateScrollToPage(pagerState.currentPage + <span class="hljs-number">1</span>)  <br>                    &#125;  <br>                &#125;  <br>            &#125;  <br>        &#125;  <br>  <br>        <span class="hljs-comment">// 判断用户是否有自己滑动，如果滑动则不进行轮播  </span><br>        LaunchedEffect(pagerState.isScrollInProgress) &#123; <span class="hljs-comment">// 使用稳定的 Key            </span><br>        snapshotFlow &#123; pagerState.isScrollInProgress &#125;  <br>                .debounce(<span class="hljs-number">500</span>) <span class="hljs-comment">// 防抖 500ms                </span><br>                .distinctUntilChanged() <span class="hljs-comment">// 去重  </span><br>                .collect &#123; isScrolling -&gt;  <br>                    <span class="hljs-keyword">if</span> (isScrolling) &#123;  <br>                        isPlaying = <span class="hljs-literal">false</span>  <br>                    &#125; <span class="hljs-keyword">else</span> &#123;  <br>                        isPlaying = <span class="hljs-literal">true</span>  <br>                    &#125;  <br>                &#125;  <br>        &#125;  <br>        LaunchedEffect(pagerState.currentPage) &#123;  <br>            <span class="hljs-keyword">if</span> (pagerState.currentPage &lt;= <span class="hljs-number">10</span>) &#123;  <br>                pagerState.scrollToPage(<span class="hljs-number">1000</span> * realPageCount)  <br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pagerState.currentPage &gt;= <span class="hljs-built_in">Int</span>.MAX_VALUE - <span class="hljs-number">10</span>) &#123;  <br>                pagerState.scrollToPage(<span class="hljs-number">1000</span> * realPageCount)  <br>            &#125;  <br>        &#125;  <br>  <br>        Text(  <br>            text = <span class="hljs-string">&quot;最新咨询&quot;</span>,  <br>            color = Color(<span class="hljs-number">0xFF149EE7</span>),  <br>            fontSize = <span class="hljs-number">16.</span>sp,  <br>        )  <br>        Spacer(modifier = Modifier.width(<span class="hljs-number">8.</span>dp))  <br>        VerticalPager(state = pagerState,  <br>            modifier = Modifier.weight(<span class="hljs-number">1f</span>),  <br>        ) &#123;index -&gt;  <br>            <span class="hljs-keyword">val</span> page = index % realPageCount  <br>            Box(  <br>                modifier = Modifier.fillMaxSize(),  <br>                contentAlignment = Alignment.CenterStart <span class="hljs-comment">// 内容居中  </span><br>            ) &#123;  <br>                Text(  <br>                    text = vm.notifications[page],  <br>                    maxLines = <span class="hljs-number">1</span>,  <br>                    overflow = TextOverflow.Ellipsis,  <br>                    fontSize = <span class="hljs-number">14.</span>sp  <br>                )  <br>            &#125;  <br>        &#125;        Text(  <br>            text = <span class="hljs-string">&quot;更多&quot;</span>,  <br>            maxLines = <span class="hljs-number">1</span>,  <br>            fontSize = <span class="hljs-number">14.</span>sp,  <br>        )  <br>    &#125;  <br>&#125;<br></code></pre></td></tr></table></figure>
-<p>通知的VerticalPager组件中没有verticalAlignment参数，所以要在text外包裹box使它内容居中，还有在最外层的Row中padding的顺序也很重要</p>
-<h1 id="四-底部翻页"><a href="#四-底部翻页" class="headerlink" title="四.底部翻页"></a>四.底部翻页</h1><figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br></pre></td><td class="code"><pre><code class="hljs livescript">@Composable  <br>fun AdvancedPageNavigator(  <br>    currentPage: Int,  <br>    totalPages: Int,  <br>    onPageSelected: <span class="hljs-function"><span class="hljs-params">(Int)</span> -&gt;</span> Unit  <br>) &#123;  <br>    Row(  <br>        modifier = Modifier.padding(<span class="hljs-number">16.dp</span>),  <br>        verticalAlignment = Alignment.CenterVertically  <br>    ) &#123;  <br>        NavigationText(<span class="hljs-string">&quot;上一页&quot;</span>, currentPage &gt; <span class="hljs-number">1</span>) &#123;  <br>            <span class="hljs-keyword">if</span> (currentPage &gt; <span class="hljs-number">1</span>) onPageSelected(currentPage - <span class="hljs-number">1</span>)  <br>        &#125;  <br>  <br>        val pages = calculatePages(currentPage, totalPages)  <br>        pages.forEach &#123; page -&gt;  <br>            <span class="hljs-keyword">when</span> (page) &#123;  <br>                <span class="hljs-keyword">is</span> PageItem.Page -&gt; &#123;  <br>                    PageBox(page.number, page.number == currentPage) &#123;  <br>                        onPageSelected(page.number)  <br>                    &#125;  <br>                &#125;  <br>                <span class="hljs-keyword">is</span> PageItem.Ellipsis -&gt; &#123;  <br>                    EllipsisBox()  <br>                &#125;  <br>            &#125;  <br>        &#125;  <br>  <br>        NavigationText(<span class="hljs-string">&quot;下一页&quot;</span>, currentPage &lt; totalPages) &#123;  <br>            <span class="hljs-keyword">if</span> (currentPage &lt; totalPages) onPageSelected(currentPage + <span class="hljs-number">1</span>)  <br>        &#125;  <br>    &#125;&#125;  <br>  <br>@Composable  <br>fun PageBox<span class="hljs-function"><span class="hljs-params">(number: Int, isSelected: <span class="hljs-built_in">Boolean</span>, onClick: () -&gt; Unit)</span> &#123;  </span><br><span class="hljs-function">    <span class="hljs-title">Box</span><span class="hljs-params">(  </span></span><br><span class="hljs-params"><span class="hljs-function">        modifier = Modifier  </span></span><br><span class="hljs-params"><span class="hljs-function">            .background(  </span></span><br><span class="hljs-params"><span class="hljs-function">                <span class="hljs-keyword">if</span> (isSelected) Color(<span class="hljs-number">0xFF005BAC</span>) <span class="hljs-keyword">else</span> Color.Transparent,  </span></span><br><span class="hljs-params"><span class="hljs-function">                shape = RoundedCornerShape(<span class="hljs-number">4.dp</span>)  </span></span><br><span class="hljs-params"><span class="hljs-function">            )  </span></span><br><span class="hljs-params"><span class="hljs-function">            .border(  </span></span><br><span class="hljs-params"><span class="hljs-function">                <span class="hljs-number">1.dp</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">                <span class="hljs-keyword">if</span> (isSelected) Color(<span class="hljs-number">0xFF005BAC</span>) <span class="hljs-keyword">else</span> Color.LightGray,  </span></span><br><span class="hljs-params"><span class="hljs-function">                shape = RoundedCornerShape(<span class="hljs-number">4.dp</span>)  </span></span><br><span class="hljs-params"><span class="hljs-function">            )  </span></span><br><span class="hljs-params"><span class="hljs-function">            .clickable &#123; onClick() &#125;  </span></span><br><span class="hljs-params"><span class="hljs-function">            .padding(horizontal = <span class="hljs-number">12.dp</span>, vertical = <span class="hljs-number">4.dp</span>)  </span></span><br><span class="hljs-params"><span class="hljs-function">    )</span> &#123;  </span><br><span class="hljs-function">        <span class="hljs-title">Text</span><span class="hljs-params">(  </span></span><br><span class="hljs-params"><span class="hljs-function">            text = number.toString(),  </span></span><br><span class="hljs-params"><span class="hljs-function">            color = <span class="hljs-keyword">if</span> (isSelected) Color.White <span class="hljs-keyword">else</span> Color(<span class="hljs-number">0xFF005BAC</span>)  </span></span><br><span class="hljs-params"><span class="hljs-function">        )</span>  </span><br><span class="hljs-function">    &#125;  </span><br><span class="hljs-function">&#125;  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">@<span class="hljs-title">Composable</span>  </span><br><span class="hljs-function"><span class="hljs-title">fun</span> <span class="hljs-title">EllipsisBox</span><span class="hljs-params">()</span> &#123;  </span><br><span class="hljs-function">    <span class="hljs-title">Box</span><span class="hljs-params">(modifier = Modifier)</span> &#123;  </span><br><span class="hljs-function">        <span class="hljs-title">Text</span><span class="hljs-params">(<span class="hljs-string">&quot;...&quot;</span>, color = Color.Gray)</span>  </span><br><span class="hljs-function">    &#125;  </span><br><span class="hljs-function">&#125;  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">@<span class="hljs-title">Composable</span>  </span><br><span class="hljs-function"><span class="hljs-title">fun</span> <span class="hljs-title">NavigationText</span><span class="hljs-params">(text: <span class="hljs-built_in">String</span>, enabled: <span class="hljs-built_in">Boolean</span>, onClick: () -&gt; Unit)</span> &#123;  </span><br><span class="hljs-function">    <span class="hljs-title">Text</span><span class="hljs-params">(  </span></span><br><span class="hljs-params"><span class="hljs-function">        text = text,  </span></span><br><span class="hljs-params"><span class="hljs-function">        color = <span class="hljs-keyword">if</span> (enabled) Color(<span class="hljs-number">0xFF005BAC</span>) <span class="hljs-keyword">else</span> Color.Gray,  </span></span><br><span class="hljs-params"><span class="hljs-function">        fontSize = <span class="hljs-number">12.sp</span>,  </span></span><br><span class="hljs-params"><span class="hljs-function">        modifier = Modifier  </span></span><br><span class="hljs-params"><span class="hljs-function">            .clickable(enabled = enabled) &#123; onClick() &#125;  </span></span><br><span class="hljs-params"><span class="hljs-function">            .padding(horizontal = <span class="hljs-number">8.dp</span>, vertical = <span class="hljs-number">8.dp</span>)  </span></span><br><span class="hljs-params"><span class="hljs-function">    )</span>  </span><br><span class="hljs-function">&#125;  </span><br><span class="hljs-function">  </span><br><span class="hljs-function"><span class="hljs-title">sealed</span> <span class="hljs-title">class</span> <span class="hljs-title">PageItem</span> &#123;  </span><br><span class="hljs-function">    <span class="hljs-title">data</span> <span class="hljs-title">class</span> <span class="hljs-title">Page</span><span class="hljs-params">(val number: Int)</span> : <span class="hljs-title">PageItem</span><span class="hljs-params">()</span>  </span><br><span class="hljs-function">    <span class="hljs-title">object</span> <span class="hljs-title">Ellipsis</span> : <span class="hljs-title">PageItem</span><span class="hljs-params">()</span>  </span><br><span class="hljs-function">&#125;  </span><br><span class="hljs-function">  </span><br><span class="hljs-function"><span class="hljs-title">fun</span> <span class="hljs-title">calculatePages</span><span class="hljs-params">(currentPage: Int, totalPages: Int)</span>: <span class="hljs-title">List</span>&lt;<span class="hljs-title">PageItem</span>&gt; &#123;  </span><br><span class="hljs-function">    <span class="hljs-title">val</span> <span class="hljs-title">pages</span> = <span class="hljs-title">mutableListOf</span>&lt;<span class="hljs-title">PageItem</span>&gt;<span class="hljs-params">()</span>  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">    <span class="hljs-title">if</span> <span class="hljs-params">(totalPages &lt;= <span class="hljs-number">7</span>)</span> &#123;  </span><br><span class="hljs-function">        // 展示所有页码  </span><br><span class="hljs-function">        <span class="hljs-params">(<span class="hljs-number">1.</span>.totalPages)</span>.<span class="hljs-title">forEach</span> &#123; <span class="hljs-title">pages</span>.<span class="hljs-title">add</span><span class="hljs-params">(PageItem.Page(<span class="hljs-literal">it</span>))</span> &#125;  </span><br><span class="hljs-function">    &#125; <span class="hljs-title">else</span> &#123;  </span><br><span class="hljs-function">        // <span class="hljs-title">Always</span> <span class="hljs-title">show</span> <span class="hljs-title">first</span> <span class="hljs-title">page</span>  </span><br><span class="hljs-function">        <span class="hljs-title">pages</span>.<span class="hljs-title">add</span><span class="hljs-params">(PageItem.Page(<span class="hljs-number">1</span>))</span>  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">        <span class="hljs-title">if</span> <span class="hljs-params">(currentPage &gt; <span class="hljs-number">4</span>)</span> &#123;  </span><br><span class="hljs-function">            <span class="hljs-title">pages</span>.<span class="hljs-title">add</span><span class="hljs-params">(PageItem.Ellipsis)</span>  </span><br><span class="hljs-function">        &#125;  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">        <span class="hljs-title">val</span> <span class="hljs-title">start</span> = <span class="hljs-title">maxOf</span><span class="hljs-params">(<span class="hljs-number">2</span>, currentPage - <span class="hljs-number">1</span>)</span>  </span><br><span class="hljs-function">        <span class="hljs-title">val</span> <span class="hljs-title">end</span> = <span class="hljs-title">minOf</span><span class="hljs-params">(totalPages - <span class="hljs-number">1</span>, currentPage + <span class="hljs-number">1</span>)</span>  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">        <span class="hljs-title">for</span> <span class="hljs-params">(i <span class="hljs-keyword">in</span> start..end)</span> &#123;  </span><br><span class="hljs-function">            <span class="hljs-title">pages</span>.<span class="hljs-title">add</span><span class="hljs-params">(PageItem.Page(i))</span>  </span><br><span class="hljs-function">        &#125;  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">        <span class="hljs-title">if</span> <span class="hljs-params">(currentPage &lt; totalPages - <span class="hljs-number">3</span>)</span> &#123;  </span><br><span class="hljs-function">            <span class="hljs-title">pages</span>.<span class="hljs-title">add</span><span class="hljs-params">(PageItem.Ellipsis)</span>  </span><br><span class="hljs-function">        &#125;  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">        // <span class="hljs-title">Always</span> <span class="hljs-title">show</span> <span class="hljs-title">last</span> <span class="hljs-title">page</span>  </span><br><span class="hljs-function">        <span class="hljs-title">pages</span>.<span class="hljs-title">add</span><span class="hljs-params">(PageItem.Page(totalPages))</span>  </span><br><span class="hljs-function">    &#125;  </span><br><span class="hljs-function">  </span><br><span class="hljs-function">    <span class="hljs-title">return</span> <span class="hljs-title">pages</span>  </span><br><span class="hljs-function">&#125;</span><br></code></pre></td></tr></table></figure>
-
-                
-              </div>
-            
-            <hr/>
-            <div>
-              <div class="post-metas my-3">
-  
-  
-</div>
-
-
-              
-  
-
-  <div class="license-box my-3">
-    <div class="license-title">
-      <div>每日搓安卓组件</div>
-      <div>http://example.com/2025/05/18/每日搓安卓组件/</div>
-    </div>
-    <div class="license-meta">
-      
-        <div class="license-meta-item">
-          <div>Author</div>
-          <div>kid</div>
-        </div>
-      
-      
-        <div class="license-meta-item license-meta-date">
-          <div>Posted on</div>
-          <div>May 18, 2025</div>
-        </div>
-      
-      
-      
-        <div class="license-meta-item">
-          <div>Licensed under</div>
-          <div>
-            
-              
-              
-                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
-                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
-                    <i class="iconfont icon-cc-by"></i>
-                  </span>
-                </a>
-              
-            
-          </div>
-        </div>
-      
-    </div>
-    <div class="license-icon iconfont"></div>
-  </div>
-
-
-
-              
-                <div class="post-prevnext my-3">
-                  <article class="post-prev col-6">
-                    
-                    
-                  </article>
-                  <article class="post-next col-6">
-                    
-                    
-                      <a href="/2024/12/17/golang%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="golang并发编程">
-                        <span class="hidden-mobile">golang并发编程</span>
-                        <span class="visible-mobile">Next</span>
-                        <i class="iconfont icon-arrowright"></i>
-                      </a>
-                    
-                  </article>
-                </div>
-              
-            </div>
-
-            
-          </article>
-        </div>
-      </div>
-    </div>
-
-    <div class="side-col d-none d-lg-block col-lg-2">
-      
-  <aside class="sidebar" style="margin-left: -1rem">
-    <div id="toc">
-  <p class="toc-header">
-    <i class="iconfont icon-list"></i>
-    <span>Table of Contents</span>
-  </p>
-  <div class="toc-body" id="toc-body"></div>
-</div>
-
-
-
   </aside>
 
-
+            
     </div>
-  </div>
+</section>
+            
+
+        
+
+                </div>
+    </div>
 </div>
 
-
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-
-    
-
-    
-      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
-        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
-      </a>
-    
-
-    
-      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
-        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body mx-3">
-        <div class="md-form mb-5">
-          <input type="text" id="local-search-input" class="form-control validate">
-          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+<footer>
+    <div id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 footer-list text-center">
+                    <ul class="kratos-social-icons">
+                        
+                    </ul>
+                    <ul class="kratos-copyright">
+                        <div>
+                            <li>&copy; 2025 Kid 版权所有.</li>
+                            <li>本站已运行<span id="kr-since">Loading...</span></li>
+                        </div>
+                        <div>
+                            <li>自豪地使用 <a href="https://github.com/Candinya/Kratos-Rebirth" target="_blank">Kratos:Rebirth</a> 主题</li>
+                            <li>站点由 John Doe 用 <i class="fa fa-heart" style="color:#d43f57"></i> 搭建</li>
+                        </div>
+                        <!-- 额外的追加注入项 -->
+                        
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="list-group" id="local-search-result"></div>
-      </div>
+        <div class="kr-tool text-center">
+            <div class="tool">
+                
+                    <div class="box search-box">
+                        <a href="/search">
+                            <span class="fa fa-search"></span>
+                        </a>
+                    </div>
+                
+                <div class="box theme-box" id="theme-toggle">
+                    <span class="fa fa-adjust"></span>
+                </div>
+            </div>
+            <div id="gotop-box" class="box gotop-box">
+                <span class="fa fa-chevron-up"></span>
+            </div>
+        </div>
     </div>
-  </div>
+</footer>
+</div>
 </div>
 
-    
 
-    
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-  
-    <div class="footer-content">
-       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    <div id="kr-donate-modal" class="kr-modal">
+    <div class="kr-modal-bg" onclick="krCloseDonateModal()"></div>
+    <div class="kr-modal-content">
+        <div class="kr-modal-header">
+            <div class="kr-modal-icon">
+                <i class="fa fa-bitcoin"></i>
+            </div>
+            <div class="kr-modal-title">赞助喵</div>
+            <button class="kr-modal-close" onclick="krCloseDonateModal()">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
+        <div class="kr-modal-body">
+            <div class="kr-donate-message">非常感谢您的喜欢！ <i class="fa fa-heart" style="color:#d43f57"></i></div>
+            <div class="kr-donate-qr" id="kr-donate-qr">
+                
+                    <img class="kr-donate-placeholder" src="https://dev.krt.moe/demo-assets/donate.webp" alt="赞助喵" />
+                
+            </div>
+            <div class="kr-donate-platforms">
+                
+                    
+                        <button class="kr-donate-platform-button" style="color: skyblue;" title="模拟支付" onclick="krDonateModalShowPlatformQR('example_payment', 'skyblue')">
+                            <i class="fa fa-credit-card"></i>
+                        </button>
+                    
+                
+            </div>
+        </div>
     </div>
-  
-  
-  
 </div>
-
-  </footer>
-
-  <!-- Scripts -->
-  
-  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
-  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
-
-  <script>
-    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
-    NProgress.start()
-    window.addEventListener('load', function() {
-      NProgress.done();
-    })
-  </script>
-
-
-<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
-<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
-<script  src="/js/events.js" ></script>
-<script  src="/js/plugins.js" ></script>
-
-
-  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
-  <script>
-    (function (window, document) {
-      var typing = Fluid.plugins.typing;
-      var subtitle = document.getElementById('subtitle');
-      if (!subtitle || !typing) {
-        return;
-      }
-      var text = subtitle.getAttribute('data-typed-text');
-      
-        typing(text);
-      
-    })(window, document);
-  </script>
+<script defer src="/js/kr-modal/donate.min.js"></script>
 
 
 
 
-  
-    <script  src="/js/img-lazyload.js" ></script>
-  
+    <div id="kr-share-modal" class="kr-modal">
+    <div class="kr-modal-bg" onclick="krCloseShareModal()"></div>
+    <div class="kr-modal-content">
+        <div class="kr-modal-header">
+            <div class="kr-modal-icon">
+                <i class="fa fa-share-alt"></i>
+            </div>
+            <div class="kr-modal-title">分享这一刻</div>
+            <button class="kr-modal-close" onclick="krCloseShareModal()">
+                <i class="fa fa-times-circle"></i>
+            </button>
+        </div>
+        <div class="kr-modal-body">
+            <div class="kr-share-message">让朋友们也来瞅瞅！</div>
+            <div class="kr-share-qr" id="kr-share-qr"></div>
+            <div class="kr-share-platforms">
+                
+                    <button class="kr-share-platform-button" style="color: #62b6e7;" title="喵窝" onclick="krShareModalOpenPlatform('https://nya.one/share?text=%3E%20$TITLE%0A%3E%0A%3E%20$SUMMARY%0A----%20$SITE%0A%0A$URL')">
+                        <svg fill="currentColor" width="18" height="18" viewBox="0 0 329 388"><path d="M0,36.226c0,-19.993 16.233,-36.226 36.226,-36.226c13.788,0 25.787,7.719 31.908,19.068l188.366,229.845l0,-111.259c-6.356,5.508 -14.645,8.843 -23.707,8.843c-19.994,0 -36.226,-16.232 -36.226,-36.226c-0,-8.551 2.968,-16.413 7.93,-22.613l-0.015,-0.013l56.614,-69.08c6.2,-11.073 18.047,-18.565 31.63,-18.565c19.994,0 36.227,16.233 36.227,36.226l-0,314.644c-0,19.994 -16.233,36.226 -36.227,36.226c-13.166,0 -24.701,-7.039 -31.044,-17.555l-189.229,-230.899l-0,212.228c-0,19.994 -16.233,36.226 -36.227,36.226c-19.993,0 -36.226,-16.232 -36.226,-36.226l0,-314.644Z" /></svg>
+                    </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<script defer src="/js/kr-modal/share.min.js"></script>
 
 
 
+<!-- 额外的追加注入项 -->
 
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
-    var toc = jQuery('#toc');
-    if (toc.length === 0 || !window.tocbot) { return; }
-    var boardCtn = jQuery('#board-ctn');
-    var boardTop = boardCtn.offset().top;
 
-    window.tocbot.init(Object.assign({
-      tocSelector     : '#toc-body',
-      contentSelector : '.markdown-body',
-      linkClass       : 'tocbot-link',
-      activeLinkClass : 'tocbot-active-link',
-      listClass       : 'tocbot-list',
-      isCollapsedClass: 'tocbot-is-collapsed',
-      collapsibleClass: 'tocbot-is-collapsible',
-      scrollSmooth    : true,
-      includeTitleTags: true,
-      headingsOffset  : -boardTop,
-    }, CONFIG.toc));
-    if (toc.find('.toc-list-item').length > 0) {
-      toc.css('visibility', 'visible');
+        <script>
+    if (!window.kr) {
+        window.kr = {};
     }
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('tocbot' in window) {
-        tocbot.refresh();
-        var toc = jQuery('#toc');
-        if (toc.length === 0 || !tocbot) {
-          return;
-        }
-        if (toc.find('.toc-list-item').length > 0) {
-          toc.css('visibility', 'visible');
-        }
-      }
-    });
-  });
+    window.kr.notMobile = (!(navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)));
+    window.kr.siteRoot = "/";
 </script>
 
 
-  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
-
-  <script>Fluid.plugins.codeWidget();</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
-    window.anchors.options = {
-      placement: CONFIG.anchorjs.placement,
-      visible  : CONFIG.anchorjs.visible
-    };
-    if (CONFIG.anchorjs.icon) {
-      window.anchors.options.icon = CONFIG.anchorjs.icon;
-    }
-    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-    var res = [];
-    for (var item of el) {
-      res.push('.markdown-body > ' + item.trim());
-    }
-    if (CONFIG.anchorjs.placement === 'left') {
-      window.anchors.options.class = 'anchorjs-link-left';
-    }
-    window.anchors.add(res.join(', '));
-
-    Fluid.events.registerRefreshCallback(function() {
-      if ('anchors' in window) {
-        anchors.removeAll();
-        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
-        var res = [];
-        for (var item of el) {
-          res.push('.markdown-body > ' + item.trim());
-        }
-        if (CONFIG.anchorjs.placement === 'left') {
-          anchors.options.class = 'anchorjs-link-left';
-        }
-        anchors.add(res.join(', '));
-      }
-    });
-  });
-</script>
-
-
-  
-<script>
-  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
-    Fluid.plugins.fancyBox();
-  });
-</script>
-
-
-  <script>Fluid.plugins.imageCaption();</script>
-
-  <script  src="/js/local-search.js" ></script>
+  <script defer src="/vendors/nprogress@0.2.0/nprogress.js"></script>
 
 
 
+  <script defer src="/vendors/viewerjs@1.11.6/dist/viewer.min.js"></script>
 
 
-<!-- 主题的启动项，将它保持在最底部 -->
-<!-- the boot of the theme, keep it at the bottom -->
-<script  src="/js/boot.js" ></script>
+<script defer src="/js/kr-core.min.js"></script>
 
 
-  
+  <script defer src="/js/kr-pjax.min.js"></script>
 
-  <noscript>
-    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
-  </noscript>
-</body>
+
+<!-- 额外的追加注入项 -->
+
+
+    </body>
 </html>
