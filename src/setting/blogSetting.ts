@@ -27,7 +27,7 @@ export const copyrightConfig: BlogCopyrightConfig = {
   defaultLicense: "CC BY-NC-SA", //默认版权声明协议
   author: "LiSiZeng", //作者
   siteName: "个人博客", //你网站的名称
-  siteUrl: "https://xuhaoyang.top", //这里填写你的域名(当前网站)
+  siteUrl: "https://kids1934.github.io/blog", //这里填写你的域名(当前网站)
 };
 
 //每一篇博客结尾的话
