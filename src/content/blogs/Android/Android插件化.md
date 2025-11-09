@@ -1,5 +1,5 @@
 ---
-title: Android Runtime
+title: Android插件化技术
 date: 2025-10-14
 category: 安卓
 tags: [Android, 插件化]
