@@ -3,7 +3,6 @@ title: Android Runtime
 date: 2025-6-20
 category: 安卓
 tags: [Android, ART]
-readTime: 5
 excerpt: 这篇文章将与你深入探讨安卓运行时(ART)的基本结构与一些与传统JVM的异同点
 reference: [
   { description: "学习整理来自小码蜂的专栏", link: "https://juejin.cn/column/7507835962337820682" },
