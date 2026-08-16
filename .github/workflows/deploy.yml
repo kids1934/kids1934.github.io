@@ -38,7 +38,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
-        run: pnpm install --allow-builds="@tailwindcss/oxide,@tsparticles/engine,sharp,unrs-resolver"
+        run: pnpm install --dangerously-allow-all-builds
 
       - name: Build project
         run: pnpm run build
